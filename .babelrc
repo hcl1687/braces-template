@@ -1,0 +1,25 @@
+{
+  "env": {
+    "test": {
+      "presets": [
+        "es2015",
+        "stage-0"
+      ],
+      "plugins": [
+        "add-module-exports",
+        "__coverage__"
+      ],
+      "comments": false
+    },
+    "production": {
+      "presets": [
+        "es2015",
+        "stage-0"
+      ],
+      "plugins": [
+        "add-module-exports"
+      ],
+      "comments": false
+    }
+  }
+}
