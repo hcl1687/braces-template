@@ -187,6 +187,16 @@ function compileNode (node, options) {
  */
 
 function compileElement (el, options) {
+  // preprocess textareas.
+  // textarea treats its text content as the initial value.
+  // just bind it as an attr directive for value.
+  if (el.tagName === 'TEXTAREA') {
+    var tokens = parseText(el.value)
+    if (tokens) {
+      el.setAttribute(':value', tokensToExp(tokens))
+      el.value = ''
+    }
+  }
   var linkFn
   var hasAttrs = el.hasAttributes()
   var attrs = hasAttrs && toArray(el.attributes)

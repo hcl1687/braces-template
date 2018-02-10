@@ -37,6 +37,18 @@ describe('Misc', function () {
     expect(el.innerHTML.replace(xmlns, '')).to.equal('<svg><text>1</text><text>2</text><text>3</text></svg>')
   })
 
+  it('handle interpolated textarea', function () {
+    var el = document.createElement('div')
+    el.innerHTML = '<textarea>hello {{msg}}</textarea>'
+    var vm = new Vue({
+      el: el,
+      data: {
+        msg: 'test'
+      }
+    })
+    expect(el.innerHTML).to.equal('<textarea>hello test</textarea>')
+  })
+
   it('prefer bound attributes over static attributes', () => {
     var el = document.createElement('div')
     el.id = 'test'

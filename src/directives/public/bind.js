@@ -95,6 +95,11 @@ export default {
       }
     }
 
+    // do not set value attribute for textarea
+    if (attr === 'value' && el.tagName === 'TEXTAREA') {
+      el.removeAttribute(attr)
+      return
+    }
     // update attribute
     if (enumeratedAttrRE.test(attr)) {
       el.setAttribute(attr, value ? 'true' : 'false')

@@ -78,27 +78,6 @@ export default function (Vue) {
       if (!definition) {
         return this.options[type + 's'][id]
       } else {
-        /* istanbul ignore if */
-        if (process.env.NODE_ENV !== 'production') {
-          if (
-            type === 'component' &&
-            (commonTagRE.test(id) || reservedTagRE.test(id))
-          ) {
-            warn(
-              'Do not use built-in or reserved HTML elements as component ' +
-              'id: ' + id
-            )
-          }
-        }
-        if (
-          type === 'component' &&
-          isPlainObject(definition)
-        ) {
-          if (!definition.name) {
-            definition.name = id
-          }
-          definition = Vue.extend(definition)
-        }
         this.options[type + 's'][id] = definition
         return definition
       }

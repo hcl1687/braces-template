@@ -3,7 +3,7 @@ module.exports = {
   output: {
     path: './',
     filename: 'index.js',
-    library: 'vte',
+    library: 'braces',
     libraryTarget: 'umd'
   },
   module: {

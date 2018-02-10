@@ -8,6 +8,10 @@
     "chai": false,
     "assert": false,
     "expect": false,
-    "should": false
+    "should": false,
+    "console": false
+  },
+  "rules": {
+    "no-console": "off"
   }
 }
