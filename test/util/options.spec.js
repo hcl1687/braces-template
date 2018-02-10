@@ -268,7 +268,6 @@ describe('Util - Option merging', function () {
   })
 
   it('warn Array assets without id', function () {
-    const _spy = sinon.spy(__, 'warn')
     var a = {
       directives: {
         a: {
@@ -280,45 +279,6 @@ describe('Util - Option merging', function () {
       directives: [{}]
     }
     merge(a, b)
-    expect(_spy.calledWith('Array-syntax assets must provide a "name" or "id" field.')).to.equal(true)
+    expect(__.warn.msg).to.include('Array-syntax assets must provide a "name" or "id" field.')
   })
-
-  // it('warn Array async component without id', function () {
-  //   var a = {
-  //     components: {
-  //       a: Vue.extend({})
-  //     }
-  //   }
-  //   var b = {
-  //     components: [function () {}]
-  //   }
-  //   merge(a, b)
-  //   expect('must provide a "name" or "id" field').toHaveBeenWarned()
-  // })
 })
-
-// describe('Util - Option resolveAsset', function () {
-//   var vm
-//   beforeEach(function () {
-//     vm = new Vue({
-//       data: {},
-//       components: {
-//         'hyphenated-component': {
-//           template: 'foo'
-//         },
-//         camelCasedComponent: {
-//           template: 'bar'
-//         },
-//         PascalCasedComponent: {
-//           template: 'baz'
-//         }
-//       }
-//     })
-//   })
-
-//   it('resolves', function () {
-//     expect(resolveAsset(vm.$options, 'components', 'hyphenated-component')).toBeTruthy()
-//     expect(resolveAsset(vm.$options, 'components', 'camel-cased-component')).toBeTruthy()
-//     expect(resolveAsset(vm.$options, 'components', 'pascal-cased-component')).toBeTruthy()
-//   })
-// })

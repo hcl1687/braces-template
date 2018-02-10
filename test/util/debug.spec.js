@@ -30,6 +30,7 @@ if (typeof console !== 'undefined') {
       config.silent = true
       _.warn('oops')
       expect(console.error.called).to.equal(false)
+      config.silent = false
     })
   })
 }

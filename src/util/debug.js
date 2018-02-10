@@ -9,7 +9,9 @@ if (process.env.NODE_ENV !== 'production') {
 
   warn = (msg, vm) => {
     if (hasConsole && (!config.silent)) {
-      console.error('[Vue warn]: ' + msg + (vm ? formatComponentName(vm) : ''))
+      const res = '[Vue warn]: ' + msg + (vm ? formatComponentName(vm) : '')
+      warn.msg = res
+      console.error(res)
     }
   }
 

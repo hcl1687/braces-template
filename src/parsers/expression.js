@@ -163,41 +163,17 @@ function makeGetterFn (body) {
 }
 
 /**
- * Compile a setter function for the expression.
- *
- * @param {String} exp
- * @return {Function|undefined}
- */
-
-function compileSetter (exp) {
-  var path = parsePath(exp)
-  if (path) {
-    return function (scope, val) {
-      setPath(scope, path, val)
-    }
-  } else {
-    process.env.NODE_ENV !== 'production' && warn(
-      'Invalid setter expression: ' + exp
-    )
-  }
-}
-
-/**
  * Parse an expression into re-written getter/setters.
  *
  * @param {String} exp
- * @param {Boolean} needSet
  * @return {Function}
  */
 
-export function parseExpression (exp, needSet) {
+export function parseExpression (exp) {
   exp = exp.trim()
   // try cache
   var hit = expressionCache.get(exp)
   if (hit) {
-    if (needSet && !hit.set) {
-      hit.set = compileSetter(hit.exp)
-    }
     return hit
   }
   var res = { exp: exp }
@@ -206,9 +182,6 @@ export function parseExpression (exp, needSet) {
     ? makeGetterFn('scope.' + exp)
     // dynamic getter
     : compileGetter(exp)
-  if (needSet) {
-    res.set = compileSetter(exp)
-  }
   expressionCache.put(exp, res)
   return res
 }
