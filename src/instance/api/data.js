@@ -1,3 +1,4 @@
+import { toArray } from '../../util/index'
 import { parseExpression } from '../../parsers/expression'
 
 export default function (Vue) {
@@ -9,12 +10,24 @@ export default function (Vue) {
    * @return {*}
    */
 
-  Vue.prototype.$get = function (exp) {
+  Vue.prototype.$get = function (exp, asStatement) {
     var res = parseExpression(exp)
     if (res) {
-      try {
-        return res.get.call(this, this)
-      } catch (e) {}
+      if (asStatement) {
+        var self = this
+        return function statementHandler () {
+          self.$arguments = toArray(arguments)
+          var result = res.get.call(self, self)
+          self.$arguments = null
+          return result
+        }
+      } else {
+        try {
+          return res.get.call(this, this)
+        } catch (e) {
+          // todo
+        }
+      }
     }
   }
 }

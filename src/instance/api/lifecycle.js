@@ -30,7 +30,7 @@ export default function (Vue) {
       this._callHook('attached')
       ready.call(this)
     } else {
-      this.$emit('hook:attached', ready)
+      this.$once('hook:attached', ready)
     }
     return this
   }

@@ -11,7 +11,7 @@ import {
   arrRemove
 } from './util/index'
 import config from './config'
-import { parseExpression } from './parsers/expression'
+import { parseExpression, isSimplePath } from './parsers/expression'
 
 /**
  * A directive links a DOM element with a piece of data,
@@ -101,7 +101,8 @@ Directive.prototype._bind = function () {
     this.update && this.update(descriptor.raw)
   } else if (
     (this.expression || this.modifiers) &&
-    this.update
+    this.update &&
+    !this._checkStatement()
   ) {
     var preProcess = this._preProcess
       ? bind(this._preProcess, this)
@@ -214,6 +215,36 @@ Directive.prototype._getDynamicValue = function (scope, expression) {
   }
 
   return value
+}
+
+/**
+ * Check if the directive is a function caller
+ * and if the expression is a callable one. If both true,
+ * we wrap up the expression and use it as the event
+ * handler.
+ *
+ * e.g. on-click="a++"
+ *
+ * @return {Boolean}
+ */
+
+Directive.prototype._checkStatement = function () {
+  var expression = this.expression
+  if (
+    expression && this.acceptStatement &&
+    !isSimplePath(expression)
+  ) {
+    var fn = parseExpression(expression).get
+    var scope = this._scope || this.vm
+    var handler = function (e) {
+      scope.$event = e
+      fn.call(scope, scope)
+      scope.$event = null
+    }
+
+    this.update(handler)
+    return true
+  }
 }
 
 /**
