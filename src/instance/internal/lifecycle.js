@@ -153,11 +153,7 @@ export default function (Vue) {
     if (this._frag) {
       arrRemove(this._frag.children, this)
     }
-    // remove reference from data ob
-    // frozen object may not have observer.
-    if (this._data && this._data.__ob__) {
-      this._data.__ob__.removeVm(this)
-    }
+
     // Clean up references to private properties and other
     // instances. preserve reference to _data so that proxy
     // accessors still work. The only potential side effect

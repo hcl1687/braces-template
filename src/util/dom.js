@@ -164,7 +164,11 @@ export function replace (target, el) {
  */
 
 export function on (el, event, cb, useCapture) {
-  el.addEventListener(event, cb, useCapture)
+  if (el.addEventListener) {
+    el.addEventListener(event, cb, useCapture)
+  } else {
+    el.attachEvent('on' + event, cb)
+  }
 }
 
 /**
@@ -176,7 +180,11 @@ export function on (el, event, cb, useCapture) {
  */
 
 export function off (el, event, cb) {
-  el.removeEventListener(event, cb)
+  if (el.removeEventListener) {
+    el.removeEventListener(event, cb)
+  } else {
+    el.detachEvent('on' + event, cb)
+  }
 }
 
 /**

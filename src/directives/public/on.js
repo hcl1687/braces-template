@@ -38,21 +38,31 @@ function keyFilter (handler, keys) {
 
 function stopFilter (handler) {
   return function stopHandler (e) {
-    e.stopPropagation()
+    if (e.stopPropagation) {
+      e.stopPropagation()
+    } else {
+      e.cancelBubble = true
+    }
     return handler.call(this, e)
   }
 }
 
 function preventFilter (handler) {
   return function preventHandler (e) {
-    e.preventDefault()
+    if (e.preventDefault) {
+      e.preventDefault()
+    } else {
+      e.returnValue = false
+    }
     return handler.call(this, e)
   }
 }
 
 function selfFilter (handler) {
   return function selfHandler (e) {
-    if (e.target === e.currentTarget) {
+    var target = e.target || e.srcElement
+    var currentTarget = e.currentTarget || this
+    if (target === currentTarget) {
       return handler.call(this, e)
     }
   }

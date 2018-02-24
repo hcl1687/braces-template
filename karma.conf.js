@@ -12,7 +12,7 @@ module.exports = function (config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'es6-shim'],
+    frameworks: ['mocha', 'es6-shim', 'es5-shim'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -56,7 +56,26 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'], // PhantomJS, Chrome
+    browsers: ['PhantomJS', 'Chrome', 'IEEDGE'], // PhantomJS, Chrome, IE
+
+    customLaunchers: {
+      IEEDGE: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateEDGE'
+      },
+      IE10: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE10'
+      },
+      IE9: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE9'
+      },
+      IE8: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE8'
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
