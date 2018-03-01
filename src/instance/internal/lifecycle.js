@@ -1,4 +1,5 @@
 import Directive from '../../directive'
+import { parseTemplate } from '../../parsers/template'
 
 import {
   getAttr,

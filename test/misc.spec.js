@@ -6,9 +6,9 @@ var textContent = _.textContent
 describe('Misc', function () {
   it('should handle directive.bind() altering its childNode structure', function () {
     var div = document.createElement('div')
-    div.innerHTML = '<div v-test>{{test}}</div>'
     var vm = new Vue({
       el: div,
+      template: '<div v-test>{{test}}</div>',
       data: {
         test: 'foo'
       },
