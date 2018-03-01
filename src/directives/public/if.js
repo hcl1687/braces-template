@@ -5,7 +5,8 @@ import {
   remove,
   replace,
   createAnchor,
-  warn
+  warn,
+  nextElementSibling
 } from '../../util/index'
 
 export default {
@@ -17,7 +18,7 @@ export default {
     var el = this.el
     if (!el.__vue__) {
       // check else block
-      var next = el.nextElementSibling
+      var next = nextElementSibling(el)
       if (next && getAttr(next, 'v-else') !== null) {
         remove(next)
         this.elseEl = next

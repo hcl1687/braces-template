@@ -1,5 +1,6 @@
 var _ = require('src/util')
 var def = require('src/directives/public/text')
+var textContent = _.textContent
 
 describe('v-text', function () {
   it('element', function () {
@@ -9,9 +10,9 @@ describe('v-text', function () {
     _.extend(dir, def)
     dir.bind()
     dir.update('foo')
-    expect(dir.el.textContent).to.equal('foo')
+    expect(textContent(dir.el)).toBe('foo')
     dir.update(123)
-    expect(dir.el.textContent).to.equal('123')
+    expect(textContent(dir.el)).toBe('123')
   })
 
   it('text node', function () {
@@ -21,8 +22,8 @@ describe('v-text', function () {
     _.extend(dir, def)
     dir.bind()
     dir.update('foo')
-    expect(dir.el.nodeValue).to.equal('foo')
+    expect(dir.el.nodeValue).toBe('foo')
     dir.update(123)
-    expect(dir.el.nodeValue).to.equal('123')
+    expect(dir.el.nodeValue).toBe('123')
   })
 })

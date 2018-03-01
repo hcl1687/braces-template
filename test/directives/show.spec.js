@@ -20,9 +20,9 @@ describe('v-show', function () {
       vm: new Vue()
     }
     dir.update(false)
-    expect(el.style.display).to.equal('none')
+    expect(el.style.display).toBe('none')
     dir.update(true)
-    expect(el.style.display).to.equal('')
+    expect(el.style.display).toBe('')
   })
 
   it('should work with v-else', function () {
@@ -33,8 +33,8 @@ describe('v-show', function () {
         ok: true
       }
     })
-    expect(el.children[0].style.display).to.equal('')
-    expect(el.children[1].style.display).to.equal('none')
+    expect(el.children[0].style.display).toBe('')
+    expect(el.children[1].style.display).toBe('none')
 
     var el1 = document.createElement('div')
     el1.innerHTML = '<p v-show="ok">YES</p><p v-else>NO</p>'
@@ -44,7 +44,7 @@ describe('v-show', function () {
         ok: false
       }
     })
-    expect(el1.children[0].style.display).to.equal('none')
-    expect(el1.children[1].style.display).to.equal('')
+    expect(el1.children[0].style.display).toBe('none')
+    expect(el1.children[1].style.display).toBe('')
   })
 })

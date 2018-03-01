@@ -1,7 +1,9 @@
+const path = require('path')
+
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: './',
+    path: path.resolve(__dirname, './'),
     filename: 'index.js',
     library: 'braces',
     libraryTarget: 'umd'

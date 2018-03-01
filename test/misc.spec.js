@@ -1,5 +1,7 @@
 // test cases for edge cases & bug fixes
-import Vue from 'src'
+var  Vue = require('src')
+var _ = require('src/util')
+var textContent = _.textContent
 
 describe('Misc', function () {
   it('should handle directive.bind() altering its childNode structure', function () {
@@ -19,13 +21,15 @@ describe('Misc', function () {
         }
       }
     })
-    expect(vm.$el.textContent).to.equal('bar foo')
+    expect(textContent(vm.$el)).toBe('bar foo')
   })
 
   // #922
-  it('template v-for inside svg', function () {
+  it('v-for inside svg', function () {
     var el = document.createElement('div')
-    el.innerHTML = '<svg><template v-for="n in list"><text>{{n}}</text></template></svg>'
+    var svg = document.createElement('svg')
+    svg.innerHTML = '<g v-for="n in list"><text>{{n}}</text></g>'
+    el.appendChild(svg)
     new Vue({
       el: el,
       data: {
@@ -33,8 +37,12 @@ describe('Misc', function () {
       }
     })
     // IE inlines svg namespace
-    var xmlns = /\s?xmlns=".*svg"/
-    expect(el.innerHTML.replace(xmlns, '')).to.equal('<svg><text>1</text><text>2</text><text>3</text></svg>')
+    if (_.isIE8) {
+      expect(_.warn.msg).toContain('Do not use SVG tag. IE8 doesn\'t support SVG.')
+    } else {
+      var xmlns = /\s?xmlns=".*svg"/
+      expect(el.innerHTML.replace(xmlns, '')).toBe('<svg><g><text>1</text></g><g><text>2</text></g><g><text>3</text></g></svg>')
+    }
   })
 
   it('handle interpolated textarea', function () {
@@ -46,7 +54,7 @@ describe('Misc', function () {
         msg: 'test'
       }
     })
-    expect(el.innerHTML).to.equal('<textarea>hello test</textarea>')
+    expect(el.innerHTML.toLowerCase()).toBe('<textarea>hello test</textarea>')
   })
 
   it('prefer bound attributes over static attributes', () => {
@@ -81,20 +89,7 @@ describe('Misc', function () {
       }
     }
 
-    expect(ret).to.be.true
-  })
-
-  // #2500
-  it('template parser tag match should include hyphen', function () {
-    var el = document.createElement('div')
-    el.innerHTML = '<div>{{{ test }}}</div>'
-    var vm = new Vue({
-      el: el,
-      data: {
-        test: '<image-field></image-field>'
-      }
-    })
-    expect(vm.$el.querySelector('image-field').namespaceURI).to.not.include('svg')
+    expect(ret).toBe(true)
   })
 
   // #2657
@@ -104,6 +99,6 @@ describe('Misc', function () {
     var vm = new Vue({
       el: el
     })
-    expect(vm.$el.textContent).to.equal('135')
+    expect(textContent(vm.$el).replace(/\r\n/g, '')).toBe('135')
   })
 })

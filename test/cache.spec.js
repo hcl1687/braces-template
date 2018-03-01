@@ -1,5 +1,4 @@
-import Cache from 'src/cache'
-
+const Cache = require('src/cache')
 /**
  * Debug function to assert cache state
  *
@@ -27,7 +26,7 @@ describe('Cache', () => {
     c.put('john', 26)
     c.put('angela', 24)
     c.put('bob', 48)
-    expect(toString(c)).to.equal('adam:29 < john:26 < angela:24 < bob:48')
+    expect(toString(c)).toBe('adam:29 < john:26 < angela:24 < bob:48')
   })
 
   it('put with same key', () => {
@@ -36,27 +35,27 @@ describe('Cache', () => {
     same.put('john', 26)
     same.put('john', 24)
     same.put('john', 48)
-    expect(same.size).to.equal(1)
-    expect(toString(same)).to.equal('john:48')
+    expect(same.size).toBe(1)
+    expect(toString(same)).toBe('john:48')
   })
 
   it('get', () => {
-    expect(c.get('adam')).to.equal(29)
-    expect(c.get('john')).to.equal(26)
-    expect(c.get('angela')).to.equal(24)
-    expect(c.get('bob')).to.equal(48)
-    expect(toString(c)).to.equal('adam:29 < john:26 < angela:24 < bob:48')
+    expect(c.get('adam')).toBe(29)
+    expect(c.get('john')).toBe(26)
+    expect(c.get('angela')).toBe(24)
+    expect(c.get('bob')).toBe(48)
+    expect(toString(c)).toBe('adam:29 < john:26 < angela:24 < bob:48')
 
-    expect(c.get('angela')).to.equal(24)
+    expect(c.get('angela')).toBe(24)
     // angela should now be the tail
-    expect(toString(c)).to.equal('adam:29 < john:26 < bob:48 < angela:24')
+    expect(toString(c)).toBe('adam:29 < john:26 < bob:48 < angela:24')
   })
 
   it('expire', () => {
     c.put('ygwie', 81)
-    expect(c.size).to.equal(4)
-    expect(toString(c)).to.equal('john:26 < bob:48 < angela:24 < ygwie:81')
-    expect(c.get('adam')).to.be.an('undefined')
+    expect(c.size).toBe(4)
+    expect(toString(c)).toBe('john:26 < bob:48 < angela:24 < ygwie:81')
+    expect(c.get('adam')).toBeUndefined()
   })
 
   it('shift', () => {
@@ -69,7 +68,7 @@ describe('Cache', () => {
     shift.shift()
     shift.shift()
     shift.shift()
-    expect(shift.size).to.equal(1)
-    expect(toString(shift)).to.equal('bob:48')
+    expect(shift.size).toBe(1)
+    expect(toString(shift)).toBe('bob:48')
   })
 })

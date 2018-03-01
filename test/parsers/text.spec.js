@@ -63,13 +63,13 @@ function assertParse (test) {
   var res = textParser.parseText(test.text)
   var exp = test.expected
   if (!Array.isArray(exp)) {
-    expect(res).to.equal(exp)
+    expect(res).toBe(exp)
   } else {
-    expect(res.length).to.equal(exp.length)
+    expect(res.length).toBe(exp.length)
     res.forEach(function (r, i) {
       var e = exp[i]
       for (var key in e) {
-        expect(e[key]).to.equal(r[key])
+        expect(e[key]).toBe(r[key])
       }
     })
   }
@@ -83,12 +83,13 @@ describe('Text Parser', function () {
   it('cache', function () {
     var res1 = textParser.parseText('{{a}}')
     var res2 = textParser.parseText('{{a}}')
-    expect(res1).to.equal(res2)
+    expect(res1).toBe(res2)
   })
 
   it('custom delimiters', function () {
     config.delimiters = ['[%', '%]']
     config.unsafeDelimiters = ['{!!', '!!}']
+    textParser.compileRegex()
     assertParse({
       text: '[% text %] and {!! html !!}',
       expected: [
@@ -99,12 +100,13 @@ describe('Text Parser', function () {
     })
     config.delimiters = ['{{', '}}']
     config.unsafeDelimiters = ['{{{', '}}}']
+    textParser.compileRegex()
   })
 
   it('tokens to expression', function () {
     var tokens = textParser.parseText('view-{{test + 1}}-test-{{ok + "|"}}')
     var exp = textParser.tokensToExp(tokens)
-    expect(exp).to.equal('"view-"+(test + 1)+"-test-"+(ok + "|")')
+    expect(exp).toBe('"view-"+(test + 1)+"-test-"+(ok + "|")')
   })
 
   it('tokens to expression, single expression', function () {
@@ -112,6 +114,6 @@ describe('Text Parser', function () {
     var exp = textParser.tokensToExp(tokens)
     // should not have parens so it can be treated as a
     // simple path by the expression parser
-    expect(exp).to.equal('test')
+    expect(exp).toBe('test')
   })
 })

@@ -6,7 +6,8 @@ import {
   mapNodeRange,
   removeNodeRange,
   remove,
-  arrRemove
+  arrRemove,
+  isIE8
 } from '../util/index'
 
 /**
@@ -48,7 +49,9 @@ export default function Fragment (linker, vm, frag, scope, parentFrag) {
     this.before = multiBefore
     this.remove = multiRemove
   }
-  this.node.__v_frag = this
+  if (!isIE8) {
+    this.node.__v_frag = this
+  }
 }
 
 /**
@@ -165,7 +168,9 @@ Fragment.prototype.destroy = function () {
   if (this.parentFrag) {
     arrRemove(this.parentFrag.childFrags, this)
   }
-  this.node.__v_frag = null
+  if (!isIE8) {
+    this.node.__v_frag = null
+  }
   this.unlink()
 }
 

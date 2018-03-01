@@ -4,6 +4,7 @@ var FragmentFactory = require('src/fragment/factory')
 var compiler = require('src/compiler')
 var compile = compiler.compile
 var publicDirectives = require('src/directives/public')
+var textContent = _.textContent
 
 describe('Compile', function () {
   var vm, el, data, directiveBind, directiveTeardown, bindDirSpy
@@ -12,9 +13,9 @@ describe('Compile', function () {
     // linker functions do.
     el = document.createElement('div')
     data = {}
-    directiveBind = sinon.spy()
-    directiveTeardown = sinon.spy()
-    bindDirSpy = sinon.spy()
+    directiveBind = jasmine.createSpy('bind')
+    directiveTeardown = jasmine.createSpy('teardown')
+    bindDirSpy = jasmine.createSpy()
     vm = {
       $options: {},
       _directives: [],
@@ -47,50 +48,50 @@ describe('Compile', function () {
       }
     })
     var linker = compile(el, options)
-    expect(typeof linker).to.equal('function')
+    expect(typeof linker).toBe('function')
     linker(vm, el)
-    expect(directiveBind.callCount).to.equal(4)
-    expect(bindDirSpy.callCount).to.equal(4)
+    expect(directiveBind.calls.count()).toBe(4)
+    expect(bindDirSpy.calls.count()).toBe(4)
 
     // check if we are in firefox, which has different
     // attribute interation order
     var isAttrReversed = el.firstChild.attributes[0].name === 'v-b'
 
     // 1
-    var args = bindDirSpy.getCall(0).args
-    expect(args[0].name).to.equal('a')
-    expect(args[0].expression).to.equal('b')
-    expect(args[0].def).to.equal(defA)
-    expect(args[1]).to.equal(el)
+    var args = bindDirSpy.calls.argsFor(0)
+    expect(args[0].name).toBe('a')
+    expect(args[0].expression).toBe('b')
+    expect(args[0].def).toBe(defA)
+    expect(args[1]).toBe(el)
     // 2
-    args = bindDirSpy.getCall(isAttrReversed ? 2 : 1).args
-    expect(args[0].name).to.equal('a')
-    expect(args[0].expression).to.equal('a')
-    expect(args[0].def).to.equal(defA)
+    args = bindDirSpy.calls.argsFor(isAttrReversed ? 2 : 1)
+    expect(args[0].name).toBe('a')
+    expect(args[0].expression).toBe('a')
+    expect(args[0].def).toBe(defA)
     // args + multiple modifiers
-    expect(args[0].arg).to.equal('hello')
-    expect(args[0].modifiers.a).to.equal(true)
-    expect(args[0].modifiers.b).to.equal(true)
-    expect(args[1]).to.equal(el.firstChild)
+    expect(args[0].arg).toBe('hello')
+    expect(args[0].modifiers.a).toBe(true)
+    expect(args[0].modifiers.b).toBe(true)
+    expect(args[1]).toBe(el.firstChild)
     // 3 (expression literal)
-    args = bindDirSpy.getCall(isAttrReversed ? 1 : 2).args
-    expect(args[0].name).to.equal('b')
-    expect(args[0].expression).to.equal('1')
-    expect(args[0].def).to.equal(defB)
-    expect(args[1]).to.equal(el.firstChild)
+    args = bindDirSpy.calls.argsFor(isAttrReversed ? 1 : 2)
+    expect(args[0].name).toBe('b')
+    expect(args[0].expression).toBe('1')
+    expect(args[0].def).toBe(defB)
+    expect(args[1]).toBe(el.firstChild)
     // 4 (explicit literal)
-    args = bindDirSpy.getCall(3).args
-    expect(args[0].name).to.equal('b')
-    expect(args[0].expression).to.equal('foo')
-    expect(args[0].def).to.equal(defB)
-    expect(args[0].modifiers.literal).to.equal(true)
-    expect(args[1]).to.equal(el.lastChild)
+    args = bindDirSpy.calls.argsFor(3)
+    expect(args[0].name).toBe('b')
+    expect(args[0].expression).toBe('foo')
+    expect(args[0].def).toBe(defB)
+    expect(args[0].modifiers.literal).toBe(true)
+    expect(args[1]).toBe(el.lastChild)
     // check the priority sorting
     // the "b"s should be called first!
-    expect(directiveBind.args[0][0]).to.equal('b')
-    expect(directiveBind.args[1][0]).to.equal('b')
-    expect(directiveBind.args[2][0]).to.equal('a')
-    expect(directiveBind.args[3][0]).to.equal('a')
+    expect(directiveBind.calls.argsFor(0)[0]).toBe('b')
+    expect(directiveBind.calls.argsFor(1)[0]).toBe('b')
+    expect(directiveBind.calls.argsFor(2)[0]).toBe('a')
+    expect(directiveBind.calls.argsFor(3)[0]).toBe('a')
   })
 
   it('v-bind shorthand', function () {
@@ -128,14 +129,14 @@ describe('Compile', function () {
 
     var linker = compile(el, Vue.options)
     linker(vm, el)
-    expect(bindDirSpy.callCount).to.equal(3)
+    expect(bindDirSpy.calls.count()).toBe(3)
 
     expects.forEach(function (e, i) {
-      var args = bindDirSpy.getCall(i).args
+      var args = bindDirSpy.calls.argsFor(i)
       for (var key in e) {
-        expect(args[0][key]).to.equal(e[key])
+        expect(args[0][key]).toBe(e[key])
       }
-      expect(args[1]).to.equal(el)
+      expect(args[1]).toBe(el)
     })
   })
 
@@ -144,13 +145,13 @@ describe('Compile', function () {
     el = el.firstChild
     var linker = compile(el, Vue.options)
     linker(vm, el)
-    expect(bindDirSpy.callCount).to.equal(1)
-    var args = bindDirSpy.getCall(0).args
-    expect(args[0].name).to.equal('on')
-    expect(args[0].expression).to.equal('a++')
-    expect(args[0].arg).to.equal('click')
-    expect(args[0].def).to.equal(publicDirectives.on)
-    expect(args[1]).to.equal(el)
+    expect(bindDirSpy.calls.count()).toBe(1)
+    var args = bindDirSpy.calls.argsFor(0)
+    expect(args[0].name).toBe('on')
+    expect(args[0].expression).toBe('a++')
+    expect(args[0].arg).toBe('click')
+    expect(args[0].def).toBe(publicDirectives.on)
+    expect(args[1]).toBe(el)
   })
 
   it('text interpolation', function () {
@@ -160,13 +161,13 @@ describe('Compile', function () {
     var linker = compile(el, Vue.options)
     linker(vm, el)
     // expect 1 call because one-time bindings do not generate a directive.
-    expect(bindDirSpy.callCount).to.equal(2)
-    var args = bindDirSpy.getCall(0).args
-    expect(args[0].name).to.equal('text')
-    expect(args[0].expression).to.equal('a')
-    expect(args[0].def).to.equal(def)
+    expect(bindDirSpy.calls.count()).toBe(2)
+    var args = bindDirSpy.calls.argsFor(0)
+    expect(args[0].name).toBe('text')
+    expect(args[0].expression).toBe('a')
+    expect(args[0].def).toBe(def)
     // bind 被spy替代了。所以不会翻译为最终的结果
-    expect(el.innerHTML).to.equal('  and  ')
+    expect(el.innerHTML).toContain(' and ')
   })
 
   it('text interpolation, adjacent nodes', function () {
@@ -178,13 +179,13 @@ describe('Compile', function () {
     var linker = compile(el, Vue.options)
     linker(vm, el)
     // expect 1 call because one-time bindings do not generate a directive.
-    expect(bindDirSpy.callCount).to.equal(2)
-    var args = bindDirSpy.getCall(0).args
-    expect(args[0].name).to.equal('text')
-    expect(args[0].expression).to.equal('a')
-    expect(args[0].def).to.equal(def)
+    expect(bindDirSpy.calls.count()).toBe(2)
+    var args = bindDirSpy.calls.argsFor(0)
+    expect(args[0].name).toBe('text')
+    expect(args[0].expression).toBe('a')
+    expect(args[0].def).toBe(def)
     // bind 被spy替代了。所以不会翻译为最终的结果
-    expect(el.innerHTML).to.equal('  and  ')
+    expect(el.innerHTML).toContain('  and  ')
   })
 
   it('adjacent text nodes with no interpolation', function () {
@@ -193,7 +194,7 @@ describe('Compile', function () {
     el.appendChild(document.createTextNode('c'))
     var linker = compile(el, Vue.options)
     linker(vm, el)
-    expect(el.innerHTML).to.equal('abc')
+    expect(el.innerHTML).toBe('abc')
   })
 
   it('inline html', function () {
@@ -202,13 +203,13 @@ describe('Compile', function () {
     var htmlDef = Vue.options.directives.html
     var linker = compile(el, Vue.options)
     linker(vm, el)
-    expect(bindDirSpy.callCount).to.equal(2)
-    var htmlArgs = bindDirSpy.getCall(0).args
-    expect(htmlArgs[0].name).to.equal('html')
-    expect(htmlArgs[0].expression).to.equal('html')
-    expect(htmlArgs[0].def).to.equal(htmlDef)
+    expect(bindDirSpy.calls.count()).toBe(2)
+    var htmlArgs = bindDirSpy.calls.argsFor(0)
+    expect(htmlArgs[0].name).toBe('html')
+    expect(htmlArgs[0].expression).toBe('html')
+    expect(htmlArgs[0].def).toBe(htmlDef)
     // bind 被spy替代了。所以不会翻译为最终的结果
-    expect(el.innerHTML).to.equal('<!--v-html--> <!--v-html-->')
+    expect(el.innerHTML).toBe('<!--v-html--> <!--v-html-->')
   })
 
   it('terminal directives', function () {
@@ -220,12 +221,12 @@ describe('Compile', function () {
     linker(vm, el)
     // expect 1 call because terminal should return early and let
     // the directive handle the rest.
-    expect(bindDirSpy.callCount).to.equal(1)
-    var args = bindDirSpy.getCall(0).args
-    expect(args[0].name).to.equal('for')
-    expect(args[0].expression).to.equal('item in items')
-    expect(args[0].def).to.equal(def)
-    expect(args[1]).to.equal(el.firstChild)
+    expect(bindDirSpy.calls.count()).toBe(1)
+    var args = bindDirSpy.calls.argsFor(0)
+    expect(args[0].name).toBe('for')
+    expect(args[0].expression).toBe('item in items')
+    expect(args[0].def).toBe(def)
+    expect(args[1]).toBe(el.firstChild)
   })
 
   it('custom terminal directives', function () {
@@ -239,15 +240,15 @@ describe('Compile', function () {
     el.innerHTML = '<div v-term:arg1.modifier1.modifier2="foo"></div>'
     var linker = compile(el, options)
     linker(vm, el)
-    expect(bindDirSpy.callCount).to.equal(1)
-    var args = bindDirSpy.getCall(0).args
-    expect(args[0].name).to.equal('term')
-    expect(args[0].expression).to.equal('foo')
-    expect(args[0].attr).to.equal('v-term:arg1.modifier1.modifier2')
-    expect(args[0].arg).to.equal('arg1')
-    expect(args[0].modifiers.modifier1).to.equal(true)
-    expect(args[0].modifiers.modifier2).to.equal(true)
-    expect(args[0].def).to.equal(defTerminal)
+    expect(bindDirSpy.calls.count()).toBe(1)
+    var args = bindDirSpy.calls.argsFor(0)
+    expect(args[0].name).toBe('term')
+    expect(args[0].expression).toBe('foo')
+    expect(args[0].attr).toBe('v-term:arg1.modifier1.modifier2')
+    expect(args[0].arg).toBe('arg1')
+    expect(args[0].modifiers.modifier1).toBe(true)
+    expect(args[0].modifiers.modifier2).toBe(true)
+    expect(args[0].def).toBe(defTerminal)
   })
 
   it('custom terminal directives priority', function () {
@@ -261,13 +262,13 @@ describe('Compile', function () {
     el.innerHTML = '<div v-term:arg1 v-if="ok"></div>'
     var linker = compile(el, options)
     linker(vm, el)
-    expect(bindDirSpy.callCount).to.equal(1)
-    var args = bindDirSpy.getCall(0).args
-    expect(args[0].name).to.equal('term')
-    expect(args[0].expression).to.equal('')
-    expect(args[0].attr).to.equal('v-term:arg1')
-    expect(args[0].arg).to.equal('arg1')
-    expect(args[0].def).to.equal(defTerminal)
+    expect(bindDirSpy.calls.count()).toBe(1)
+    var args = bindDirSpy.calls.argsFor(0)
+    expect(args[0].name).toBe('term')
+    expect(args[0].expression).toBe('')
+    expect(args[0].attr).toBe('v-term:arg1')
+    expect(args[0].arg).toBe('arg1')
+    expect(args[0].def).toBe(defTerminal)
   })
 
   it('DocumentFragment', function () {
@@ -281,25 +282,25 @@ describe('Compile', function () {
     vm.b = 'B'
     var linker = compile(frag, Vue.options)
     linker(vm, frag)
-    expect(el.innerHTML).to.equal(' ')
-    expect(el2.innerHTML).to.equal(' ')
+    expect(el.innerHTML).toBe(' ')
+    expect(el2.innerHTML).toBe(' ')
   })
 
   it('partial compilation', function () {
     el.innerHTML = '<div v-bind:test="abc">{{bcd}}<p v-show="ok"></p></div>'
     var linker = compile(el, Vue.options, true)
     var decompile = linker(vm, el)
-    expect(vm._directives.length).to.equal(3)
+    expect(vm._directives.length).toBe(3)
     decompile()
-    expect(directiveTeardown.callCount).to.equal(3)
-    expect(vm._directives.length).to.equal(0)
+    expect(directiveTeardown.calls.count()).toBe(3)
+    expect(vm._directives.length).toBe(0)
   })
 
   it('skip script tags', function () {
     el.innerHTML = '<script type="x/template">{{test}}</script>'
     var linker = compile(el, Vue.options)
     linker(vm, el)
-    expect(bindDirSpy.callCount).to.equal(0)
+    expect(bindDirSpy.calls.count()).toBe(0)
   })
 
   it('attribute interpolation', function () {
@@ -311,8 +312,8 @@ describe('Compile', function () {
         c: 'ccc'
       }
     })
-    expect(el.firstChild.id).to.equal('aaa')
-    expect(el.firstChild.className).to.equal('b bla-ccc d')
+    expect(el.firstChild.id).toBe('aaa')
+    expect(el.firstChild.className).toBe('b bla-ccc d')
   })
 
   it('attribute interpolation: special cases', function () {
@@ -325,7 +326,13 @@ describe('Compile', function () {
         c: 'UTF-8'
       }
     })
-    expect(el.innerHTML).to.equal('<label for="aaa" data-test="bbb"></label><form accept-charset="UTF-8"></form>')
+
+    // compatible with ie8
+    if (_.isIE8) {
+      expect(el.innerHTML.replace('\r\n', '').toLowerCase()).toBe('<label for=aaa data-test="bbb"></label><form accept-charset=utf-8></form>')
+    } else {
+      expect(el.innerHTML).toBe('<label for="aaa" data-test="bbb"></label><form accept-charset="UTF-8"></form>')
+    }
   })
 
   it('attribute interpolation: warn invalid', function () {
@@ -336,8 +343,8 @@ describe('Compile', function () {
         a: '123'
       }
     })
-    expect(el.innerHTML).to.equal('<div></div>')
-    expect(_.warn.msg).to.include('attribute interpolation is not allowed in Vue.js directives')
+    expect(el.innerHTML.toLowerCase()).toBe('<div></div>')
+    expect(_.warn.msg).toContain('attribute interpolation is not allowed in Vue.js directives')
   })
 
   it('attribute interpolation: warn mixed usage with v-bind', function () {
@@ -348,7 +355,7 @@ describe('Compile', function () {
         a: 'foo'
       }
     })
-    expect(_.warn.msg).to.include('Do not mix mustache interpolation and v-bind')
+    expect(_.warn.msg).toContain('Do not mix mustache interpolation and v-bind')
   })
 
   it('should compile custom terminal directive wihtout loop', function () {
@@ -374,6 +381,6 @@ describe('Compile', function () {
         }
       }
     })
-    expect(el.textContent).to.equal('hello world')
+    expect(textContent(el)).toBe('hello world')
   })
 })

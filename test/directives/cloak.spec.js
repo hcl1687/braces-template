@@ -6,7 +6,7 @@ describe('v-cloak', function () {
     var el = document.createElement('div')
     el.setAttribute('v-cloak', '')
     compile(el, Vue.options)
-    expect(el.hasAttribute('v-cloak')).to.equal(true)
+    expect(el.hasAttribute('v-cloak')).toBe(true)
   })
 
   it('should remove after compile', function () {
@@ -15,6 +15,6 @@ describe('v-cloak', function () {
     new Vue({
       el: el
     })
-    expect(el.hasAttribute('v-cloak')).to.equal(false)
+    expect(el.hasAttribute('v-cloak')).toBe(false)
   })
 })

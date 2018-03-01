@@ -7,9 +7,9 @@ describe('Directive', function () {
     el = document.createElement('div')
     def = {
       params: ['foo', 'keBab'],
-      bind: sinon.spy(),
-      update: sinon.spy(),
-      unbind: sinon.spy()
+      bind: jasmine.createSpy('bind'),
+      update: jasmine.createSpy('update'),
+      unbind: jasmine.createSpy('unbind')
     }
     vm = new Vue({
       data: {
@@ -37,20 +37,20 @@ describe('Directive', function () {
     }, vm, el)
     d._bind()
     // properties
-    expect(d.el).to.equal(el)
-    expect(d.name).to.equal('test')
-    expect(d.vm).to.equal(vm)
-    expect(d.expression).to.equal('a')
-    expect(d.literal).to.equal(false)
+    expect(d.el).toBe(el)
+    expect(d.name).toBe('test')
+    expect(d.vm).toBe(vm)
+    expect(d.expression).toBe('a')
+    expect(d.literal).toBe(false)
     // init calls
-    expect(def.bind.called).to.equal(true)
-    expect(def.update.called).to.equal(true)
-    expect(def.update.calledWith(1)).to.be.true
-    expect(d._bound).to.equal(true)
+    expect(def.bind).toHaveBeenCalled()
+    expect(def.update).toHaveBeenCalled()
+    expect(def.update).toHaveBeenCalledWith(1)
+    expect(d._bound).toBe(true)
     // teardown
     d._teardown()
-    expect(def.unbind.called).to.equal(true)
-    expect(d._bound).to.equal(false)
+    expect(def.unbind).toHaveBeenCalled()
+    expect(d._bound).toBe(false)
   })
 
   it('literal', function () {
@@ -64,9 +64,9 @@ describe('Directive', function () {
       }
     }, vm, el)
     d._bind()
-    expect(d.expression).to.equal('a')
-    expect(d.bind.called).to.equal(true)
-    expect(d.update.calledWith('a')).to.be.true
+    expect(d.expression).toBe('a')
+    expect(d.bind).toHaveBeenCalled()
+    expect(d.update).toHaveBeenCalledWith('a')
   })
 
   it('function def', () => {
@@ -76,8 +76,8 @@ describe('Directive', function () {
       def: def.update
     }, vm, el)
     d._bind()
-    expect(d.update).to.equal(def.update)
-    expect(def.update.called).to.be.true
+    expect(d.update).toBe(def.update)
+    expect(def.update).toHaveBeenCalled()
   })
 
   it('static params', () => {
@@ -89,8 +89,8 @@ describe('Directive', function () {
       expression: 'a'
     }, vm, el)
     d._bind()
-    expect(d.params.foo).to.equal('hello')
-    expect(d.params.keBab).to.equal('yo')
+    expect(d.params.foo).toBe('hello')
+    expect(d.params.keBab).toBe('yo')
   })
 
   it('dynamic params', () => {
@@ -102,8 +102,8 @@ describe('Directive', function () {
       expression: 'a'
     }, vm, el)
     d._bind()
-    expect(d.params.foo).to.equal(vm.a)
-    expect(d.params.keBab).to.equal(123)
+    expect(d.params.foo).toBe(vm.a)
+    expect(d.params.keBab).toBe(123)
   })
 
   it('dynamic params another test', () => {
@@ -127,11 +127,10 @@ describe('Directive', function () {
       }
     })
 
-    expect(vm._directives.length).to.equal(3)
+    expect(vm._directives.length).toBe(3)
     var test = vm._directives.filter(item => item.name === 'test')
     test = test.length > 0 ? test[0] : null
-    expect(test).to.be.an('object')
-    expect(test.params.foo).to.equal(vm.a)
-    expect(test.params.keBab).to.equal(123)
+    expect(test.params.foo).toBe(vm.a)
+    expect(test.params.keBab).toBe(123)
   })
 })

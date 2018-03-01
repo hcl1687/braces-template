@@ -1,8 +1,5 @@
 import { compileRegex } from './parsers/text'
 
-let delimiters = ['{{', '}}']
-let unsafeDelimiters = ['{{{', '}}}']
-
 const config = {
 
   /**
@@ -75,30 +72,8 @@ const config = {
 
   _maxUpdateCount: 100,
 
-  /**
-   * Interpolation delimiters. Changing these would trigger
-   * the text parser to re-compile the regular expressions.
-   *
-   * @type {Array<String>}
-   */
-
-  get delimiters () {
-    return delimiters
-  },
-
-  set delimiters (val) {
-    delimiters = val
-    compileRegex()
-  },
-
-  get unsafeDelimiters () {
-    return unsafeDelimiters
-  },
-
-  set unsafeDelimiters (val) {
-    unsafeDelimiters = val
-    compileRegex()
-  }
+  delimiters: ['{{', '}}'],
+  unsafeDelimiters: ['{{{', '}}}']
 }
 
 export default config

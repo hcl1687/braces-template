@@ -1,4 +1,4 @@
-import { on, off, warn } from '../../util/index'
+import { on, off, warn, isIE8 } from '../../util/index'
 import { ON } from '../priorities'
 
 // keyCode aliases
@@ -58,10 +58,10 @@ function preventFilter (handler) {
   }
 }
 
-function selfFilter (handler) {
+function selfFilter (handler, el) {
   return function selfHandler (e) {
     var target = e.target || e.srcElement
-    var currentTarget = e.currentTarget || this
+    var currentTarget = e.currentTarget || el
     if (target === currentTarget) {
       return handler.call(this, e)
     }
@@ -81,7 +81,20 @@ export default {
       this.arg !== 'load'
     ) {
       var self = this
+      var oldHandler = this.handler
+      this.handler = function (e) {
+        oldHandler.call(self, e)
+      }
       this.iframeBind = function () {
+        // on support iframe bind in ie8
+        if (isIE8) {
+          process.env.NODE_ENV !== 'production' && warn(
+            'v-on:' + this.arg + '="' +
+            this.expression + '" no support iframe bind in ie8 ',
+            this.vm
+          )
+          return
+        }
         on(
           self.el.contentWindow,
           self.arg,
@@ -97,7 +110,7 @@ export default {
     // stub a noop for v-on with no value,
     // e.g. @mousedown.prevent
     if (!this.descriptor.raw) {
-      handler = function () {}
+      handler = function _handler() {}
     }
 
     if (typeof handler !== 'function') {
@@ -118,7 +131,7 @@ export default {
       handler = preventFilter(handler)
     }
     if (this.modifiers.self) {
-      handler = selfFilter(handler)
+      handler = selfFilter(handler, this.el)
     }
     // key filter
     var keys = Object.keys(this.modifiers)
@@ -138,6 +151,14 @@ export default {
     if (this.iframeBind) {
       this.iframeBind()
     } else {
+      if (isIE8 && this.modifiers.capture) {
+        // no support capture mode in ie8
+        process.env.NODE_ENV !== 'production' && warn(
+          'v-on:' + this.arg + '="' +
+          this.expression + '" no support capture mode in ie8 ',
+          this.vm
+        )
+      }
       on(
         this.el,
         this.arg,

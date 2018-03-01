@@ -1,4 +1,4 @@
-import { warn, camelize, setClass } from '../../util/index'
+import { warn, camelize, setClass, isIE8 } from '../../util/index'
 import { BIND } from '../priorities'
 
 // xlink
@@ -107,6 +107,16 @@ export default {
       if (attr === 'class') {
         setClass(el, value)
       } if (xlinkRE.test(attr)) {
+        /* istanbul ignore if */
+        if (process.env.NODE_ENV !== 'production') {
+          // no support xlink bind in ie8
+          if (isIE8) {
+            warn(
+              raw + ' no support xlink bind in ie8.',
+              this.vm
+            )
+          }
+        }
         el.setAttributeNS(xlinkNS, attr, value === true ? '' : value)
       } else {
         el.setAttribute(attr, value === true ? '' : value)

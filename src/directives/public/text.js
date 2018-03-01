@@ -1,11 +1,13 @@
-import { _toString } from '../../util/index'
+import { _toString, isIE8 } from '../../util/index'
 
 export default {
 
   bind () {
     this.attr = this.el.nodeType === 3
       ? 'data'
-      : 'textContent'
+      : isIE8 
+        ? 'innerText'
+        : 'textContent'
   },
 
   update (value) {

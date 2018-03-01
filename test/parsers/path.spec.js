@@ -4,7 +4,7 @@ var _ = require('src/util')
 function assertPath (str, expected) {
   var path = Path.parsePath(str)
   var res = pathMatch(path, expected)
-  expect(res).to.equal(true)
+  expect(res).toBe(true)
   if (!res) {
     console.log('Path parse failed: ', str, path)
   }
@@ -12,7 +12,7 @@ function assertPath (str, expected) {
 
 function assertInvalidPath (str) {
   var path = Path.parsePath(str)
-  expect(path).to.equal(undefined)
+  expect(path).toBe(undefined)
 }
 
 function pathMatch (a, b) {
@@ -79,7 +79,7 @@ describe('Path Parser', function () {
   it('caching', function () {
     var path1 = Path.parsePath('a.b.c')
     var path2 = Path.parsePath('a.b.c')
-    expect(path1).to.equal(path2)
+    expect(path1).toBe(path2)
   })
 
   it('get', function () {
@@ -89,8 +89,8 @@ describe('Path Parser', function () {
         'b"b"c': [12345]
       }
     }
-    expect(Path.getPath(obj, path)).to.equal(12345)
-    expect(Path.getPath(obj, 'a.c')).to.equal(undefined)
+    expect(Path.getPath(obj, path)).toBe(12345)
+    expect(Path.getPath(obj, 'a.c')).toBe(undefined)
   })
 
   it('get dynamic', function () {
@@ -101,6 +101,6 @@ describe('Path Parser', function () {
       },
       b: 'key'
     }
-    expect(Path.getPath(obj, path)).to.equal(123)
+    expect(Path.getPath(obj, path)).toBe(123)
   })
 })

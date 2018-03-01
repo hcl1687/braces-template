@@ -5,8 +5,7 @@ export const hasProto = '__proto__' in {}
 
 // Browser environment sniffing
 export const inBrowser =
-  typeof window !== 'undefined' &&
-  Object.prototype.toString.call(window) !== '[object Object]'
+  typeof window !== 'undefined'// && Object.prototype.toString.call(window) !== '[object Object]'
 
 // detect devtools
 export const devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__
@@ -14,6 +13,7 @@ export const devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__
 // UA sniffing for working around browser-specific quirks
 const UA = inBrowser && window.navigator.userAgent.toLowerCase()
 export const isIE = UA && UA.indexOf('trident') > 0
+export const isIE8 = UA && UA.indexOf('msie 8.0') > 0
 export const isIE9 = UA && UA.indexOf('msie 9.0') > 0
 export const isAndroid = UA && UA.indexOf('android') > 0
 export const isIos = UA && /(iphone|ipad|ipod|ios)/i.test(UA)

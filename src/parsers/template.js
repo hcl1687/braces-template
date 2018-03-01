@@ -3,7 +3,11 @@ import {
   inBrowser,
   trimNode,
   isTemplate,
-  isFragment
+  isFragment,
+  isIE8,
+  textContent,
+  cloneDomNode,
+  innerHTML
 } from '../util/index'
 
 const templateCache = new Cache(1000)
@@ -116,7 +120,7 @@ function stringToFragment (templateString, raw) {
     var suffix = wrap[2]
     var node = document.createElement('div')
 
-    node.innerHTML = prefix + templateString + suffix
+    innerHTML(node, prefix + templateString + suffix)
     while (depth--) {
       node = node.lastChild
     }
@@ -154,7 +158,7 @@ function nodeToFragment (node) {
   }
   // script template
   if (node.tagName === 'SCRIPT') {
-    return stringToFragment(node.textContent)
+    return stringToFragment(textContent(node))
   }
   // normal node, clone it to avoid mutating the original
   var clonedNode = cloneNode(node)
@@ -176,7 +180,7 @@ var hasBrokenTemplate = (function () {
   if (inBrowser) {
     var a = document.createElement('div')
     a.innerHTML = '<template>1</template>'
-    return !a.cloneNode(true).firstChild.innerHTML
+    return !cloneDomNode(a, true).firstChild.innerHTML
   } else {
     return false
   }
@@ -188,7 +192,7 @@ var hasTextareaCloneBug = (function () {
   if (inBrowser) {
     var t = document.createElement('textarea')
     t.placeholder = 't'
-    return t.cloneNode(true).value === 't'
+    return cloneDomNode(t, true).value === 't'
   } else {
     return false
   }
@@ -205,11 +209,12 @@ var hasTextareaCloneBug = (function () {
  */
 
 export function cloneNode (node) {
+  // 
   /* istanbul ignore if */
   if (!node.querySelectorAll) {
     return node.cloneNode()
   }
-  var res = node.cloneNode(true)
+  var res = cloneDomNode(node, true)
   var i, original, cloned
   /* istanbul ignore if */
   if (hasBrokenTemplate) {

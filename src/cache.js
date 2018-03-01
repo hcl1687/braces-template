@@ -10,7 +10,6 @@
  * @param {Number} limit
  * @constructor
  */
-
 export default function Cache (limit) {
   this.size = 0
   this.limit = limit

@@ -5,7 +5,8 @@ import {
   replace,
   remove,
   _toString,
-  toArray
+  toArray,
+  innerHTML
 } from '../../util/index'
 
 export default {
@@ -27,7 +28,7 @@ export default {
     if (this.nodes) {
       this.swap(value)
     } else {
-      this.el.innerHTML = value
+      innerHTML(this.el, value)
     }
   },
 

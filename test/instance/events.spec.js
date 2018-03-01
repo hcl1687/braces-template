@@ -1,11 +1,12 @@
 var Vue = require('src')
 var _ = require('src/util')
+var textContent = _.textContent
 
 describe('Instance Events', function () {
   var spy, spy2
   beforeEach(function () {
-    spy = sinon.spy()
-    spy2 = sinon.spy()
+    spy = jasmine.createSpy()
+    spy2 = jasmine.createSpy()
   })
 
   describe('option events', function () {
@@ -17,9 +18,9 @@ describe('Instance Events', function () {
         }
       })
       vm.$emit('test', 123)
-      expect(spy.calledWith(123)).to.equal(true)
+      expect(spy).toHaveBeenCalledWith(123)
       vm.$emit('test2')
-      expect(spy.callCount).to.equal(3)
+      expect(spy.calls.count()).toBe(3)
     })
 
     it('hook events', function () {
@@ -28,7 +29,7 @@ describe('Instance Events', function () {
           'hook:created': spy
         }
       })
-      expect(spy.called).to.equal(true)
+      expect(spy).toHaveBeenCalled()
     })
 
     it('method name strings', function () {
@@ -42,9 +43,9 @@ describe('Instance Events', function () {
         }
       })
       vm.$emit('test', 123)
-      expect(spy.calledWith(123)).to.equal(true)
+      expect(spy).toHaveBeenCalledWith(123)
       vm.$emit('test2')
-      expect(_.warn.msg).to.includes('Unknown method')
+      expect(_.warn.msg).toContain('Unknown method')
     })
   })
 
@@ -59,75 +60,75 @@ describe('Instance Events', function () {
           spy()
         }
       })
-      expect(ctx).to.equal(vm)
-      expect(spy.called).to.equal(true)
+      expect(ctx).toBe(vm)
+      expect(spy).toHaveBeenCalled()
     })
 
     it('beforeDestroy', function () {
       var vm = new Vue({
         beforeDestroy: function () {
-          expect(this).to.equal(vm)
-          expect(this._isDestroyed).to.equal(false)
+          expect(this).toBe(vm)
+          expect(this._isDestroyed).toBe(false)
           spy()
         }
       })
       vm.$destroy()
-      expect(spy.called).to.equal(true)
+      expect(spy).toHaveBeenCalled()
     })
 
     it('destroyed', function () {
       var vm = new Vue({
         destroyed: function () {
-          expect(this).to.equal(vm)
-          expect(this._isDestroyed).to.equal(true)
+          expect(this).toBe(vm)
+          expect(this._isDestroyed).toBe(true)
           spy()
         }
       })
       vm.$destroy()
-      expect(spy.called).to.equal(true)
+      expect(spy).toHaveBeenCalled()
     })
 
     it('beforeCompile', function () {
       var vm = new Vue({
         data: { a: 1 },
         beforeCompile: function () {
-          expect(this).to.equal(vm)
-          expect(this.$el).to.equal(el)
-          expect(this.$el.textContent).to.equal('{{a}}')
+          expect(this).toBe(vm)
+          expect(this.$el).toBe(el)
+          expect(textContent(this.$el)).toBe('{{a}}')
           spy()
         }
       })
       var el = document.createElement('div')
-      el.textContent = '{{a}}'
+      textContent(el, '{{a}}')
       vm.$mount(el)
-      expect(spy.called).to.equal(true)
+      expect(spy).toHaveBeenCalled()
     })
 
     it('compiled', function () {
       var vm = new Vue({
         data: { a: 1 },
         compiled: function () {
-          expect(this.$el).to.equal(el)
-          expect(this.$el.textContent).to.equal('1')
+          expect(this.$el).toBe(el)
+          expect(textContent(this.$el)).toBe('1')
           spy()
         }
       })
       var el = document.createElement('div')
-      el.textContent = '{{a}}'
+      textContent(el, '{{a}}')
       vm.$mount(el)
-      expect(spy.called).to.equal(true)
+      expect(spy).toHaveBeenCalled()
     })
 
     it('ready', function () {
       var vm = new Vue({
         ready: spy
       })
-      expect(spy.called).not.to.equal(true)
+      expect(spy).not.toHaveBeenCalled()
       var el = document.createElement('div')
       vm.$mount(el)
-      expect(spy.called).not.to.equal(true)
+      expect(spy).not.toHaveBeenCalled()
       vm.$appendTo(document.body)
-      expect(spy.called).to.equal(true)
+      expect(spy).toHaveBeenCalled()
       vm.$remove()
       // try mounting on something already in dom
       el = document.createElement('div')
@@ -136,7 +137,7 @@ describe('Instance Events', function () {
         el: el,
         ready: spy2
       })
-      expect(spy2.called).to.equal(true)
+      expect(spy2).toHaveBeenCalled()
       vm.$remove()
     })
 
@@ -149,9 +150,9 @@ describe('Instance Events', function () {
           attached: spy,
           detached: spy2
         })
-        expect(spy.callCount).to.equal(1)
+        expect(spy.calls.count()).toBe(1)
         parentVm.$remove()
-        expect(spy2.callCount).to.equal(1)
+        expect(spy2.calls.count()).toBe(1)
       })
 
       it('create then attach', function () {
@@ -162,9 +163,9 @@ describe('Instance Events', function () {
           detached: spy2
         })
         parentVm.$appendTo(document.body)
-        expect(spy.callCount).to.equal(1)
+        expect(spy.calls.count()).toBe(1)
         parentVm.$remove()
-        expect(spy2.callCount).to.equal(1)
+        expect(spy2.calls.count()).toBe(1)
       })
     })
   })

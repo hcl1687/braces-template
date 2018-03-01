@@ -55,7 +55,7 @@ export default function Directive (descriptor, vm, el, scope, frag) {
   this._scope = scope
   this._frag = frag
   // store directives on node in dev mode
-  if (process.env.NODE_ENV !== 'production' && this.el) {
+  if (process.env.NODE_ENV !== 'production' && this.el && this.el.nodeType !== 3) {
     this.el._vue_directives = this.el._vue_directives || []
     this.el._vue_directives.push(this)
   }
@@ -282,7 +282,7 @@ Directive.prototype._teardown = function () {
       }
     }
 
-    if (process.env.NODE_ENV !== 'production' && this.el) {
+    if (process.env.NODE_ENV !== 'production' && this.el && this.el.nodeType !== 3) {
       arrRemove(this.el._vue_directives, this)
     }
     this.vm = this.el = this._listeners = null

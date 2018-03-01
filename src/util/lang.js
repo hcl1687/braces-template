@@ -221,7 +221,12 @@ export function isObject (obj) {
 var toString = Object.prototype.toString
 var OBJECT_STRING = '[object Object]'
 export function isPlainObject (obj) {
-  return toString.call(obj) === OBJECT_STRING
+  // in ie8
+  // toString.call(null) === OBJECT_STRING
+  // toString.call(undefined) === OBJECT_STRING
+  // toString.call(Window) === OBJECT_STRING
+  return toString.call(obj) === OBJECT_STRING && obj !== null && obj !== undefined
+    && obj !== window
 }
 
 /**

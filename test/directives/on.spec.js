@@ -2,7 +2,17 @@ var _ = require('src/util')
 var Vue = require('src')
 
 function trigger (target, event, process) {
-  var e = document.createEvent('HTMLEvents')
+  var e
+  if (_.isIE8) {
+    e = document.createEventObject()
+    if (event === 'click') {
+      e.button = 1
+    }
+    if (process) process(e)
+    target.fireEvent('on' + event, e)
+    return e
+  }
+  e = document.createEvent('HTMLEvents')
   e.initEvent(event, true, true)
   if (process) process(e)
   target.dispatchEvent(e)
@@ -17,7 +27,7 @@ describe('v-on', function () {
 
   it('methods', function () {
     el.innerHTML = '<a v-on:click="test"></a>'
-    var spy = sinon.spy()
+    var spy = jasmine.createSpy()
     var vm = new Vue({
       el: el,
       data: {a: 1},
@@ -27,15 +37,15 @@ describe('v-on', function () {
     })
     var a = el.firstChild
     trigger(a, 'click')
-    expect(spy.callCount).to.equal(1)
+    expect(spy.calls.count()).toBe(1)
     vm.$destroy()
     trigger(a, 'click')
-    expect(spy.callCount).to.equal(1)
+    expect(spy.calls.count()).toBe(1)
   })
 
   it('shorthand', function () {
     el.innerHTML = '<a @click="test"></a>'
-    var spy = sinon.spy()
+    var spy = jasmine.createSpy()
     var vm = new Vue({
       el: el,
       data: {a: 1},
@@ -45,10 +55,10 @@ describe('v-on', function () {
     })
     var a = el.firstChild
     trigger(a, 'click')
-    expect(spy.callCount).to.equal(1)
+    expect(spy.calls.count()).toBe(1)
     vm.$destroy()
     trigger(a, 'click')
-    expect(spy.callCount).to.equal(1)
+    expect(spy.calls.count()).toBe(1)
   })
 
   it('with key modifier', function (done) {
@@ -67,7 +77,7 @@ describe('v-on', function () {
       e.keyCode = 13
     })
     _.nextTick(function () {
-      expect(vm.b).to.equal(2)
+      expect(vm.b).toBe(2)
       done()
     })
   })
@@ -88,7 +98,7 @@ describe('v-on', function () {
       e.keyCode = 46
     })
     _.nextTick(function () {
-      expect(vm.b).to.equal(2)
+      expect(vm.b).toBe(2)
       done()
     })
   })
@@ -109,7 +119,7 @@ describe('v-on', function () {
       e.keyCode = 8
     })
     _.nextTick(function () {
-      expect(vm.b).to.equal(2)
+      expect(vm.b).toBe(2)
       done()
     })
   })
@@ -130,7 +140,7 @@ describe('v-on', function () {
       e.keyCode = 13
     })
     _.nextTick(function () {
-      expect(vm.b).to.equal(2)
+      expect(vm.b).toBe(2)
       done()
     })
   })
@@ -151,14 +161,14 @@ describe('v-on', function () {
       e.keyCode = 65
     })
     _.nextTick(function () {
-      expect(vm.b).to.equal(2)
+      expect(vm.b).toBe(2)
       done()
     })
   })
 
   it('stop modifier', function () {
-    var outer = sinon.spy()
-    var inner = sinon.spy()
+    var outer = jasmine.createSpy('outer')
+    var inner = jasmine.createSpy('inner')
     el.innerHTML = '<div @click="outer"><div class="inner" @click.stop="inner"></div></div>'
     new Vue({
       el: el,
@@ -168,8 +178,8 @@ describe('v-on', function () {
       }
     })
     trigger(el.querySelector('.inner'), 'click')
-    expect(inner.called).to.equal(true)
-    expect(outer.called).to.equal(false)
+    expect(inner).toHaveBeenCalled()
+    expect(outer).not.toHaveBeenCalled()
   })
 
   it('prevent modifier', function () {
@@ -182,12 +192,16 @@ describe('v-on', function () {
           // store the prevented state now:
           // IE will reset the `defaultPrevented` flag
           // once the event handler call stack is done!
-          prevented = e.defaultPrevented
+          if (_.isIE8) {
+            prevented = !e.returnValue
+          } else {
+            prevented = e.defaultPrevented
+          }
         }
       }
     })
     trigger(el.firstChild, 'click')
-    expect(prevented).to.equal(true)
+    expect(prevented).toBe(true)
   })
 
   it('prevent modifier with no value', function () {
@@ -197,13 +211,13 @@ describe('v-on', function () {
     })
     var hash = window.location.hash
     trigger(el.firstChild, 'click')
-    expect(window.location.hash).to.equal(hash)
+    expect(window.location.hash).toBe(hash)
   })
 
   it('capture modifier', function () {
     document.body.appendChild(el)
-    var outer = sinon.spy()
-    var inner = sinon.spy()
+    var outer = jasmine.createSpy('outer')
+    var inner = jasmine.createSpy('inner')
     el.innerHTML = '<div @click.capture.stop="outer"><div class="inner" @click="inner"></div></div>'
     new Vue({
       el: el,
@@ -212,14 +226,18 @@ describe('v-on', function () {
         inner: inner
       }
     })
-    trigger(el.querySelector('.inner'), 'click')
-    expect(outer.called).to.equal(true)
-    expect(inner.called).to.equal(false)
+    if (_.isIE8) {
+      expect(_.warn.msg).toContain('no support capture mode in ie8')
+    } else {
+      trigger(el.querySelector('.inner'), 'click')
+      expect(outer).toHaveBeenCalled()
+      expect(inner).not.toHaveBeenCalled()
+    }
     document.body.removeChild(el)
   })
 
   it('self modifier', function () {
-    var outer = sinon.spy()
+    var outer = jasmine.createSpy('outer')
     el.innerHTML = '<div class="outer" @click.self="outer"><div class="inner"></div></div>'
     new Vue({
       el: el,
@@ -228,13 +246,13 @@ describe('v-on', function () {
       }
     })
     trigger(el.querySelector('.inner'), 'click')
-    expect(outer.called).to.equal(false)
+    expect(outer).not.toHaveBeenCalled()
     trigger(el.querySelector('.outer'), 'click')
-    expect(outer.called).to.equal(true)
+    expect(outer).toHaveBeenCalled()
   })
 
   it('multiple modifiers working together', function () {
-    var outer = sinon.spy()
+    var outer = jasmine.createSpy('outer')
     var prevented
     el.innerHTML = '<div @keyup="outer"><input class="inner" @keyup.enter.stop.prevent="inner"></div></div>'
     new Vue({
@@ -242,15 +260,19 @@ describe('v-on', function () {
       methods: {
         outer: outer,
         inner: function (e) {
-          prevented = e.defaultPrevented
+          if (_.isIE8) {
+            prevented = !e.returnValue
+          } else {
+            prevented = e.defaultPrevented
+          }
         }
       }
     })
     trigger(el.querySelector('.inner'), 'keyup', function (e) {
       e.keyCode = 13
     })
-    expect(outer.called).to.equal(false)
-    expect(prevented).to.equal(true)
+    expect(outer).not.toHaveBeenCalled()
+    expect(prevented).toBe(true)
   })
 
   it('warn non-function values', function () {
@@ -259,14 +281,14 @@ describe('v-on', function () {
       el: el,
       data: { test: 123 }
     })
-    expect(_.warn.msg).to.include('expects a function value')
+    expect(_.warn.msg).toContain('expects a function value')
   })
 
   it('iframe', function () {
     // iframes only gets contentWindow when inserted
     // into the document
     document.body.appendChild(el)
-    var spy = sinon.spy()
+    var spy = jasmine.createSpy()
     el.innerHTML = '<iframe v-on:click="test"></iframe>'
     var vm = new Vue({
       el: el,
@@ -274,17 +296,23 @@ describe('v-on', function () {
         test: spy
       }
     })
+
     var iframeDoc = el.firstChild.contentDocument
-    trigger(iframeDoc, 'click')
-    expect(spy.callCount).to.equal(1)
-    vm.$destroy()
-    trigger(iframeDoc, 'click')
-    expect(spy.callCount).to.equal(1)
+    if (_.isIE8) {
+      expect(_.warn.msg).toContain('no support iframe bind in ie8')
+    } else {
+      trigger(iframeDoc, 'click')
+      expect(spy.calls.count()).toBe(1)
+      vm.$destroy()
+      trigger(iframeDoc, 'click')
+      expect(spy.calls.count()).toBe(1)
+    }
+
     document.body.removeChild(el)
   })
 
   it('passing $event', function () {
-    var test = sinon.spy()
+    var test = jasmine.createSpy()
     el.innerHTML = '<a v-on:click="test($event)"></a>'
     new Vue({
       el: el,
@@ -293,6 +321,6 @@ describe('v-on', function () {
       }
     })
     var e = trigger(el.firstChild, 'click')
-    expect(test.calledWith(e)).to.equal(true)
+    expect(test).toHaveBeenCalledWith(e)
   })
 })

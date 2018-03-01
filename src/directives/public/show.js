@@ -1,10 +1,10 @@
-import { getAttr } from '../../util/index'
+import { getAttr, nextElementSibling } from '../../util/index'
 
 export default {
 
   bind () {
     // check else block
-    var next = this.el.nextElementSibling
+    var next = nextElementSibling(this.el)
     if (next && getAttr(next, 'v-else') !== null) {
       this.elseEl = next
     }

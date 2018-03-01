@@ -3,61 +3,61 @@ var _ = require('src/util')
 describe('Util - Language Enhancement', function () {
   it('hasOwn', function () {
     var obj1 = { a: 1 }
-    expect(_.hasOwn(obj1, 'a')).to.equal(true)
+    expect(_.hasOwn(obj1, 'a')).toBe(true)
     var obj2 = Object.create(null)
     obj2.a = 2
-    expect(_.hasOwn(obj2, 'a')).to.equal(true)
+    expect(_.hasOwn(obj2, 'a')).toBe(true)
   })
 
   it('isLiteral', function () {
-    expect(_.isLiteral('123')).to.equal(true)
-    expect(_.isLiteral('12.3')).to.equal(true)
-    expect(_.isLiteral('true')).to.equal(true)
-    expect(_.isLiteral(' false ')).to.equal(true)
-    expect(_.isLiteral('"foo"')).to.equal(true)
-    expect(_.isLiteral(" 'foo' ")).to.equal(true)
-    expect(_.isLiteral('a.b.c')).to.equal(false)
-    expect(_.isLiteral('1 + 1')).to.equal(false)
+    expect(_.isLiteral('123')).toBe(true)
+    expect(_.isLiteral('12.3')).toBe(true)
+    expect(_.isLiteral('true')).toBe(true)
+    expect(_.isLiteral(' false ')).toBe(true)
+    expect(_.isLiteral('"foo"')).toBe(true)
+    expect(_.isLiteral(" 'foo' ")).toBe(true)
+    expect(_.isLiteral('a.b.c')).toBe(false)
+    expect(_.isLiteral('1 + 1')).toBe(false)
   })
 
   it('toString', function () {
-    expect(_._toString('foo')).to.equal('foo')
-    expect(_._toString(1.234)).to.equal('1.234')
-    expect(_._toString(null)).to.equal('')
-    expect(_._toString(undefined)).to.equal('')
+    expect(_._toString('foo')).toBe('foo')
+    expect(_._toString(1.234)).toBe('1.234')
+    expect(_._toString(null)).toBe('')
+    expect(_._toString(undefined)).toBe('')
   })
 
   it('toNumber', function () {
-    expect(_.toNumber('12')).to.equal(12)
-    expect(_.toNumber('1e5')).to.equal(1e5)
-    expect(_.toNumber('0x2F')).to.equal(0x2F)
-    expect(_.toNumber(null)).to.equal(null)
-    expect(_.toNumber(true)).to.equal(true)
-    expect(_.toNumber('hello')).to.equal('hello')
+    expect(_.toNumber('12')).toBe(12)
+    expect(_.toNumber('1e5')).toBe(1e5)
+    expect(_.toNumber('0x2F')).toBe(0x2F)
+    expect(_.toNumber(null)).toBe(null)
+    expect(_.toNumber(true)).toBe(true)
+    expect(_.toNumber('hello')).toBe('hello')
   })
 
   it('strip quotes', function () {
-    expect(_.stripQuotes('"123"')).to.equal('123')
-    expect(_.stripQuotes("'fff'")).to.equal('fff')
-    expect(_.stripQuotes("'fff")).to.equal("'fff")
+    expect(_.stripQuotes('"123"')).toBe('123')
+    expect(_.stripQuotes("'fff'")).toBe('fff')
+    expect(_.stripQuotes("'fff")).toBe("'fff")
   })
 
   it('camelize', function () {
-    expect(_.camelize('abc')).to.equal('abc')
-    expect(_.camelize('some-long-name')).to.equal('someLongName')
+    expect(_.camelize('abc')).toBe('abc')
+    expect(_.camelize('some-long-name')).toBe('someLongName')
   })
 
   it('hyphenate', function () {
-    expect(_.hyphenate('fooBar')).to.equal('foo-bar')
-    expect(_.hyphenate('a1BfC')).to.equal('a1-bf-c')
-    expect(_.hyphenate('already-With-Hyphen')).to.equal('already-with-hyphen')
+    expect(_.hyphenate('fooBar')).toBe('foo-bar')
+    expect(_.hyphenate('a1BfC')).toBe('a1-bf-c')
+    expect(_.hyphenate('already-With-Hyphen')).toBe('already-with-hyphen')
   })
 
   it('classify', function () {
-    expect(_.classify('abc')).to.equal('Abc')
-    expect(_.classify('foo-bar')).to.equal('FooBar')
-    expect(_.classify('foo_bar')).to.equal('FooBar')
-    expect(_.classify('foo/bar')).to.equal('FooBar')
+    expect(_.classify('abc')).toBe('Abc')
+    expect(_.classify('foo-bar')).toBe('FooBar')
+    expect(_.classify('foo_bar')).toBe('FooBar')
+    expect(_.classify('foo/bar')).toBe('FooBar')
   })
 
   it('bind', function () {
@@ -67,20 +67,20 @@ describe('Util - Language Enhancement', function () {
     var ctx = { a: 'ctx a ' }
     var bound = _.bind(original, ctx)
     var res = bound('arg a')
-    expect(res).to.equal('ctx a arg a')
+    expect(res).toBe('ctx a arg a')
   })
 
   it('toArray', function () {
     // should make a copy of original array
     var arr = [1, 2, 3]
     var res = _.toArray(arr)
-    expect(Array.isArray(res)).to.equal(true)
-    expect(res).not.to.equal(arr)
+    expect(Array.isArray(res)).toBe(true)
+    expect(res).not.toBe(arr)
 
     // should work on arguments
     ;(function () {
       var res = _.toArray(arguments)
-      expect(Array.isArray(res)).to.equal(true)
+      expect(Array.isArray(res)).toBe(true)
     })(1, 2, 3)
   })
 
@@ -88,39 +88,39 @@ describe('Util - Language Enhancement', function () {
     var from = {a: 1, b: 2}
     var to = {}
     var res = _.extend(to, from)
-    expect(to.a).to.equal(from.a)
-    expect(to.b).to.equal(from.b)
-    expect(res).to.equal(to)
+    expect(to.a).toBe(from.a)
+    expect(to.b).toBe(from.b)
+    expect(res).toBe(to)
   })
 
   it('isObject', function () {
-    expect(_.isObject({})).to.equal(true)
-    expect(_.isObject([])).to.equal(true)
-    expect(_.isObject(null)).to.equal(false)
-    expect(_.isObject(123)).to.equal(false)
-    expect(_.isObject(true)).to.equal(false)
-    expect(_.isObject('foo')).to.equal(false)
-    expect(_.isObject(undefined)).to.equal(false)
-    expect(_.isObject(function () {})).to.equal(false)
+    expect(_.isObject({})).toBe(true)
+    expect(_.isObject([])).toBe(true)
+    expect(_.isObject(null)).toBe(false)
+    expect(_.isObject(123)).toBe(false)
+    expect(_.isObject(true)).toBe(false)
+    expect(_.isObject('foo')).toBe(false)
+    expect(_.isObject(undefined)).toBe(false)
+    expect(_.isObject(function () {})).toBe(false)
   })
 
   it('isPlainObject', function () {
-    expect(_.isPlainObject({})).to.equal(true)
-    expect(_.isPlainObject([])).to.equal(false)
-    expect(_.isPlainObject(null)).to.equal(false)
-    expect(_.isPlainObject(null)).to.equal(false)
-    expect(_.isPlainObject(123)).to.equal(false)
-    expect(_.isPlainObject(true)).to.equal(false)
-    expect(_.isPlainObject('foo')).to.equal(false)
-    expect(_.isPlainObject(undefined)).to.equal(false)
-    expect(_.isPlainObject(function () {})).to.equal(false)
-    expect(_.isPlainObject(window)).to.equal(false)
+    expect(_.isPlainObject({})).toBe(true)
+    expect(_.isPlainObject([])).toBe(false)
+    expect(_.isPlainObject(null)).toBe(false)
+    expect(_.isPlainObject(null)).toBe(false)
+    expect(_.isPlainObject(123)).toBe(false)
+    expect(_.isPlainObject(true)).toBe(false)
+    expect(_.isPlainObject('foo')).toBe(false)
+    expect(_.isPlainObject(undefined)).toBe(false)
+    expect(_.isPlainObject(function () {})).toBe(false)
+    expect(_.isPlainObject(window)).toBe(false)
   })
 
   it('isArray', function () {
-    expect(_.isArray([])).to.equal(true)
-    expect(_.isArray({})).to.equal(false)
-    expect(_.isArray(arguments)).to.equal(false)
+    expect(_.isArray([])).toBe(true)
+    expect(_.isArray({})).toBe(false)
+    expect(_.isArray(arguments)).toBe(false)
   })
 
   it('debounce', function (done) {
@@ -132,19 +132,19 @@ describe('Util - Language Enhancement', function () {
     setTimeout(fn, 10)
     setTimeout(fn, 20)
     setTimeout(function () {
-      expect(count).to.equal(0)
+      expect(count).toBe(0)
     }, 30)
     setTimeout(function () {
-      expect(count).to.equal(1)
+      expect(count).toBe(1)
       done()
     }, 200)
   })
 
   it('looseEqual', function () {
-    expect(_.looseEqual(1, '1')).to.equal(true)
-    expect(_.looseEqual(null, undefined)).to.equal(true)
-    expect(_.looseEqual({a: 1}, {a: 1})).to.equal(true)
-    expect(_.looseEqual({a: 1}, {a: 2})).to.equal(false)
-    expect(_.looseEqual({}, [])).to.equal(false)
+    expect(_.looseEqual(1, '1')).toBe(true)
+    expect(_.looseEqual(null, undefined)).toBe(true)
+    expect(_.looseEqual({a: 1}, {a: 1})).toBe(true)
+    expect(_.looseEqual({a: 1}, {a: 2})).toBe(false)
+    expect(_.looseEqual({}, [])).toBe(false)
   })
 })

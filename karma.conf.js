@@ -12,12 +12,12 @@ module.exports = function (config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'es6-shim', 'es5-shim'],
+    frameworks: ['jasmine', 'es5-shim'],
 
     // list of files / patterns to load in the browser
     files: [
+      './node_modules/es5-shim/es5-sham.js',
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
-      './node_modules/sinon/pkg/sinon.js',
       {
         pattern: './test/index.js',
         watched: false,
@@ -39,8 +39,7 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha', 'coverage'],
-
+    reporters: ['progress', 'coverage'],
     // web server port
     port: 9876,
 
@@ -56,7 +55,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS', 'Chrome', 'IEEDGE'], // PhantomJS, Chrome, IE
+    browsers: ['IE8', 'PhantomJS', 'Chrome'], // PhantomJS, Chrome, IE
 
     customLaunchers: {
       IEEDGE: {

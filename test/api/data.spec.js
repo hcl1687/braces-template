@@ -1,6 +1,5 @@
 var Vue = require('src')
 var _ = require('src/util')
-var nextTick = _.nextTick
 
 describe('Data API', function () {
   var vm
@@ -19,12 +18,12 @@ describe('Data API', function () {
   })
 
   it('$get', function () {
-    expect(vm.$get('a')).to.equal(1)
-    expect(vm.$get('b["c"]')).to.equal(2)
-    expect(vm.$get('a + b.c')).to.equal(3)
-    expect(vm.$get('c')).to.equal(undefined)
+    expect(vm.$get('a')).toBe(1)
+    expect(vm.$get('b["c"]')).toBe(2)
+    expect(vm.$get('a + b.c')).toBe(3)
+    expect(vm.$get('c')).toBeUndefined()
     // invalid, should warn
     vm.$get('a(')
-    expect(_.warn.msg).to.include('Invalid expression')
+    expect(_.warn.msg).toContain('Invalid expression')
   })
 })

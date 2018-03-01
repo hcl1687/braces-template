@@ -6,11 +6,11 @@ describe('Instance state initialization', function () {
     new Vue({
       data: function () {}
     })
-    expect(_.warn.msg).to.include('should return an object')
+    expect(_.warn.msg).toContain('should return an object')
   })
 
   it('should initialize data once per strat', function () {
-    var spyOncePerStrat = sinon.spy()
+    var spyOncePerStrat = jasmine.createSpy('called once per strat')
     new Vue({
       data: function () {
         spyOncePerStrat()
@@ -19,7 +19,7 @@ describe('Instance state initialization', function () {
         }
       }
     })
-    expect(spyOncePerStrat.callCount).to.equal(1)
+    expect(spyOncePerStrat.calls.count()).toBe(1)
   })
 
   describe('data proxy', function () {
@@ -32,8 +32,8 @@ describe('Instance state initialization', function () {
     })
 
     it('initial', function () {
-      expect(vm.a).to.equal(data.a)
-      expect(vm.b).to.equal(data.b)
+      expect(vm.a).toBe(data.a)
+      expect(vm.b).toBe(data.b)
     })
   })
 
@@ -45,12 +45,12 @@ describe('Instance state initialization', function () {
         },
         methods: {
           test: function () {
-            expect(this instanceof Vue).to.equal(true)
+            expect(this instanceof Vue).toBe(true)
             return this.a
           }
         }
       })
-      expect(vm.test()).to.equal(1)
+      expect(vm.test()).toBe(1)
     })
   })
 })

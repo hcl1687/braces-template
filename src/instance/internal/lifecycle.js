@@ -2,7 +2,11 @@ import Directive from '../../directive'
 
 import {
   getAttr,
-  arrRemove
+  arrRemove,
+  warn,
+  isIE8,
+  innerHTML,
+  isTemplate
 } from '../../util/index'
 
 import {
@@ -30,6 +34,7 @@ export default function (Vue) {
     // so we need to keep reference; this step also injects
     // the template and caches the original attributes
     // on the container node and replacer node.
+    this._transclude(el, options)
     this._initElement(el)
 
     // handle v-pre on root node (#2026)
@@ -54,6 +59,40 @@ export default function (Vue) {
   }
 
   /**
+   * Process an element or a DocumentFragment based on a
+   * instance option object. This allows us to transclude
+   * a template node/fragment before the instance is created,
+   * so the processed fragment can then be cloned and reused
+   * in v-for.
+   *
+   * @param {Element} el
+   * @param {Object} options
+   * @return {Element|DocumentFragment}
+   */
+
+  Vue.prototype._transclude = function (el, options) {
+    // for template tags, what we want is its content as
+    // a documentFragment (for fragment instances)
+    if (isTemplate(el)) {
+      // el = parseTemplate(el)
+      // target should not be a template
+      process.env.NODE_ENV !== 'production' && warn(
+        'Do not mount an instance to a <template> tag.'
+      )
+      return el
+    }
+
+    if (options && options.template) {
+      var frag = parseTemplate(options.template, true)
+      if (frag) {
+        el.appendChild(frag)
+      }
+    }
+
+    return el
+  }
+
+  /**
    * Initialize instance element. Called in the public
    * $mount() method.
    *
@@ -61,6 +100,26 @@ export default function (Vue) {
    */
 
   Vue.prototype._initElement = function (el) {
+    if (isIE8) {
+      var content = el.innerHTML.toLowerCase()
+      // no support svg in ie8
+      var svgRE = /<svg[^>]*>/
+      if (svgRE.test(content))  {
+        process.env.NODE_ENV !== 'production' && warn(
+          'Do not use SVG tag. IE8 doesn\'t support SVG.',
+          this
+        )
+      }
+      // no support template tag in ie8
+      var templateRE = /<\/template[^>]*/
+      if (templateRE.test(content)) {
+        process.env.NODE_ENV !== 'production' && warn(
+          'IE8 cannot use `<template id="my-template">`. instead of `<script id="my-template" type="x/template">`',
+          this
+        )
+      }
+    }
+
     this.$el = el
     this.$el.__vue__ = this
     this._callHook('beforeCompile')

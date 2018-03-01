@@ -1,5 +1,5 @@
 import config from '../config'
-import { isIE9 } from './env'
+import { isIE8, isIE9 } from './env'
 import { warn } from './debug'
 import { camelize } from './lang'
 
@@ -349,12 +349,14 @@ export function isTemplate (el) {
  *                            templates.
  * @return {Comment|Text}
  */
-
+var ANCHOR_MARK = '__VUE__ANCHOR_MARK__VUE__'
 export function createAnchor (content, persist) {
   var anchor = config.debug
     ? document.createComment(content)
     : document.createTextNode(persist ? ' ' : '')
-  anchor.__v_anchor = true
+  if (!isIE8) {
+    anchor.__v_anchor = true
+  }
   return anchor
 }
 
@@ -452,7 +454,162 @@ export function getOuterHTML (el) {
     return el.outerHTML
   } else {
     var container = document.createElement('div')
-    container.appendChild(el.cloneNode(true))
+    container.appendChild(cloneDomNode(el, true))
     return container.innerHTML
+  }
+}
+
+/**
+ * support ie8
+ * @param  {[type]} el [description]
+ * @return {[type]}    [description]
+ */
+export function getWholeText (el) {
+  if (el.wholeText) {
+    return el.wholeText
+  }
+
+  var res = ''
+  var previousSibling = el
+  while(previousSibling && previousSibling.nodeType === 3) {
+    res = previousSibling.data + res
+    previousSibling = previousSibling.previousSibling
+  }
+
+  var nextSibling = el.nextSibling
+  while(nextSibling && nextSibling.nodeType === 3) {
+    res += nextSibling.data
+    nextSibling = nextSibling.nextSibling
+  }
+
+  return res
+}
+
+/**
+ * support ie8
+ * @param  {[type]} el  [description]
+ * @param  {[type]} val [description]
+ * @return {[type]}     [description]
+ */
+export function textContent (el, val) {
+  // IE8 does not recognize innerHTML or childNodes on script tags
+  if (val === undefined) {
+    return isIE8 
+      ? el.tagName === 'SCRIPT'
+        ? el.text
+        : el.innerText
+      : el.textContent
+  }
+
+  if (isIE8) {
+    if (el.tagName === 'SCRIPT') {
+      el.text = val
+    } else {
+      el.innerText = val
+    }
+  } else {
+    el.textContent = val
+  }
+}
+
+/**
+ * support ie8
+ * @param  {[type]} el   [description]
+ * @param  {[type]} deep [description]
+ * @return {[type]}      [description]
+ */
+export function cloneDomNode (el, deep) {
+  if (!isIE8 || !deep) {
+    return el.cloneNode(deep)
+  }
+
+  // ie8 deep clone
+  return deepClone(el)
+
+  function deepClone(el) {
+    var clone = el.nodeType == 3 ? document.createTextNode(el.nodeValue)
+      : el.cloneNode(false)
+   
+    // Recurse     
+    var child = el.firstChild
+    while(child) {
+        clone.appendChild(deepClone(child))
+        child = child.nextSibling
+    }
+     
+    return clone
+  }
+}
+
+/**
+ * support ie8
+ * @param  {[type]} el [description]
+ * @return {[type]}    [description]
+ */
+export function nextElementSibling (el) {
+  if (!isIE8) {
+    return el.nextElementSibling
+  }
+
+  var nextSibling = el.nextSibling
+  if (!nextSibling) {
+    return nextSibling
+  }
+
+  while (nextSibling.nodeType === 3 || nextSibling.nodeType === 8) {
+    nextSibling = nextSibling.nextSibling
+  }
+
+  return nextSibling
+}
+
+/**
+ * support ie8
+ * @param  {[type]} el [description]
+ * @return {[type]}    [description]
+ */
+export function previousElementSibling (el) {
+  if (!isIE8) {
+    return el.previousElementSibling
+  }
+
+  var previousSibling = el.previousSibling
+  if (!previousSibling) {
+    return previousSibling
+  }
+
+  while (previousSibling.nodeType === 3 || previousSibling.nodeType === 8) {
+    previousSibling = previousSibling.previousSibling
+  }
+
+  return previousSibling
+}
+
+export function innerHTML (el, val) {
+  if (val === undefined) {
+    return el.innerHTML
+  }
+
+  if (!isIE8) {
+    el.innerHTML = val
+    return
+  }
+
+  // https://allofetechnical.wordpress.com/2010/05/21/ies-innerhtml-method-with-script-and-style-tags/
+  var selector = '__VUE__INNERHTML_MARK__VUE__'
+  var prefix = '<div class="' + selector + '" style="display:none;">&nbsp;</div>'
+  var scriptStyleTagRE = /(<script|<style)/ig
+  val = val.replace(scriptStyleTagRE, function($1) {
+    return prefix + $1
+  })
+
+  el.innerHTML = val
+  // remove prefix
+  var marks = el.querySelectorAll('.' + selector)
+  for (var i = 0, l = marks.length; i < l; i++) {
+    var node = marks[i]
+    if (node.parentNode) {
+      node.parentNode.removeChild(node)
+    }
   }
 }

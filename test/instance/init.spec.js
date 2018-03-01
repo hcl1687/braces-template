@@ -6,10 +6,10 @@ describe('Instance Init', function () {
     constructor: {
       options: { a: 1, b: 2 }
     },
-    _initEvents: sinon.spy(),
-    _callHook: sinon.spy(),
-    _initState: sinon.spy(),
-    $mount: sinon.spy()
+    _initEvents: jasmine.createSpy(),
+    _callHook: jasmine.createSpy(),
+    _initState: jasmine.createSpy(),
+    $mount: jasmine.createSpy()
   }
 
   var options = {
@@ -20,28 +20,28 @@ describe('Instance Init', function () {
   init.call(stub, options)
 
   it('should setup properties', function () {
-    expect(stub.$el).to.equal(null)
-    expect(stub.$root).to.equal(stub)
-    expect(stub.$els).to.eql({})
-    expect(stub._directives).to.eql([])
-    expect(stub._events).to.eql({})
+    expect(stub.$el).toBe(null)
+    expect(stub.$root).toBe(stub)
+    expect(stub.$els).toBeTruthy()
+    expect(stub._directives).toBeTruthy()
+    expect(stub._events).toBeTruthy()
   })
 
   it('should merge options', function () {
-    expect(stub.$options.a).to.equal(2)
-    expect(stub.$options.b).to.equal(2)
+    expect(stub.$options.a).toBe(2)
+    expect(stub.$options.b).toBe(2)
   })
 
   it('should call other init methods', function () {
-    expect(stub._initEvents.called).to.equal(true)
-    expect(stub._initState.called).to.equal(true)
+    expect(stub._initEvents).toHaveBeenCalled()
+    expect(stub._initState).toHaveBeenCalled()
   })
 
   it('should call created hook', function () {
-    expect(stub._callHook.calledWith('created')).to.equal(true)
+    expect(stub._callHook).toHaveBeenCalledWith('created')
   })
 
   it('should call $mount when options.el is present', function () {
-    expect(stub.$mount.calledWith(stub.$options.el)).to.equal(true)
+    expect(stub.$mount).toHaveBeenCalledWith(stub.$options.el)
   })
 })

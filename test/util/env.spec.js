@@ -8,7 +8,7 @@ describe('Util - Environment', function () {
         this.id = 1
       }, ctx)
       _.nextTick(function () {
-        expect(ctx.id).to.equal(1)
+        expect(ctx.id).toBe(1)
         done()
       })
     })

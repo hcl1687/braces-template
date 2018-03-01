@@ -1,4 +1,6 @@
+var _ = require('src/util')
 var Vue = require('src')
+var textContent = _.textContent
 
 describe('el', function () {
   var el
@@ -14,7 +16,7 @@ describe('el', function () {
         ok: true
       }
     })
-    expect(vm.$els.testEl.id).to.equal('test')
+    expect(vm.$els.testEl.id).toBe('test')
   })
 
   it('aside v-if', function () {
@@ -25,15 +27,18 @@ describe('el', function () {
         ok: false
       }
     })
-    expect(vm.$els.testEl).to.equal(undefined)
+    expect(vm.$els.testEl).toBe(undefined)
   })
 
   it('inside v-for', function () {
-    el.innerHTML = '<div v-for="n in items"><p v-el:test>{{n}}</p>{{$els.test.textContent}}</div>'
+    el.innerHTML = '<div v-for="n in items"><p v-el:test>{{n}}</p>{{textContent($els.test)}}</div>'
     var vm = new Vue({
       el: el,
-      data: { items: [1, 2] }
+      data: { items: [1, 2] },
+      methods: {
+        textContent: textContent
+      }
     })
-    expect(vm.$el.textContent).to.equal('1122')
+    expect(textContent(vm.$el).replace(/\r\n/g, '')).toBe('1122')
   })
 })

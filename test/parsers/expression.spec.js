@@ -156,7 +156,7 @@ var testCases = [
   },
   {
     // keyowrd + keyword literal
-    exp: 'true && a.true',
+    exp: 'true && a["true"]',
     scope: {
       a: { 'true': false }
     },
@@ -274,25 +274,31 @@ describe('Expression Parser', function () {
     it('parse getter: ' + testCase.exp, function () {
       var res = expParser.parseExpression(testCase.exp, true)
       expect(JSON.stringify(res.get(testCase.scope)))
-        .to.equal(JSON.stringify(testCase.expected))
+        .toBe(JSON.stringify(testCase.expected))
     })
   })
 
   it('cache', function () {
     var res1 = expParser.parseExpression('a + b')
     var res2 = expParser.parseExpression('a + b')
-    expect(res1).to.equal(res2)
+    expect(res1).toBe(res2)
   })
 
   describe('invalid expression', function () {
     it('should warn on invalid expression', function () {
       expParser.parseExpression('a--b"ffff')
-      expect(_.warn.msg).to.include('Invalid expression')
+      expect(_.warn.msg).toContain('Invalid expression')
     })
 
     it('should warn if expression contains improper reserved keywords', function () {
       expParser.parseExpression('break + 1')
-      expect(_.warn.msg).to.include('Avoid using reserved keywords')
+      if (_.isIE8) {
+        // in ie8, direct access reserved field throws error
+        // Invalid expression. Generated function body:  scope.break+1'
+        expect(_.warn.msg).toContain('Generated function body')
+      } else {
+        expect(_.warn.msg).toContain('Avoid using reserved keywords')
+      }
     })
   })
 })

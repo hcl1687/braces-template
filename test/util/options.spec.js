@@ -8,10 +8,10 @@ describe('Util - Option merging', function () {
   it('default strat', function () {
     // child undefined
     var res = merge({replace: true}, {}).replace
-    expect(res).to.equal(true)
+    expect(res).toBe(true)
     // child overwrite
     res = merge({replace: true}, {replace: false}).replace
-    expect(res).to.equal(false)
+    expect(res).toBe(false)
   })
 
   it('hooks', function () {
@@ -20,29 +20,29 @@ describe('Util - Option merging', function () {
     var res
     // parent undefined
     res = merge({}, {created: fn1}).created
-    expect(Array.isArray(res)).to.equal(true)
-    expect(res.length).to.equal(1)
-    expect(res[0]).to.equal(fn1)
+    expect(Array.isArray(res)).toBe(true)
+    expect(res.length).toBe(1)
+    expect(res[0]).toBe(fn1)
     // child undefined
     res = merge({created: [fn1]}, {}).created
-    expect(Array.isArray(res)).to.equal(true)
-    expect(res.length).to.equal(1)
-    expect(res[0]).to.equal(fn1)
+    expect(Array.isArray(res)).toBe(true)
+    expect(res.length).toBe(1)
+    expect(res[0]).toBe(fn1)
     // both defined
     res = merge({created: [fn1]}, {created: fn2}).created
-    expect(Array.isArray(res)).to.equal(true)
-    expect(res.length).to.equal(2)
-    expect(res[0]).to.equal(fn1)
-    expect(res[1]).to.equal(fn2)
+    expect(Array.isArray(res)).toBe(true)
+    expect(res.length).toBe(2)
+    expect(res[0]).toBe(fn1)
+    expect(res[1]).toBe(fn2)
   })
 
   it('events', function () {
     // no parent
     var res = merge({}, {events: 1})
-    expect(res.events).to.equal(1)
+    expect(res.events).toBe(1)
     // no child
     res = merge({events: 1}, {})
-    expect(res.events).to.equal(1)
+    expect(res.events).toBe(1)
 
     var fn1 = function () {}
     var fn2 = function () {}
@@ -66,11 +66,11 @@ describe('Util - Option merging', function () {
     assertRes(res.fn3, [fn3])
 
     function assertRes (res, expected) {
-      expect(Array.isArray(res)).to.equal(true)
-      expect(res.length).to.equal(expected.length)
+      expect(Array.isArray(res)).toBe(true)
+      expect(res.length).toBe(expected.length)
       var i = expected.length
       while (i--) {
-        expect(res[i]).to.equal(expected[i])
+        expect(res[i]).toBe(expected[i])
       }
     }
   })
@@ -81,15 +81,15 @@ describe('Util - Option merging', function () {
     var res
     // parent undefined
     res = merge({}, {methods: {test: fn1}}).methods
-    expect(res.test).to.equal(fn1)
+    expect(res.test).toBe(fn1)
     // child undefined
     res = merge({methods: {test: fn1}}, {}).methods
-    expect(res.test).to.equal(fn1)
+    expect(res.test).toBe(fn1)
     // both defined
     var parent = {methods: {test: fn1}}
     res = merge(parent, {methods: {test2: fn2}}).methods
-    expect(res.test).to.equal(fn1)
-    expect(res.test2).to.equal(fn2)
+    expect(res.test).toBe(fn1)
+    expect(res.test2).toBe(fn2)
   })
 
   it('assets', function () {
@@ -104,21 +104,21 @@ describe('Util - Option merging', function () {
         b: asset2
       }
     }).directives
-    expect(res.a).to.equal(asset1)
-    expect(res.b).to.equal(asset2)
+    expect(res.a).toBe(asset1)
+    expect(res.b).toBe(asset2)
   })
 
   it('should ignore non-function el & data in class merge', function () {
     var res = merge({}, {el: 1, data: 2})
-    expect(res.el).to.equal(undefined)
-    expect(res.data).equal(undefined)
+    expect(res.el).toBe(undefined)
+    expect(res.data).toBe(undefined)
   })
 
   it('class el merge', function () {
     function fn1 () {}
     function fn2 () {}
     var res = merge({ el: fn1 }, { el: fn2 })
-    expect(res.el).to.equal(fn2)
+    expect(res.el).toBe(fn2)
   })
 
   it('class data merge', function () {
@@ -142,42 +142,42 @@ describe('Util - Option merging', function () {
     }
     // both present
     var res = merge({ data: fn1 }, { data: fn2 }).data()
-    expect(res.a).to.equal(2)
-    expect(res.b).to.equal(3)
-    expect(res.c).to.equal(4)
-    expect(res.d.e).to.equal(1)
-    expect(res.d.f).to.equal(2)
+    expect(res.a).toBe(2)
+    expect(res.b).toBe(3)
+    expect(res.c).toBe(4)
+    expect(res.d.e).toBe(1)
+    expect(res.d.f).toBe(2)
     // only parent
     res = merge({ data: fn1 }, {}).data()
-    expect(res.a).to.equal(1)
-    expect(res.b).to.equal(undefined)
-    expect(res.c).to.equal(4)
-    expect(res.d.e).to.equal(1)
-    expect(res.d.f).to.equal(undefined)
+    expect(res.a).toBe(1)
+    expect(res.b).toBe(undefined)
+    expect(res.c).toBe(4)
+    expect(res.d.e).toBe(1)
+    expect(res.d.f).toBe(undefined)
   })
 
   it('instanace el merge', function () {
     var vm = {} // mock vm presence
     function fn1 () {
-      expect(this).to.equal(vm)
+      expect(this).toBe(vm)
       return 1
     }
     function fn2 () {
-      expect(this).to.equal(vm)
+      expect(this).toBe(vm)
       return 2
     }
     // both functions
     var res = merge({ el: fn1 }, { el: fn2 }, vm)
-    expect(res.el).to.equal(2)
+    expect(res.el).toBe(2)
     // direct instance el
     res = merge({ el: fn1 }, { el: 2 }, vm)
-    expect(res.el).to.equal(2)
+    expect(res.el).toBe(2)
     // no parent
     res = merge({}, { el: 2 }, vm)
-    expect(res.el).to.equal(2)
+    expect(res.el).toBe(2)
     // no child
     res = merge({ el: fn1 }, {}, vm)
-    expect(res.el).to.equal(1)
+    expect(res.el).toBe(1)
   })
 
   it('instance data merge with no instance data', function () {
@@ -192,7 +192,7 @@ describe('Util - Option merging', function () {
       {}, // no instance data
       {} // mock vm presence
     )
-    expect(res.data().a).to.equal(1)
+    expect(res.data().a).toBe(1)
   })
 
   it('instance data merge with default data function', function () {
@@ -201,7 +201,7 @@ describe('Util - Option merging', function () {
       // component default
       {
         data: function () {
-          expect(this).to.equal(vm)
+          expect(this).toBe(vm)
           return {
             a: 1,
             b: 2
@@ -215,8 +215,8 @@ describe('Util - Option merging', function () {
       vm
     )
     var data = res.data()
-    expect(data.a).to.equal(2)
-    expect(data.b).to.equal(2)
+    expect(data.a).toBe(2)
+    expect(data.b).toBe(2)
   })
 
   it('mixins', function () {
@@ -239,16 +239,16 @@ describe('Util - Option merging', function () {
       mixins: [mixinA, mixinB],
       created: f4
     })
-    expect(res.a).to.equal(1)
-    expect(res.b).to.equal(1)
-    expect(res.directives.a).to.equal(a)
-    expect(res.directives.b).to.equal(b)
-    expect(res.directives.c).to.equal(c)
-    expect(res.directives.d).to.equal(d)
-    expect(res.created[0]).to.equal(f1)
-    expect(res.created[1]).to.equal(f2)
-    expect(res.created[2]).to.equal(f3)
-    expect(res.created[3]).to.equal(f4)
+    expect(res.a).toBe(1)
+    expect(res.b).toBe(1)
+    expect(res.directives.a).toBe(a)
+    expect(res.directives.b).toBe(b)
+    expect(res.directives.c).toBe(c)
+    expect(res.directives.d).toBe(d)
+    expect(res.created[0]).toBe(f1)
+    expect(res.created[1]).toBe(f2)
+    expect(res.created[2]).toBe(f3)
+    expect(res.created[3]).toBe(f4)
   })
 
   it('Array assets', function () {
@@ -263,8 +263,8 @@ describe('Util - Option merging', function () {
       directives: [{ name: 'b' }]
     }
     var res = merge(a, b)
-    expect(res.directives.a).to.equal(a.directives.a)
-    expect(res.directives.b).to.equal(b.directives[0])
+    expect(res.directives.a).toBe(a.directives.a)
+    expect(res.directives.b).toBe(b.directives[0])
   })
 
   it('warn Array assets without id', function () {
@@ -279,6 +279,6 @@ describe('Util - Option merging', function () {
       directives: [{}]
     }
     merge(a, b)
-    expect(__.warn.msg).to.include('Array-syntax assets must provide a "name" or "id" field.')
+    expect(__.warn.msg).toContain('Array-syntax assets must provide a "name" or "id" field.')
   })
 })
