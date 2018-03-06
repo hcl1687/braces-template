@@ -72,7 +72,6 @@ module.exports = function (config) {
     reporters: ['progress', 'saucelabs'],
     sauceLabs: {
       testName: 'braces-template unit tests',
-      'public': 'public',
       // 是否在测试过程记录虚拟机的运行录像
       recordVideo: false,
       // 是否在测试过程记录虚拟机的图像
@@ -82,6 +81,10 @@ module.exports = function (config) {
       startConnect: false,
       username: process.env.SAUCE_USERNAME,
       accessKey: process.env.SAUCE_ACCESS_KEY,
+      connectOptions: {
+        port: 5757,
+        logfile: 'sauce_connect.log'
+      }
     },
     // mobile emulators are really slow
     captureTimeout: 300000,
