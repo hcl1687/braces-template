@@ -2,7 +2,7 @@
 
 [![Build](https://img.shields.io/travis/hcl1687/braces-template.svg)](https://travis-ci.org/hcl1687/braces-template)
 
-[![Coverage Status](https://img.shields.io/coveralls/hcl1687/braces-template/master.svg)](https://coveralls.io/github/hcl1687/braces-template)
+[![Coverage Status](https://coveralls.io/repos/github/hcl1687/braces-template/badge.svg)](https://coveralls.io/github/hcl1687/braces-template)
 
 
 
