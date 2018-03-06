@@ -17,7 +17,7 @@
       }
     },
     "test-ci": {
-      "command": "karma start karam.ci.conf.js",
+      "command": "karma start karma.ci.conf.js",
       "env": {
         "NODE_ENV": "test"
       }
