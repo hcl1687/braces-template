@@ -58,22 +58,14 @@ var batches = {
 }
 
 batches = {
-  sl_chrome: {
+  sl_firefox: {
     base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 7'
+    browserName: 'firefox'
   }
 }
 
 module.exports = function (config) {
-
-  // Use ENV vars on Travis and sauce.json locally to get credentials
-  if (!process.env.SAUCE_USERNAME) {
-      process.env.SAUCE_USERNAME =  'hcl1687' // require('./sauce').username;
-      process.env.SAUCE_ACCESS_KEY = '67ab6fbf-c4e3-47f5-b84c-b787166838a7' // require('./sauce').accessKey;
-  }
-
-  config.set(assign(base, {
+  config.set(assign({}, base, {
     browsers: Object.keys(batches),
     customLaunchers: batches,
     reporters: ['progress', 'saucelabs'],
