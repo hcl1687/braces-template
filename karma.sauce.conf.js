@@ -77,7 +77,10 @@ module.exports = function (config) {
       // 是否在测试过程记录虚拟机的图像
       recordScreenshots: false,
       // 测试的记录号，可以为任意字符，如果希望生成矩阵图，build 不能为空
-      build: 'build-' + Date.now()
+      build: process.env.TRAVIS_JOB_NUMBER || 'build-' + Date.now(),
+      startConnect: false,
+      username: process.env.SAUCE_USERNAME,
+      accessKey: process.env.SAUCE_ACCESS_KEY,
     },
     // mobile emulators are really slow
     captureTimeout: 300000,
