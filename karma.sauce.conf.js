@@ -58,9 +58,10 @@ var batches = {
 }
 
 batches = {
-  sl_firefox: {
+  sl_chrome: {
     base: 'SauceLabs',
-    browserName: 'firefox'
+    browserName: 'chrome',
+    platform: 'Windows 7'
   }
 }
 
