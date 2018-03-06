@@ -7,7 +7,8 @@
     "test": "better-npm-run test",
     "test-ci": "better-npm-run test-ci",
     "compile": "better-npm-run compile",
-    "coveralls": "cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls"
+    "coveralls": "cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls",
+    "sauce": "better-npm-run sauce"
   },
   "betterScripts": {
     "test": {
@@ -18,6 +19,12 @@
     },
     "test-ci": {
       "command": "karma start karma.ci.conf.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "sauce": {
+      "command": "karma start karma.sauce.conf.js",
       "env": {
         "NODE_ENV": "test"
       }

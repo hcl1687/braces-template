@@ -7,73 +7,85 @@ var base = require('./karma.base.conf.js')
  * smaller batches.
  */
 
-var batches = [
+var batches = {
   // the cool kids
-  {
-    sl_chrome: {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      platform: 'Windows 7'
-    },
-    sl_firefox: {
-      base: 'SauceLabs',
-      browserName: 'firefox'
-    },
-    sl_mac_safari: {
-      base: 'SauceLabs',
-      browserName: 'safari',
-      platform: 'OS X 10.10'
-    }
+  sl_chrome: {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    platform: 'Windows 7'
+  },
+  sl_firefox: {
+    base: 'SauceLabs',
+    browserName: 'firefox'
+  },
+  sl_mac_safari: {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'OS X 10.10'
   },
   // ie family
-  {
-    sl_ie_9: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      platform: 'Windows 7',
-      version: '9'
-    },
-    sl_ie_10: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      platform: 'Windows 8',
-      version: '10'
-    },
-    sl_ie_11: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      platform: 'Windows 8.1',
-      version: '11'
-    }
+  sl_ie_9: {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    platform: 'Windows 7',
+    version: '9'
+  },
+  sl_ie_10: {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    platform: 'Windows 8',
+    version: '10'
+  },
+  sl_ie_11: {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    platform: 'Windows 8.1',
+    version: '11'
   },
   // mobile
-  {
-    sl_ios_safari: {
-      base: 'SauceLabs',
-      browserName: 'iphone',
-      platform: 'OS X 10.9',
-      version: '7.1'
-    },
-    sl_android: {
-      base: 'SauceLabs',
-      browserName: 'android',
-      platform: 'Linux',
-      version: '4.2'
-    }
+  sl_ios_safari: {
+    base: 'SauceLabs',
+    browserName: 'iphone',
+    platform: 'OS X 10.9',
+    version: '7.1'
+  },
+  sl_android: {
+    base: 'SauceLabs',
+    browserName: 'android',
+    platform: 'Linux',
+    version: '4.2'
   }
-]
+}
+
+batches = {
+  sl_chrome: {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    platform: 'Windows 7'
+  }
+}
 
 module.exports = function (config) {
-  var batch = batches[process.argv[4] || 0]
+
+  // Use ENV vars on Travis and sauce.json locally to get credentials
+  if (!process.env.SAUCE_USERNAME) {
+      process.env.SAUCE_USERNAME =  'hcl1687' // require('./sauce').username;
+      process.env.SAUCE_ACCESS_KEY = '67ab6fbf-c4e3-47f5-b84c-b787166838a7' // require('./sauce').accessKey;
+  }
 
   config.set(assign(base, {
-    browsers: Object.keys(batch),
-    customLaunchers: batch,
+    browsers: Object.keys(batches),
+    customLaunchers: batches,
     reporters: ['progress', 'saucelabs'],
     sauceLabs: {
       testName: 'braces-template unit tests',
+      'public': 'public',
+      // 是否在测试过程记录虚拟机的运行录像
+      recordVideo: false,
+      // 是否在测试过程记录虚拟机的图像
       recordScreenshots: false,
-      build: process.env.CIRCLE_BUILD_NUM || process.env.SAUCE_BUILD_ID || Date.now()
+      // 测试的记录号，可以为任意字符，如果希望生成矩阵图，build 不能为空
+      build: 'build-' + Date.now()
     },
     // mobile emulators are really slow
     captureTimeout: 300000,

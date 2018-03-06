@@ -4,6 +4,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/hcl1687/braces-template/badge.svg)](https://coveralls.io/github/hcl1687/braces-template)
 
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/hcl1687.svg)](https://saucelabs.com/u/hcl1687)
+
 
 
 no support
