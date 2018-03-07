@@ -76,6 +76,34 @@ expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>0 1</div><div
 el.parentNode.removeChild(el)
 ```
 
+### v-for nested
+```javascript
+import Braces from 'braces-template'
+
+var el = document.createElement('div')
+el.id = 'app'
+document.body.appendChild(el)
+
+new Braces({
+  el: el,
+  template: '<script type="x/template" v-for="item in items">' +
+      '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
+    '</script>',
+  data: {
+    items: [
+      { items: [{a: 1}, {a: 2}], a: 1 },
+      { items: [{a: 3}, {a: 4}], a: 2 }
+    ]
+  }
+})
+
+expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe(
+  '<p>0 1 0 1</p><p>1 2 0 1</p>' +
+  '<p>0 3 1 2</p><p>1 4 1 2</p>'
+)
+el.parentNode.removeChild(el)
+```
+
 ### v-if false
 ```javascript
 import Braces from 'braces-template'
