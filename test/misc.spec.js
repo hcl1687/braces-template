@@ -101,4 +101,136 @@ describe('Misc', function () {
     })
     expect(textContent(vm.$el).replace(/\r\n/g, '')).toBe('135')
   })
+
+  it('demo: new', function () {
+    // el = '<div id="app"><div>{{message}}</div></div>'
+    var el = document.createElement('div')
+    el.id = 'app'
+    el.innerHTML = '<div>{{message}}</div>'
+    document.body.appendChild(el)
+
+    var vm = new Braces({
+      el: '#app',
+      data: {
+        message: 'Hello World'
+      }
+    })
+
+    // output:
+    // <div id="app"><div>Hello World</div></div>
+    expect(textContent(vm.$el).replace(/\r\n/g, '')).toBe('Hello World')
+    el.parentNode.removeChild(el)
+  })
+
+  it('demo: new with template', function () {
+    var el = document.createElement('div')
+    el.id = 'app'
+    document.body.appendChild(el)
+
+    var vm = new Braces({
+      el: '#app',
+      template: '<div>{{ message }}</div>',
+      data: {
+        message: 'Hello World'
+      }
+    })
+
+    // output:
+    // <div id="app"><div>Hello World</div></div>
+    expect(textContent(vm.$el).replace(/\r\n/g, '')).toBe('Hello World')
+    el.parentNode.removeChild(el)
+  })
+
+  it('demo: v-for', function () {
+    var el = document.createElement('div')
+    el.id = 'app'
+    document.body.appendChild(el)
+
+    new Braces({
+      el: el,
+      template: '<div v-for="item in items">{{$index}} {{item.a}}</div>',
+      data: {
+        items: [{a: 1}, {a: 2}]
+      }
+    })
+
+    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>0 1</div><div>1 2</div>')
+    el.parentNode.removeChild(el)
+  })
+
+  // it('demo: v-for nested', function () {
+  //   debugger
+  //   var el = document.createElement('div')
+  //   el.id = 'app'
+  //   document.body.appendChild(el)
+
+  //   new Braces({
+  //     el: el,
+  //     template: '<script type="x/template" v-for="item in items">' +
+  //         '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
+  //       '</script>',
+  //     data: {
+  //       items: [
+  //         { items: [{a: 1}, {a: 2}], a: 1 },
+  //         { items: [{a: 3}, {a: 4}], a: 2 }
+  //       ]
+  //     }
+  //   })
+
+  //   expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe(
+  //     '<p>0 1 0 1</p><p>1 2 0 1</p>' +
+  //     '<p>0 3 1 2</p><p>1 4 1 2</p>'
+  //   )
+  //   el.parentNode.removeChild(el)
+  // })
+
+  it('demo: v-if false', function () {
+    var el = document.createElement('div')
+    el.id = 'app'
+    document.body.appendChild(el)
+
+    new Braces({
+      el: '#app',
+      template: '<div v-if="test"><div :a="a"></div></div>',
+      data: { test: false, a: 'A' }
+    })
+    expect(el.innerHTML).toBe('')
+    el.parentNode.removeChild(el)
+  })
+
+  it('demo: v-if true', function () {
+    var el = document.createElement('div')
+    el.id = 'app'
+    document.body.appendChild(el)
+
+    new Braces({
+      el: el,
+      template: '<div v-if="test"><div id="a" :a="a"></div></div>',
+      data: { test: true, a: 'A' }
+    })
+    // lazy instantitation
+    if (_.isIE8) {
+      expect(el.innerHTML.replace(/\r\n/g, '')).toBe('<DIV><DIV id=a a="A"></DIV></DIV>')
+    } else {
+      expect(el.innerHTML).toBe('<div><div id="a" a="A"></div></div>')
+    }
+    expect(el.children[0].children[0].getAttribute('a')).toBe('A')
+    el.parentNode.removeChild(el)
+  })
+
+  it('demo: html', function () {
+    var el = document.createElement('div')
+    el.id = 'app'
+    document.body.appendChild(el)
+
+    new Braces({
+      el: '#app',
+      template: '<div>{{{ message }}}</div>',
+      data: {
+        message: '<div>1234</div><p>234</p>'
+      }
+    })
+    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div><div>1234</div><p>234</p></div>')
+    el.parentNode.removeChild(el)
+  })
 })
