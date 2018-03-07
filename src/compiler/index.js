@@ -57,7 +57,7 @@ export function compile (el, options) {
    * compiled piece of DOM, which instantiates all directive
    * instances.
    *
-   * @param {Vue} vm
+   * @param {Braces} vm
    * @param {Element|DocumentFragment} el
    * @param {Object} [scope] - v-for scope
    * @param {Fragment} [frag] - link context fragment
@@ -81,7 +81,7 @@ export function compile (el, options) {
  * directives created during the process.
  *
  * @param {Function} linker
- * @param {Vue} vm
+ * @param {Braces} vm
  */
 
 function linkAndCapture (linker, vm) {
@@ -91,7 +91,7 @@ function linkAndCapture (linker, vm) {
     // mode, so that when unlinking we don't need to splice
     // them out (which turns out to be a perf hit).
     // they are kept in development mode because they are
-    // useful for Vue's own tests.
+    // useful for Braces's own tests.
     vm._directives = []
   }
   var originalDirCount = vm._directives.length
@@ -125,9 +125,9 @@ function directiveComparator (a, b) {
  * We create unlink functions with only the necessary
  * information to avoid retaining additional closures.
  *
- * @param {Vue} vm
+ * @param {Braces} vm
  * @param {Array} dirs
- * @param {Vue} [context]
+ * @param {Braces} [context]
  * @param {Array} [contextDirs]
  * @return {Function}
  */
@@ -147,7 +147,7 @@ function makeUnlinkFn (vm, dirs, context, contextDirs) {
 /**
  * Teardown partial linked directives.
  *
- * @param {Vue} vm
+ * @param {Braces} vm
  * @param {Array} dirs
  * @param {Boolean} destroying
  */
@@ -216,7 +216,7 @@ function compileElement (el, options) {
   return linkFn
 }
 
-var TEXT_SKIP_MARK = '__VUE__TEXT_SKIP_MARK__VUE__'
+var TEXT_SKIP_MARK = '__BRACES__TEXT_SKIP_MARK__BRACES__'
 
 /**
  * Compile a textNode and return a nodeLinkFn.
@@ -268,7 +268,7 @@ function compileTextNode (node, options) {
 /**
  * Linker for an skipped text node.
  *
- * @param {Vue} vm
+ * @param {Braces} vm
  * @param {Text} node
  */
 

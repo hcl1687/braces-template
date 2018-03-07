@@ -325,7 +325,7 @@ export function setPath (obj, path, val) {
       obj = obj[key]
       if (!isObject(obj)) {
         obj = {}
-        if (process.env.NODE_ENV !== 'production' && last._isVue) {
+        if (process.env.NODE_ENV !== 'production' && last._isBraces) {
           warnNonExistent(path, last)
         }
         set(last, key, obj)
@@ -336,7 +336,7 @@ export function setPath (obj, path, val) {
       } else if (key in obj) {
         obj[key] = val
       } else {
-        if (process.env.NODE_ENV !== 'production' && obj._isVue) {
+        if (process.env.NODE_ENV !== 'production' && obj._isBraces) {
           warnNonExistent(path, obj)
         }
         set(obj, key, val)

@@ -3,14 +3,14 @@ import {
   warn
 } from '../../util/index'
 
-export default function (Vue) {
+export default function (Braces) {
   /**
    * Setup the instance's option events & watchers.
    * If the value is a string, we pull it from the
    * instance's methods by name.
    */
 
-  Vue.prototype._initEvents = function () {
+  Braces.prototype._initEvents = function () {
     var options = this.$options
     registerCallbacks(this, '$on', options.events)
   }
@@ -18,7 +18,7 @@ export default function (Vue) {
   /**
    * Register callbacks for option events and watchers.
    *
-   * @param {Vue} vm
+   * @param {Braces} vm
    * @param {String} action
    * @param {Object} hash
    */
@@ -41,7 +41,7 @@ export default function (Vue) {
   /**
    * Helper to register an event/watch callback.
    *
-   * @param {Vue} vm
+   * @param {Braces} vm
    * @param {String} action
    * @param {String} key
    * @param {Function|String|Object} handler
@@ -73,7 +73,7 @@ export default function (Vue) {
    * Setup recursive attached/detached calls
    */
 
-  Vue.prototype._initDOMHooks = function () {
+  Braces.prototype._initDOMHooks = function () {
     this.$on('hook:attached', onAttached)
     this.$on('hook:detached', onDetached)
   }
@@ -104,7 +104,7 @@ export default function (Vue) {
    * @param {String} hook
    */
 
-  Vue.prototype._callHook = function (hook) {
+  Braces.prototype._callHook = function (hook) {
     this.$emit('pre-hook:' + hook)
     var handlers = this.$options[hook]
     if (handlers) {

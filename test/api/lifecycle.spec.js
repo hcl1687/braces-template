@@ -1,5 +1,5 @@
 var _ = require('src/util')
-var Vue = require('src')
+var Braces = require('src')
 var compiler = require('src/compiler')
 var textContent = _.textContent
 
@@ -14,32 +14,32 @@ describe('Lifecycle API', function () {
     })
 
     it('normal', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         data: {
           test: 'foo'
         }
       })
       vm.$mount(el)
       expect(vm.$el).toBe(el)
-      expect(el.__vue__).toBe(vm)
+      expect(el.__braces__).toBe(vm)
       expect(textContent(el)).toBe('foo')
     })
 
     it('selector', function () {
       el.id = 'mount-test'
       document.body.appendChild(el)
-      var vm = new Vue({
+      var vm = new Braces({
         data: { test: 'foo' }
       })
       vm.$mount('#mount-test')
       expect(vm.$el).toBe(el)
-      expect(el.__vue__).toBe(vm)
+      expect(el.__braces__).toBe(vm)
       expect(textContent(el)).toBe('foo')
       document.body.removeChild(el)
     })
 
     it('warn invalid selector', function () {
-      var vm = new Vue()
+      var vm = new Braces()
       vm.$mount('#none-exist')
       expect(_.warn.msg).toContain('Cannot find element')
     })
@@ -54,7 +54,7 @@ describe('Lifecycle API', function () {
       hooks.forEach(function (hook) {
         options[hook] = jasmine.createSpy(hook)
       })
-      var vm = new Vue(options)
+      var vm = new Braces(options)
       expect(options.created).toHaveBeenCalled()
       expect(options.beforeCompile).not.toHaveBeenCalled()
       vm.$mount(el)
@@ -69,7 +69,7 @@ describe('Lifecycle API', function () {
     })
 
     it('warn against multiple calls', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         el: el
       })
       vm.$mount(el)
@@ -79,7 +79,7 @@ describe('Lifecycle API', function () {
 
   describe('$destroy', function () {
     it('normal', function () {
-      var vm = new Vue()
+      var vm = new Braces()
       expect(vm._isDestroyed).toBe(false)
       vm.$destroy()
       expect(vm._isDestroyed).toBe(true)
@@ -94,10 +94,10 @@ describe('Lifecycle API', function () {
       var el = document.createElement('div')
       var parent = document.createElement('div')
       parent.appendChild(el)
-      var vm = new Vue({ el: el })
+      var vm = new Braces({ el: el })
       vm.$destroy(true)
       expect(parent.childNodes.length).toBe(0)
-      expect(el.__vue__).toBe(null)
+      expect(el.__braces__).toBe(null)
     })
 
     it('hooks', function () {
@@ -108,7 +108,7 @@ describe('Lifecycle API', function () {
       }
       var el = opts.el = document.createElement('div')
       document.body.appendChild(el)
-      var vm = new Vue(opts)
+      var vm = new Braces(opts)
       vm.$destroy(true)
       expect(opts.beforeDestroy).toHaveBeenCalled()
       expect(opts.destroyed).toHaveBeenCalled()
@@ -119,7 +119,7 @@ describe('Lifecycle API', function () {
       var spy = jasmine.createSpy('directive unbind')
       var el = document.createElement('div')
       el.innerHTML = '<div v-test></div>'
-      var vm = new Vue({
+      var vm = new Braces({
         el: el,
         directives: {
           test: {
@@ -133,7 +133,7 @@ describe('Lifecycle API', function () {
 
     it('refuse multiple calls', function () {
       var spy = jasmine.createSpy()
-      var vm = new Vue({
+      var vm = new Braces({
         beforeDestroy: spy
       })
       vm.$destroy()
@@ -146,7 +146,7 @@ describe('Lifecycle API', function () {
     it('should partial compile and teardown stuff', function () {
       var el = document.createElement('div')
       el.innerHTML = '{{a}}'
-      var vm = new Vue({
+      var vm = new Braces({
         el: el,
         data: {
           a: 'foo'

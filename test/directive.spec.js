@@ -1,4 +1,4 @@
-import Vue from 'src'
+import Braces from 'src'
 import Directive from 'src/directive'
 
 describe('Directive', function () {
@@ -11,7 +11,7 @@ describe('Directive', function () {
       update: jasmine.createSpy('update'),
       unbind: jasmine.createSpy('unbind')
     }
-    vm = new Vue({
+    vm = new Braces({
       data: {
         a: 1,
         b: {
@@ -112,7 +112,7 @@ describe('Directive', function () {
     div.id = 'test1'
     div.innerHTML = str
     document.body.appendChild(div)
-    vm = new Vue({
+    vm = new Braces({
       el: div,
       data: {
         a: 1,

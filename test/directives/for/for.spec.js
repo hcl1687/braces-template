@@ -1,5 +1,5 @@
 var _ = require('src/util')
-var Vue = require('src')
+var Braces = require('src')
 var textContent = _.textContent
 
 function done () {}
@@ -12,7 +12,7 @@ describe('v-for', function () {
 
   it('objects', function () {
     el.innerHTML = '<div v-for="item in items">{{$index}} {{item.a}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         items: [{a: 1}, {a: 2}]
@@ -23,7 +23,7 @@ describe('v-for', function () {
 
   it('primitives', function () {
     el.innerHTML = '<div v-for="item in items">{{$index}} {{item}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         items: [1, 2, 3]
@@ -34,7 +34,7 @@ describe('v-for', function () {
 
   it('object of objects', function () {
     el.innerHTML = '<div v-for="item in items">{{$index}} {{$key}} {{item.a}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         items: {
@@ -48,7 +48,7 @@ describe('v-for', function () {
 
   it('object of primitives', function () {
     el.innerHTML = '<div v-for="item in items">{{$index}} {{$key}} {{item}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         items: {
@@ -62,7 +62,7 @@ describe('v-for', function () {
 
   it('array of arrays', function () {
     el.innerHTML = '<div v-for="item in items">{{$index}} {{item}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         items: [[1, 1], [2, 2], [3, 3]]
@@ -76,7 +76,7 @@ describe('v-for', function () {
 
   it('check priorities: v-if before v-for', function () {
     el.innerHTML = '<div v-if="item < 3" v-for="item in items">{{item}}</div>'
-    new Vue({
+    new Braces({
       el: el,
       data: {
         items: [1, 2, 3]
@@ -87,7 +87,7 @@ describe('v-for', function () {
 
   it('check priorities: v-if after v-for', function () {
     el.innerHTML = '<div v-for="item in items" v-if="item < 3">{{item}}</div>'
-    new Vue({
+    new Braces({
       el: el,
       data: {
         items: [1, 2, 3]
@@ -100,7 +100,7 @@ describe('v-for', function () {
     el.innerHTML = '<div v-for="item in items">' +
           '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
         '</div>'
-    new Vue({
+    new Braces({
       el: el,
       data: {
         items: [
@@ -115,12 +115,31 @@ describe('v-for', function () {
     )
   })
 
+  it('nested loops - template', function () {
+    _.innerHTML(el, '<script type="x/template" v-for="item in items">' +
+          '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
+        '</script>')
+    new Braces({
+      el: el,
+      data: {
+        items: [
+          { items: [{a: 1}, {a: 2}], a: 1 },
+          { items: [{a: 3}, {a: 4}], a: 2 }
+        ]
+      }
+    })
+    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe(
+      '<p>0 1 0 1</p><p>1 2 0 1</p>' +
+      '<p>0 3 1 2</p><p>1 4 1 2</p>'
+    )
+  })
+
   it('nested loops on object', function () {
     el.innerHTML = '<div v-for="list in listHash">' +
           '{{$key}}' +
           '<p v-for="item in list">{{item.a}}</p>' +
         '</div>'
-    new Vue({
+    new Braces({
       el: el,
       data: {
         listHash: {
@@ -145,7 +164,7 @@ describe('v-for', function () {
 
   it('div loop', function () {
     el.innerHTML = '<div v-for="item in list"><p>{{item.a}}</p><p>{{item.a + 1}}</p></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         list: [
@@ -167,7 +186,7 @@ describe('v-for', function () {
 
   it('warn missing alias', function () {
     el.innerHTML = '<div v-for="items"></div>'
-    new Vue({
+    new Braces({
       el: el
     })
     expect(_.warn.msg).toContain('alias is required')
@@ -175,7 +194,7 @@ describe('v-for', function () {
 
   it('key val syntax with object', function () {
     el.innerHTML = '<div v-for="(key,val) in items">{{$index}} {{key}} {{val.a}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         items: {
@@ -189,7 +208,7 @@ describe('v-for', function () {
 
   it('key val syntax with array', function () {
     el.innerHTML = '<div v-for="(i, item) in items">{{i}} {{item.a}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         items: [{a: 1}, {a: 2}]
@@ -200,7 +219,7 @@ describe('v-for', function () {
 
   it('key val syntax with nested v-for s', function () {
     el.innerHTML = '<div v-for="(key,val) in items"><div v-for="(subkey,subval) in val">{{key}} {{subkey}} {{subval}}</div></div>'
-    new Vue({
+    new Braces({
       el: el,
       data: {
         items: {'a': {'b': 'c'}}
@@ -211,23 +230,23 @@ describe('v-for', function () {
 
   it('repeat number', function () {
     el.innerHTML = '<div v-for="n in 3">{{$index}} {{n}}</div>'
-    new Vue({
+    new Braces({
       el: el
     })
     expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>0 0</div><div>1 1</div><div>2 2</div>')
   })
 
   it('repeat string', function () {
-    el.innerHTML = '<div v-for="letter in \'vue\'">{{$index}} {{letter}}</div>'
-    new Vue({
+    el.innerHTML = '<div v-for="letter in \'braces\'">{{$index}} {{letter}}</div>'
+    new Braces({
       el: el
     })
-    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>0 v</div><div>1 u</div><div>2 e</div>')
+    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>0 b</div><div>1 r</div><div>2 a</div><div>3 c</div><div>4 e</div><div>5 s</div>')
   })
 
   it('teardown', function () {
     el.innerHTML = '<div v-for="item in items"></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         items: [{a: 1}, {a: 2}]
@@ -239,7 +258,7 @@ describe('v-for', function () {
 
   it('access parent scope\'s $els', function () {
     el.innerHTML = '<div data-d=1 v-el:a><div v-for="n in 2">{{ready ? 1 : 0}}</div></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         ready: true

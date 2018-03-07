@@ -1,7 +1,7 @@
-import Vue from './instance/vue'
+import Braces from './instance/braces'
 import installGlobalAPI from './global-api'
 
-installGlobalAPI(Vue)
-Vue.version = '1.0.26'
+installGlobalAPI(Braces)
+Braces.version = '1.0.26'
 
-export default Vue
+export default Braces

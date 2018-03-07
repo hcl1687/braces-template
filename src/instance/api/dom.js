@@ -7,16 +7,16 @@ import {
   remove
 } from '../../util/index'
 
-export default function (Vue) {
+export default function (Braces) {
   /**
    * Convenience on-instance nextTick. The callback is
    * auto-bound to the instance, and this avoids component
-   * modules having to rely on the global Vue.
+   * modules having to rely on the global Braces.
    *
    * @param {Function} fn
    */
 
-  Vue.prototype.$nextTick = function (fn) {
+  Braces.prototype.$nextTick = function (fn) {
     nextTick(fn, this)
   }
 
@@ -28,7 +28,7 @@ export default function (Vue) {
    * @param {Boolean} [withTransition] - defaults to true
    */
 
-  Vue.prototype.$appendTo = function (target, cb) {
+  Braces.prototype.$appendTo = function (target, cb) {
     return insert(
       this, target, cb, append
     )
@@ -42,7 +42,7 @@ export default function (Vue) {
    * @param {Boolean} [withTransition] - defaults to true
    */
 
-  Vue.prototype.$prependTo = function (target, cb) {
+  Braces.prototype.$prependTo = function (target, cb) {
     target = query(target)
     if (target.hasChildNodes()) {
       this.$before(target.firstChild, cb)
@@ -60,7 +60,7 @@ export default function (Vue) {
    * @param {Boolean} [withTransition] - defaults to true
    */
 
-  Vue.prototype.$before = function (target, cb) {
+  Braces.prototype.$before = function (target, cb) {
     return insert(
       this, target, cb, beforeWithCb
     )
@@ -74,7 +74,7 @@ export default function (Vue) {
    * @param {Boolean} [withTransition] - defaults to true
    */
 
-  Vue.prototype.$after = function (target, cb) {
+  Braces.prototype.$after = function (target, cb) {
     target = query(target)
     if (target.nextSibling) {
       this.$before(target.nextSibling, cb)
@@ -91,7 +91,7 @@ export default function (Vue) {
    * @param {Boolean} [withTransition] - defaults to true
    */
 
-  Vue.prototype.$remove = function (cb) {
+  Braces.prototype.$remove = function (cb) {
     if (!this.$el.parentNode) {
       return cb && cb()
     }
@@ -119,7 +119,7 @@ export default function (Vue) {
   /**
    * Shared DOM insertion function.
    *
-   * @param {Vue} vm
+   * @param {Braces} vm
    * @param {Element} target
    * @param {Function} [cb]
    * @param {Boolean} [withTransition]
@@ -166,7 +166,7 @@ export default function (Vue) {
    *
    * @param {Node} el
    * @param {Node} target
-   * @param {Vue} vm - unused
+   * @param {Braces} vm - unused
    * @param {Function} [cb]
    */
 
@@ -180,7 +180,7 @@ export default function (Vue) {
    *
    * @param {Node} el
    * @param {Node} target
-   * @param {Vue} vm - unused
+   * @param {Braces} vm - unused
    * @param {Function} [cb]
    */
 
@@ -193,7 +193,7 @@ export default function (Vue) {
    * Remove operation that takes a callback.
    *
    * @param {Node} el
-   * @param {Vue} vm - unused
+   * @param {Braces} vm - unused
    * @param {Function} [cb]
    */
 

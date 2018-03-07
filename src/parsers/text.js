@@ -91,7 +91,7 @@ export function parseText (text) {
  * into one single expression as '"a " + b + " c"'.
  *
  * @param {Array} tokens
- * @param {Vue} [vm]
+ * @param {Braces} [vm]
  * @return {String}
  */
 
@@ -109,7 +109,7 @@ export function tokensToExp (tokens, vm) {
  * Format a single token.
  *
  * @param {Object} token
- * @param {Vue} [vm]
+ * @param {Braces} [vm]
  * @param {Boolean} [single]
  * @return {String}
  */

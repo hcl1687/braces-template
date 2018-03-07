@@ -1,4 +1,4 @@
-var Vue = require('src')
+var Braces = require('src')
 var _ = require('src/util')
 
 describe('Data API', function () {
@@ -6,7 +6,7 @@ describe('Data API', function () {
   beforeEach(function () {
     var el = document.createElement('div')
     el.setAttribute('prop', 'foo')
-    vm = new Vue({
+    vm = new Braces({
       el: el,
       data: {
         a: 1,

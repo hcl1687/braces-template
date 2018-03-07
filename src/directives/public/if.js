@@ -16,7 +16,7 @@ export default {
 
   bind () {
     var el = this.el
-    if (!el.__vue__) {
+    if (!el.__braces__) {
       // check else block
       var next = nextElementSibling(el)
       if (next && getAttr(next, 'v-else') !== null) {

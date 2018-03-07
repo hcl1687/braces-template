@@ -1,4 +1,4 @@
-var Vue = require('src')
+var Braces = require('src')
 var _ = require('src/util')
 var textContent = _.textContent
 
@@ -11,7 +11,7 @@ describe('Instance Events', function () {
 
   describe('option events', function () {
     it('normal events', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         events: {
           test: spy,
           test2: [spy, spy]
@@ -24,7 +24,7 @@ describe('Instance Events', function () {
     })
 
     it('hook events', function () {
-      new Vue({
+      new Braces({
         events: {
           'hook:created': spy
         }
@@ -33,7 +33,7 @@ describe('Instance Events', function () {
     })
 
     it('method name strings', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         events: {
           test: 'doSomething',
           test2: 'doSomethingElse'
@@ -52,7 +52,7 @@ describe('Instance Events', function () {
   describe('hooks', function () {
     it('created', function () {
       var ctx
-      var vm = new Vue({
+      var vm = new Braces({
         created: function () {
           // can't assert this === vm here
           // because the constructor hasn't returned yet
@@ -65,7 +65,7 @@ describe('Instance Events', function () {
     })
 
     it('beforeDestroy', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         beforeDestroy: function () {
           expect(this).toBe(vm)
           expect(this._isDestroyed).toBe(false)
@@ -77,7 +77,7 @@ describe('Instance Events', function () {
     })
 
     it('destroyed', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         destroyed: function () {
           expect(this).toBe(vm)
           expect(this._isDestroyed).toBe(true)
@@ -89,7 +89,7 @@ describe('Instance Events', function () {
     })
 
     it('beforeCompile', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         data: { a: 1 },
         beforeCompile: function () {
           expect(this).toBe(vm)
@@ -105,7 +105,7 @@ describe('Instance Events', function () {
     })
 
     it('compiled', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         data: { a: 1 },
         compiled: function () {
           expect(this.$el).toBe(el)
@@ -120,7 +120,7 @@ describe('Instance Events', function () {
     })
 
     it('ready', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         ready: spy
       })
       expect(spy).not.toHaveBeenCalled()
@@ -133,7 +133,7 @@ describe('Instance Events', function () {
       // try mounting on something already in dom
       el = document.createElement('div')
       document.body.appendChild(el)
-        vm = new Vue({
+        vm = new Braces({
         el: el,
         ready: spy2
       })
@@ -145,7 +145,7 @@ describe('Instance Events', function () {
       it('in DOM', function () {
         var el = document.createElement('div')
         document.body.appendChild(el)
-        var parentVm = new Vue({
+        var parentVm = new Braces({
           el: el,
           attached: spy,
           detached: spy2
@@ -157,7 +157,7 @@ describe('Instance Events', function () {
 
       it('create then attach', function () {
         var el = document.createElement('div')
-        var parentVm = new Vue({
+        var parentVm = new Braces({
           el: el,
           attached: spy,
           detached: spy2

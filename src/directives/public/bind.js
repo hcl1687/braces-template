@@ -32,7 +32,7 @@ export default {
       ) {
         process.env.NODE_ENV !== 'production' && warn(
           attr + '="' + descriptor.raw + '": ' +
-          'attribute interpolation is not allowed in Vue.js ' +
+          'attribute interpolation is not allowed in Braces.js ' +
           'directives and special attributes.',
           this.vm
         )

@@ -1,9 +1,9 @@
-var Vue = require('src')
+var Braces = require('src')
 
 describe('Events API', function () {
   var vm, spy
   beforeEach(function () {
-    vm = new Vue()
+    vm = new Braces()
     spy = jasmine.createSpy('emitter')
   })
 

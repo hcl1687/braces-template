@@ -1,4 +1,4 @@
-var Vue = require('src')
+var Braces = require('src')
 var _ = require('src/util')
 var FragmentFactory = require('src/fragment/factory')
 var compiler = require('src/compiler')
@@ -31,7 +31,7 @@ describe('Compile', function () {
         })
       },
       $get: function (exp) {
-        return (new Vue()).$get(exp)
+        return (new Braces()).$get(exp)
       }
     }
   })
@@ -41,7 +41,7 @@ describe('Compile', function () {
     el.innerHTML = '<p v-a:hello.a.b="a" v-b="1">hello</p><div v-b.literal="foo"></div>'
     var defA = { priority: 1 }
     var defB = { priority: 2 }
-    var options = _.mergeOptions(Vue.options, {
+    var options = _.mergeOptions(Braces.options, {
       directives: {
         a: defA,
         b: defB
@@ -127,7 +127,7 @@ describe('Compile', function () {
       return descriptors[attr.name]
     })
 
-    var linker = compile(el, Vue.options)
+    var linker = compile(el, Braces.options)
     linker(vm, el)
     expect(bindDirSpy.calls.count()).toBe(3)
 
@@ -143,7 +143,7 @@ describe('Compile', function () {
   it('v-on shorthand', function () {
     el.innerHTML = '<div @click="a++"></div>'
     el = el.firstChild
-    var linker = compile(el, Vue.options)
+    var linker = compile(el, Braces.options)
     linker(vm, el)
     expect(bindDirSpy.calls.count()).toBe(1)
     var args = bindDirSpy.calls.argsFor(0)
@@ -157,8 +157,8 @@ describe('Compile', function () {
   it('text interpolation', function () {
     vm.b = 'yeah'
     el.innerHTML = '{{a}} and {{b}}'
-    var def = Vue.options.directives.text
-    var linker = compile(el, Vue.options)
+    var def = Braces.options.directives.text
+    var linker = compile(el, Braces.options)
     linker(vm, el)
     // expect 1 call because one-time bindings do not generate a directive.
     expect(bindDirSpy.calls.count()).toBe(2)
@@ -175,8 +175,8 @@ describe('Compile', function () {
     el.appendChild(document.createTextNode('{{a'))
     el.appendChild(document.createTextNode('}} and {{'))
     el.appendChild(document.createTextNode('b}}'))
-    var def = Vue.options.directives.text
-    var linker = compile(el, Vue.options)
+    var def = Braces.options.directives.text
+    var linker = compile(el, Braces.options)
     linker(vm, el)
     // expect 1 call because one-time bindings do not generate a directive.
     expect(bindDirSpy.calls.count()).toBe(2)
@@ -192,7 +192,7 @@ describe('Compile', function () {
     el.appendChild(document.createTextNode('a'))
     el.appendChild(document.createTextNode('b'))
     el.appendChild(document.createTextNode('c'))
-    var linker = compile(el, Vue.options)
+    var linker = compile(el, Braces.options)
     linker(vm, el)
     expect(el.innerHTML).toBe('abc')
   })
@@ -200,8 +200,8 @@ describe('Compile', function () {
   it('inline html', function () {
     vm.html = '<div>foo</div>'
     el.innerHTML = '{{{html}}} {{{html}}}'
-    var htmlDef = Vue.options.directives.html
-    var linker = compile(el, Vue.options)
+    var htmlDef = Braces.options.directives.html
+    var linker = compile(el, Braces.options)
     linker(vm, el)
     expect(bindDirSpy.calls.count()).toBe(2)
     var htmlArgs = bindDirSpy.calls.argsFor(0)
@@ -216,8 +216,8 @@ describe('Compile', function () {
     el.innerHTML =
       '<div v-for="item in items"><p v-a="b"></p></div>' + // v-for
       '<div v-pre><p v-a="b"></p></div>' // v-pre
-    var def = Vue.options.directives.for
-    var linker = compile(el, Vue.options)
+    var def = Braces.options.directives.for
+    var linker = compile(el, Braces.options)
     linker(vm, el)
     // expect 1 call because terminal should return early and let
     // the directive handle the rest.
@@ -232,9 +232,9 @@ describe('Compile', function () {
   it('custom terminal directives', function () {
     var defTerminal = {
       terminal: true,
-      priority: Vue.options.directives.if.priority + 1
+      priority: Braces.options.directives.if.priority + 1
     }
-    var options = _.mergeOptions(Vue.options, {
+    var options = _.mergeOptions(Braces.options, {
       directives: { term: defTerminal }
     })
     el.innerHTML = '<div v-term:arg1.modifier1.modifier2="foo"></div>'
@@ -254,9 +254,9 @@ describe('Compile', function () {
   it('custom terminal directives priority', function () {
     var defTerminal = {
       terminal: true,
-      priority: Vue.options.directives.if.priority + 1
+      priority: Braces.options.directives.if.priority + 1
     }
-    var options = _.mergeOptions(Vue.options, {
+    var options = _.mergeOptions(Braces.options, {
       directives: { term: defTerminal }
     })
     el.innerHTML = '<div v-term:arg1 v-if="ok"></div>'
@@ -280,7 +280,7 @@ describe('Compile', function () {
     el2.innerHTML = '{{b}}'
     vm.a = 'A'
     vm.b = 'B'
-    var linker = compile(frag, Vue.options)
+    var linker = compile(frag, Braces.options)
     linker(vm, frag)
     expect(el.innerHTML).toBe(' ')
     expect(el2.innerHTML).toBe(' ')
@@ -288,7 +288,7 @@ describe('Compile', function () {
 
   it('partial compilation', function () {
     el.innerHTML = '<div v-bind:test="abc">{{bcd}}<p v-show="ok"></p></div>'
-    var linker = compile(el, Vue.options, true)
+    var linker = compile(el, Braces.options, true)
     var decompile = linker(vm, el)
     expect(vm._directives.length).toBe(3)
     decompile()
@@ -298,14 +298,14 @@ describe('Compile', function () {
 
   it('skip script tags', function () {
     el.innerHTML = '<script type="x/template">{{test}}</script>'
-    var linker = compile(el, Vue.options)
+    var linker = compile(el, Braces.options)
     linker(vm, el)
     expect(bindDirSpy.calls.count()).toBe(0)
   })
 
   it('attribute interpolation', function () {
     el.innerHTML = '<div id="{{a}}" class="b bla-{{c}} d"></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         a: 'aaa',
@@ -318,7 +318,7 @@ describe('Compile', function () {
 
   it('attribute interpolation: special cases', function () {
     el.innerHTML = '<label for="{{a}}" data-test="{{b}}"></label><form accept-charset="{{c}}"></form>'
-    new Vue({
+    new Braces({
       el: el,
       data: {
         a: 'aaa',
@@ -337,19 +337,19 @@ describe('Compile', function () {
 
   it('attribute interpolation: warn invalid', function () {
     el.innerHTML = '<div v-text="{{a}}"></div>'
-    new Vue({
+    new Braces({
       el: el,
       data: {
         a: '123'
       }
     })
     expect(el.innerHTML.toLowerCase()).toBe('<div></div>')
-    expect(_.warn.msg).toContain('attribute interpolation is not allowed in Vue.js directives')
+    expect(_.warn.msg).toContain('attribute interpolation is not allowed in Braces.js directives')
   })
 
   it('attribute interpolation: warn mixed usage with v-bind', function () {
     el.innerHTML = '<div class="{{a}}" :class="bcd"></div>'
-    new Vue({
+    new Braces({
       el: el,
       data: {
         a: 'foo'
@@ -360,13 +360,13 @@ describe('Compile', function () {
 
   it('should compile custom terminal directive wihtout loop', function () {
     el.innerHTML = '<p v-if="show" v-inject:modal.modifier1="foo">hello world</p>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: { show: true },
       directives: {
         inject: {
           terminal: true,
-          priority: Vue.options.directives.if.priority + 1,
+          priority: Braces.options.directives.if.priority + 1,
           bind: function () {
             this.anchor = _.createAnchor('v-inject')
             _.replace(this.el, this.anchor)

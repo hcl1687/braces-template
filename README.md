@@ -30,7 +30,7 @@ Braces-template has been designed to work in IE8 and other browsers that are ES5
 - custom tag
     - no support custom tag
 - a.true should be replaced by a['true']
-    - true is a keyworld in javascript. using dot notaion 'true' will throw an error.
+    - true is a keyworld in javascript. using dot notaion 'true' will throw an error in IE8.
 
 ## License
 [MIT](https://opensource.org/licenses/mit-license.php)

@@ -9,7 +9,7 @@ import eventsAPI from './api/events'
 import lifecycleAPI from './api/lifecycle'
 
 /**
- * The exposed Vue constructor.
+ * The exposed Braces constructor.
  *
  * API conventions:
  * - public API methods/properties are prefixed with `$`
@@ -22,20 +22,20 @@ import lifecycleAPI from './api/lifecycle'
  * @public
  */
 
-function Vue (options) {
+function Braces (options) {
   this._init(options)
 }
 
 // install internals
-initMixin(Vue)
-stateMixin(Vue)
-eventsMixin(Vue)
-lifecycleMixin(Vue)
+initMixin(Braces)
+stateMixin(Braces)
+eventsMixin(Braces)
+lifecycleMixin(Braces)
 
 // install instance APIs
-dataAPI(Vue)
-domAPI(Vue)
-eventsAPI(Vue)
-lifecycleAPI(Vue)
+dataAPI(Braces)
+domAPI(Braces)
+eventsAPI(Braces)
+lifecycleAPI(Braces)
 
-export default Vue
+export default Braces

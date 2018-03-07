@@ -1,4 +1,4 @@
-var Vue = require('src')
+var Braces = require('src')
 var _ = require('src/util')
 
 describe('DOM API', function () {
@@ -12,7 +12,7 @@ describe('DOM API', function () {
     parent.appendChild(target)
     parent.appendChild(sibling)
     var el = document.createElement('div')
-    vm = new Vue({ el: el })
+    vm = new Braces({ el: el })
   })
 
   describe('$appendTo', function () {

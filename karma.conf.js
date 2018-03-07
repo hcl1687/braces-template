@@ -55,7 +55,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['IE8', 'PhantomJS', 'Chrome'], // PhantomJS, Chrome, IE
+    browsers: ['PhantomJS', 'Chrome', 'IE8'], // PhantomJS, Chrome, IE
 
     customLaunchers: {
       IEEDGE: {
@@ -88,7 +88,7 @@ module.exports = function (config) {
         type: 'text-summary'
       }, {
         type: 'html'
-      },{
+      }, {
         type: 'lcov',
         subdir: 'lcov'
       }],

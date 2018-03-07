@@ -5,7 +5,7 @@ import {
   bind
 } from '../../util/index'
 
-export default function (Vue) {
+export default function (Braces) {
   /**
    * Setup the scope of an instance, which contains:
    * - observed data
@@ -14,7 +14,7 @@ export default function (Vue) {
    * - meta properties
    */
 
-  Vue.prototype._initState = function () {
+  Braces.prototype._initState = function () {
     this._initMethods()
     this._initData()
   }
@@ -23,7 +23,7 @@ export default function (Vue) {
    * Initialize the data.
    */
 
-  Vue.prototype._initData = function () {
+  Braces.prototype._initData = function () {
     var dataFn = this.$options.data
     var data = this._data = dataFn ? dataFn() : {}
     if (!isPlainObject(data)) {
@@ -51,7 +51,7 @@ export default function (Vue) {
    * @param {String} key
    */
 
-  Vue.prototype._proxy = function (key) {
+  Braces.prototype._proxy = function (key) {
     if (!isReserved(key)) {
       // need to store ref to self here
       // because these getter/setters might
@@ -67,7 +67,7 @@ export default function (Vue) {
    * @param {String} key
    */
 
-  Vue.prototype._unproxy = function (key) {
+  Braces.prototype._unproxy = function (key) {
     if (!isReserved(key)) {
       delete this[key]
     }
@@ -79,7 +79,7 @@ export default function (Vue) {
    * child components.
    */
 
-  Vue.prototype._initMethods = function () {
+  Braces.prototype._initMethods = function () {
     var methods = this.$options.methods
     if (methods) {
       for (var key in methods) {

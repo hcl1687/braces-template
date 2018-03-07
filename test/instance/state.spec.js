@@ -1,9 +1,9 @@
-var Vue = require('src')
+var Braces = require('src')
 var _ = require('src/util')
 
 describe('Instance state initialization', function () {
   it('should warn data functions that do not return an object', function () {
-    new Vue({
+    new Braces({
       data: function () {}
     })
     expect(_.warn.msg).toContain('should return an object')
@@ -11,7 +11,7 @@ describe('Instance state initialization', function () {
 
   it('should initialize data once per strat', function () {
     var spyOncePerStrat = jasmine.createSpy('called once per strat')
-    new Vue({
+    new Braces({
       data: function () {
         spyOncePerStrat()
         return {
@@ -27,7 +27,7 @@ describe('Instance state initialization', function () {
       a: 0,
       b: 0
     }
-    var vm = new Vue({
+    var vm = new Braces({
       data: data
     })
 
@@ -39,13 +39,13 @@ describe('Instance state initialization', function () {
 
   describe('methods', function () {
     it('should work and have correct context', function () {
-      var vm = new Vue({
+      var vm = new Braces({
         data: {
           a: 1
         },
         methods: {
           test: function () {
-            expect(this instanceof Vue).toBe(true)
+            expect(this instanceof Braces).toBe(true)
             return this.a
           }
         }

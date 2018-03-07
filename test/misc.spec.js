@@ -1,12 +1,12 @@
 // test cases for edge cases & bug fixes
-var  Vue = require('src')
+var  Braces = require('src')
 var _ = require('src/util')
 var textContent = _.textContent
 
 describe('Misc', function () {
   it('should handle directive.bind() altering its childNode structure', function () {
     var div = document.createElement('div')
-    var vm = new Vue({
+    var vm = new Braces({
       el: div,
       template: '<div v-test>{{test}}</div>',
       data: {
@@ -30,7 +30,7 @@ describe('Misc', function () {
     var svg = document.createElement('svg')
     svg.innerHTML = '<g v-for="n in list"><text>{{n}}</text></g>'
     el.appendChild(svg)
-    new Vue({
+    new Braces({
       el: el,
       data: {
         list: [1, 2, 3]
@@ -48,7 +48,7 @@ describe('Misc', function () {
   it('handle interpolated textarea', function () {
     var el = document.createElement('div')
     el.innerHTML = '<textarea>hello {{msg}}</textarea>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         msg: 'test'
@@ -73,7 +73,7 @@ describe('Misc', function () {
       'bound'
     ]
 
-    new Vue({
+    new Braces({
       el: el,
       data: {
         title: 'bound'
@@ -96,7 +96,7 @@ describe('Misc', function () {
   it('template v-for with v-if', function () {
     var el = document.createElement('div')
     el.innerHTML = '<div><div v-for="n in 6" v-if="n % 2">{{ n }}</div></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el
     })
     expect(textContent(vm.$el).replace(/\r\n/g, '')).toBe('135')

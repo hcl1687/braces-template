@@ -31,7 +31,7 @@ import { parseExpression, isSimplePath } from './parsers/expression'
  *                 - {String} [ref]
  *                 - {Array<Object>} [interp]
  *                 - {Boolean} [hasOneTime]
- * @param {Vue} vm
+ * @param {Braces} vm
  * @param {Node} el
  * @param {Object} [scope] - v-for scope
  * @param {Fragment} [frag] - owner fragmen
@@ -56,8 +56,8 @@ export default function Directive (descriptor, vm, el, scope, frag) {
   this._frag = frag
   // store directives on node in dev mode
   if (process.env.NODE_ENV !== 'production' && this.el && this.el.nodeType !== 3) {
-    this.el._vue_directives = this.el._vue_directives || []
-    this.el._vue_directives.push(this)
+    this.el._braces_directives = this.el._braces_directives || []
+    this.el._braces_directives.push(this)
   }
 }
 
@@ -283,7 +283,7 @@ Directive.prototype._teardown = function () {
     }
 
     if (process.env.NODE_ENV !== 'production' && this.el && this.el.nodeType !== 3) {
-      arrRemove(this.el._vue_directives, this)
+      arrRemove(this.el._braces_directives, this)
     }
     this.vm = this.el = this._listeners = null
   }

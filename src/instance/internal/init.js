@@ -2,7 +2,7 @@ import { mergeOptions } from '../../util/index'
 
 let uid = 0
 
-export default function (Vue) {
+export default function (Braces) {
   /**
    * The main init sequence. This is called for every
    * instance, including ones that are created from extended
@@ -14,7 +14,7 @@ export default function (Vue) {
    *                           in to the constructor.
    */
 
-  Vue.prototype._init = function (options) {
+  Braces.prototype._init = function (options) {
     options = options || {}
 
     this.$el = null
@@ -29,7 +29,7 @@ export default function (Vue) {
     this._uid = uid++
 
     // a flag to avoid this being observed
-    this._isVue = true
+    this._isBraces = true
 
     // events bookkeeping
     this._events = {}            // registered callbacks

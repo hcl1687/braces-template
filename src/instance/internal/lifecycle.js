@@ -14,7 +14,7 @@ import {
   compile
 } from '../../compiler/index'
 
-export default function (Vue) {
+export default function (Braces) {
   /**
    * Transclude, compile and link element.
    *
@@ -27,7 +27,7 @@ export default function (Vue) {
    * @param {Element} el
    */
 
-  Vue.prototype._compile = function (el) {
+  Braces.prototype._compile = function (el) {
     var options = this.$options
 
     // transclude and init element
@@ -71,7 +71,7 @@ export default function (Vue) {
    * @return {Element|DocumentFragment}
    */
 
-  Vue.prototype._transclude = function (el, options) {
+  Braces.prototype._transclude = function (el, options) {
     // for template tags, what we want is its content as
     // a documentFragment (for fragment instances)
     if (isTemplate(el)) {
@@ -100,7 +100,7 @@ export default function (Vue) {
    * @param {Element} el
    */
 
-  Vue.prototype._initElement = function (el) {
+  Braces.prototype._initElement = function (el) {
     if (isIE8) {
       var content = el.innerHTML.toLowerCase()
       // no support svg in ie8
@@ -122,7 +122,7 @@ export default function (Vue) {
     }
 
     this.$el = el
-    this.$el.__vue__ = this
+    this.$el.__braces__ = this
     this._callHook('beforeCompile')
   }
 
@@ -135,7 +135,7 @@ export default function (Vue) {
    * @param {Fragment} [frag] - owner fragment
    */
 
-  Vue.prototype._bindDir = function (descriptor, node, scope, frag) {
+  Braces.prototype._bindDir = function (descriptor, node, scope, frag) {
     this._directives.push(
       new Directive(descriptor, this, node, scope, frag)
     )
@@ -150,7 +150,7 @@ export default function (Vue) {
    *                                 be called later
    */
 
-  Vue.prototype._destroy = function (remove, deferCleanup) {
+  Braces.prototype._destroy = function (remove, deferCleanup) {
     if (this._isBeingDestroyed) {
       if (!deferCleanup) {
         this._cleanup()
@@ -190,7 +190,7 @@ export default function (Vue) {
     }
     // remove reference to self on $el
     if (this.$el) {
-      this.$el.__vue__ = null
+      this.$el.__braces__ = null
     }
 
     destroyReady = true
@@ -203,7 +203,7 @@ export default function (Vue) {
    * is any.
    */
 
-  Vue.prototype._cleanup = function () {
+  Braces.prototype._cleanup = function () {
     if (this._isDestroyed) {
       return
     }

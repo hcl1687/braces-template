@@ -1,5 +1,5 @@
 var _ = require('src/util')
-var Vue = require('src')
+var Braces = require('src')
 var merge = _.mergeOptions
 var resolveAsset = _.resolveAsset
 var __ = require('src/util/debug')

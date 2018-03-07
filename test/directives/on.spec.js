@@ -1,5 +1,5 @@
 var _ = require('src/util')
-var Vue = require('src')
+var Braces = require('src')
 
 function trigger (target, event, process) {
   var e
@@ -28,7 +28,7 @@ describe('v-on', function () {
   it('methods', function () {
     el.innerHTML = '<a v-on:click="test"></a>'
     var spy = jasmine.createSpy()
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {a: 1},
       methods: {
@@ -46,7 +46,7 @@ describe('v-on', function () {
   it('shorthand', function () {
     el.innerHTML = '<a @click="test"></a>'
     var spy = jasmine.createSpy()
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {a: 1},
       methods: {
@@ -63,7 +63,7 @@ describe('v-on', function () {
 
   it('with key modifier', function (done) {
     el.innerHTML = '<a v-on:keyup.enter="test">{{a}}</a>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {a: 1, b: 1},
       methods: {
@@ -84,7 +84,7 @@ describe('v-on', function () {
 
   it('with delete modifier capturing DEL', function (done) {
     el.innerHTML = '<a v-on:keyup.delete="test">{{a}}</a>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {a: 1, b: 1},
       methods: {
@@ -105,7 +105,7 @@ describe('v-on', function () {
 
   it('with delete modifier capturing backspace', function (done) {
     el.innerHTML = '<a v-on:keyup.delete="test">{{a}}</a>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {a: 1, b: 1},
       methods: {
@@ -126,7 +126,7 @@ describe('v-on', function () {
 
   it('with key modifier (keycode)', function (done) {
     el.innerHTML = '<a v-on:keyup.13="test">{{a}}</a>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {a: 1, b: 1},
       methods: {
@@ -147,7 +147,7 @@ describe('v-on', function () {
 
   it('with key modifier (letter)', function (done) {
     el.innerHTML = '<a v-on:keyup.a="test">{{a}}</a>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {a: 1, b: 1},
       methods: {
@@ -170,7 +170,7 @@ describe('v-on', function () {
     var outer = jasmine.createSpy('outer')
     var inner = jasmine.createSpy('inner')
     el.innerHTML = '<div @click="outer"><div class="inner" @click.stop="inner"></div></div>'
-    new Vue({
+    new Braces({
       el: el,
       methods: {
         outer: outer,
@@ -185,7 +185,7 @@ describe('v-on', function () {
   it('prevent modifier', function () {
     var prevented
     el.innerHTML = '<a href="#" @click.prevent="onClick">'
-    new Vue({
+    new Braces({
       el: el,
       methods: {
         onClick: function (e) {
@@ -206,7 +206,7 @@ describe('v-on', function () {
 
   it('prevent modifier with no value', function () {
     el.innerHTML = '<a href="#123" @click.prevent>'
-    new Vue({
+    new Braces({
       el: el
     })
     var hash = window.location.hash
@@ -219,7 +219,7 @@ describe('v-on', function () {
     var outer = jasmine.createSpy('outer')
     var inner = jasmine.createSpy('inner')
     el.innerHTML = '<div @click.capture.stop="outer"><div class="inner" @click="inner"></div></div>'
-    new Vue({
+    new Braces({
       el: el,
       methods: {
         outer: outer,
@@ -239,7 +239,7 @@ describe('v-on', function () {
   it('self modifier', function () {
     var outer = jasmine.createSpy('outer')
     el.innerHTML = '<div class="outer" @click.self="outer"><div class="inner"></div></div>'
-    new Vue({
+    new Braces({
       el: el,
       methods: {
         outer: outer
@@ -255,7 +255,7 @@ describe('v-on', function () {
     var outer = jasmine.createSpy('outer')
     var prevented
     el.innerHTML = '<div @keyup="outer"><input class="inner" @keyup.enter.stop.prevent="inner"></div></div>'
-    new Vue({
+    new Braces({
       el: el,
       methods: {
         outer: outer,
@@ -277,7 +277,7 @@ describe('v-on', function () {
 
   it('warn non-function values', function () {
     el.innerHTML = '<a v-on:keyup="test"></a>'
-    new Vue({
+    new Braces({
       el: el,
       data: { test: 123 }
     })
@@ -290,7 +290,7 @@ describe('v-on', function () {
     document.body.appendChild(el)
     var spy = jasmine.createSpy()
     el.innerHTML = '<iframe v-on:click="test"></iframe>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       methods: {
         test: spy
@@ -314,7 +314,7 @@ describe('v-on', function () {
   it('passing $event', function () {
     var test = jasmine.createSpy()
     el.innerHTML = '<a v-on:click="test($event)"></a>'
-    new Vue({
+    new Braces({
       el: el,
       methods: {
         test: test

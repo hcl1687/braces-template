@@ -1,5 +1,5 @@
-var Vue = require('src')
-var init = Vue.prototype._init
+var Braces = require('src')
+var init = Braces.prototype._init
 
 describe('Instance Init', function () {
   var stub = {

@@ -1,7 +1,7 @@
 var _ = require('src/util')
-var Vue = require('src')
+var Braces = require('src')
 var config = require('src/config')
-var warnPrefix = '[Vue warn]: '
+var warnPrefix = '[Braces warn]: '
 if (typeof console !== 'undefined') {
   var oldError = console['error']
   describe('Util - Debug', function () {
@@ -27,7 +27,7 @@ if (typeof console !== 'undefined') {
 
     it('format component name', function () {
       config.silent = false
-      _.warn('oops', new Vue({ name: 'foo' }))
+      _.warn('oops', new Braces({ name: 'foo' }))
       expect(console.error).toHaveBeenCalledWith(warnPrefix + 'oops (found in component: <foo>)')
       _.warn('oops', { name: 'bar' })
       expect(console.error).toHaveBeenCalledWith(warnPrefix + 'oops (found in component: <bar>)')

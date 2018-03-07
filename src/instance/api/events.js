@@ -1,6 +1,6 @@
 import { toArray } from '../../util/index'
 
-export default function (Vue) {
+export default function (Braces) {
   /**
    * Listen on the given `event` with `fn`.
    *
@@ -8,7 +8,7 @@ export default function (Vue) {
    * @param {Function} fn
    */
 
-  Vue.prototype.$on = function (event, fn) {
+  Braces.prototype.$on = function (event, fn) {
     (this._events[event] || (this._events[event] = []))
       .push(fn)
     return this
@@ -22,7 +22,7 @@ export default function (Vue) {
    * @param {Function} fn
    */
 
-  Vue.prototype.$once = function (event, fn) {
+  Braces.prototype.$once = function (event, fn) {
     var self = this
     function on () {
       self.$off(event, on)
@@ -41,7 +41,7 @@ export default function (Vue) {
    * @param {Function} fn
    */
 
-  Vue.prototype.$off = function (event, fn) {
+  Braces.prototype.$off = function (event, fn) {
     var cbs
     // all
     if (!arguments.length) {
@@ -77,7 +77,7 @@ export default function (Vue) {
    * @return {Boolean} shouldPropagate
    */
 
-  Vue.prototype.$emit = function (event) {
+  Braces.prototype.$emit = function (event) {
     var isSource = typeof event === 'string'
     event = isSource
       ? event

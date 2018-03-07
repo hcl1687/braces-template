@@ -9,14 +9,14 @@ if (process.env.NODE_ENV !== 'production') {
 
   warn = (msg, vm) => {
     if (hasConsole && (!config.silent)) {
-      const res = '[Vue warn]: ' + msg + (vm ? formatComponentName(vm) : '')
+      const res = '[Braces warn]: ' + msg + (vm ? formatComponentName(vm) : '')
       warn.msg = res
       console.error(res)
     }
   }
 
   formatComponentName = vm => {
-    var name = vm._isVue ? vm.$options.name : vm.name
+    var name = vm._isBraces ? vm.$options.name : vm.name
     return name
       ? ' (found in component: <' + hyphenate(name) + '>)'
       : ''

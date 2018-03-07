@@ -1,5 +1,5 @@
 var _ = require('src/util')
-var Vue = require('src')
+var Braces = require('src')
 var textContent = _.textContent
 
 describe('el', function () {
@@ -10,7 +10,7 @@ describe('el', function () {
 
   it('normal', function () {
     el.innerHTML = '<div v-if="ok" v-el:test-el id="test"></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         ok: true
@@ -21,7 +21,7 @@ describe('el', function () {
 
   it('aside v-if', function () {
     el.innerHTML = '<div v-if="ok" v-el:test-el id="test"></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         ok: false
@@ -32,7 +32,7 @@ describe('el', function () {
 
   it('inside v-for', function () {
     el.innerHTML = '<div v-for="n in items"><p v-el:test>{{n}}</p>{{textContent($els.test)}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: { items: [1, 2] },
       methods: {

@@ -1,5 +1,5 @@
 var _ = require('src/util')
-var Vue = require('src')
+var Braces = require('src')
 var textContent = _.textContent
 
 describe('v-if', function () {
@@ -10,7 +10,7 @@ describe('v-if', function () {
 
   it('normal-false', function () {
     el.innerHTML = '<div v-if="test"><div :a="a"></div></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: { test: false, a: 'A' }
     })
@@ -19,7 +19,7 @@ describe('v-if', function () {
 
   it('normal-true', function () {
     el.innerHTML = '<div v-if="test"><div id="a" :a="a"></div></div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: { test: true, a: 'A' }
     })
@@ -34,7 +34,7 @@ describe('v-if', function () {
 
   it('v-if with different truthy values', function () {
     el.innerHTML = '<div v-if="a">{{a}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         a: 1
@@ -45,7 +45,7 @@ describe('v-if', function () {
 
   it('invalid warn', function () {
     el.setAttribute('v-if', 'test')
-    new Vue({
+    new Braces({
       el: el
     })
     expect(_.warn.msg).toContain('cannot be used on an instance root element')
@@ -53,7 +53,7 @@ describe('v-if', function () {
 
   it('if + else', function () {
     el.innerHTML = '<div v-if="test">{{a}}</div><div v-else>{{b}}</div>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: { test: false, a: 'A', b: 'B' }
     })
@@ -61,7 +61,7 @@ describe('v-if', function () {
 
     var el1 = document.createElement('div')
     el1.innerHTML = '<div v-if="test">{{a}}</div><div v-else>{{b}}</div>'
-    vm = new Vue({
+    vm = new Braces({
       el: el1,
       data: { test: true, a: 'A', b: 'B' }
     })

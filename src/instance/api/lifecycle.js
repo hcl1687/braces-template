@@ -1,7 +1,7 @@
 import { warn, query, inDoc } from '../../util/index'
 import { compile } from '../../compiler/index'
 
-export default function (Vue) {
+export default function (Braces) {
   /**
    * Set instance target element and kick off the compilation
    * process. The passed in `el` can be a selector string, an
@@ -12,7 +12,7 @@ export default function (Vue) {
    * @public
    */
 
-  Vue.prototype.$mount = function (el) {
+  Braces.prototype.$mount = function (el) {
     if (this._isCompiled) {
       process.env.NODE_ENV !== 'production' && warn(
         '$mount() should be called only once.',
@@ -53,7 +53,7 @@ export default function (Vue) {
    * @param {Boolean} deferCleanup
    */
 
-  Vue.prototype.$destroy = function (remove, deferCleanup) {
+  Braces.prototype.$destroy = function (remove, deferCleanup) {
     this._destroy(remove, deferCleanup)
   }
 
@@ -67,7 +67,7 @@ export default function (Vue) {
    * @return {Function}
    */
 
-  Vue.prototype.$compile = function (el, scope, frag) {
+  Braces.prototype.$compile = function (el, scope, frag) {
     return compile(el, this.$options, true)(
       this, el, scope, frag
     )

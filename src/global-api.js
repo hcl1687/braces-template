@@ -19,17 +19,17 @@ import {
   isPlainObject
 } from './util/index'
 
-export default function (Vue) {
+export default function (Braces) {
   /**
-   * Vue and every constructor that extends Vue has an
+   * Braces and every constructor that extends Braces has an
    * associated options object, which can be accessed during
    * compilation steps as `this.constructor.options`.
    *
    * These can be seen as the default options of every
-   * Vue instance.
+   * Braces instance.
    */
 
-  Vue.options = {
+  Braces.options = {
     directives,
     replace: true
   }
@@ -38,17 +38,17 @@ export default function (Vue) {
    * Expose useful internals
    */
 
-  Vue.util = util
-  Vue.config = config
-  Vue.nextTick = nextTick
+  Braces.util = util
+  Braces.config = config
+  Braces.nextTick = nextTick
 
   /**
    * The following are exposed for advanced usage / plugins
    */
 
-  Vue.compiler = compiler
-  Vue.FragmentFactory = FragmentFactory
-  Vue.parsers = {
+  Braces.compiler = compiler
+  Braces.FragmentFactory = FragmentFactory
+  Braces.parsers = {
     path,
     text,
     template,
@@ -57,12 +57,12 @@ export default function (Vue) {
   }
 
   /**
-   * Each instance constructor, including Vue, has a unique
+   * Each instance constructor, including Braces, has a unique
    * cid. This enables us to create wrapped "child
    * constructors" for prototypal inheritance and cache them.
    */
 
-  Vue.cid = 0
+  Braces.cid = 0
   var cid = 1
 
   /**
@@ -74,7 +74,7 @@ export default function (Vue) {
    */
 
   config._assetTypes.forEach(function (type) {
-    Vue[type] = function (id, definition) {
+    Braces[type] = function (id, definition) {
       if (!definition) {
         return this.options[type + 's'][id]
       } else {

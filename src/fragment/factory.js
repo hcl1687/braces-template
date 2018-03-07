@@ -10,7 +10,7 @@ const linkerCache = new Cache(5000)
  * A factory that can be used to create instances of a
  * fragment. Caches the compiled linker if possible.
  *
- * @param {Vue} vm
+ * @param {Braces} vm
  * @param {Element|String} el
  */
 

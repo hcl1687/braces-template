@@ -329,7 +329,8 @@ function isTrimmable (node) {
 
 export function isTemplate (el) {
   return el.tagName &&
-    el.tagName.toLowerCase() === 'template'
+    (el.tagName.toLowerCase() === 'template' ||
+      el.tagName.toLowerCase() === 'script' && el.type === 'x/template')
 }
 
 /**
@@ -349,7 +350,7 @@ export function isTemplate (el) {
  *                            templates.
  * @return {Comment|Text}
  */
-var ANCHOR_MARK = '__VUE__ANCHOR_MARK__VUE__'
+var ANCHOR_MARK = '__BRACES__ANCHOR_MARK__BRACES__'
 export function createAnchor (content, persist) {
   var anchor = config.debug
     ? document.createComment(content)
@@ -405,7 +406,7 @@ export function mapNodeRange (node, end, op) {
  *
  * @param {Node} start
  * @param {Node} end
- * @param {Vue} vm
+ * @param {Braces} vm
  * @param {DocumentFragment} frag
  * @param {Function} cb
  */
@@ -596,7 +597,7 @@ export function innerHTML (el, val) {
   }
 
   // https://allofetechnical.wordpress.com/2010/05/21/ies-innerhtml-method-with-script-and-style-tags/
-  var selector = '__VUE__INNERHTML_MARK__VUE__'
+  var selector = '__BRACES__INNERHTML_MARK__BRACES__'
   var prefix = '<div class="' + selector + '" style="display:none;">&nbsp;</div>'
   var scriptStyleTagRE = /(<script|<style)/ig
   val = val.replace(scriptStyleTagRE, function($1) {

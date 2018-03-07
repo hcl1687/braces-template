@@ -1,4 +1,4 @@
-import Vue from '../instance/vue'
+import Braces from '../instance/braces'
 import config from '../config'
 import {
   extend,
@@ -18,7 +18,7 @@ import { warn } from './debug'
  *
  * @param {*} parentVal
  * @param {*} childVal
- * @param {Vue} [vm]
+ * @param {Braces} [vm]
  */
 
 var strats = config.optionMergeStrategies = Object.create(null)
@@ -47,7 +47,7 @@ function mergeData (to, from) {
 
 strats.data = function (parentVal, childVal, vm) {
   if (!vm) {
-    // in a Vue.extend merge, both should be functions
+    // in a Braces.extend merge, both should be functions
     if (!childVal) {
       return parentVal
     }
@@ -240,7 +240,7 @@ function guardArrayAssets (assets) {
  *
  * @param {Object} parent
  * @param {Object} child
- * @param {Vue} [vm] - if vm is present, indicates this is
+ * @param {Braces} [vm] - if vm is present, indicates this is
  *                     an instantiation merge.
  */
 

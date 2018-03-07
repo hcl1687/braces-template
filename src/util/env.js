@@ -8,7 +8,7 @@ export const inBrowser =
   typeof window !== 'undefined'// && Object.prototype.toString.call(window) !== '[object Object]'
 
 // detect devtools
-export const devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__
+export const devtools = inBrowser && window.__BRACES_DEVTOOLS_GLOBAL_HOOK__
 
 // UA sniffing for working around browser-specific quirks
 const UA = inBrowser && window.navigator.userAgent.toLowerCase()

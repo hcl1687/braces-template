@@ -1,7 +1,7 @@
 import { toArray } from '../../util/index'
 import { parseExpression } from '../../parsers/expression'
 
-export default function (Vue) {
+export default function (Braces) {
   /**
    * Get the value from an expression on this vm.
    *
@@ -10,7 +10,7 @@ export default function (Vue) {
    * @return {*}
    */
 
-  Vue.prototype.$get = function (exp, asStatement) {
+  Braces.prototype.$get = function (exp, asStatement) {
     var res = parseExpression(exp)
     if (res) {
       if (asStatement) {

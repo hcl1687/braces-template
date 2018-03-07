@@ -1,4 +1,4 @@
-var Vue = require('src')
+var Braces = require('src')
 var def = require('src/directives/public/show')
 
 describe('v-show', function () {
@@ -17,7 +17,7 @@ describe('v-show', function () {
       el: el,
       update: def.update,
       apply: def.apply,
-      vm: new Vue()
+      vm: new Braces()
     }
     dir.update(false)
     expect(el.style.display).toBe('none')
@@ -27,7 +27,7 @@ describe('v-show', function () {
 
   it('should work with v-else', function () {
     el.innerHTML = '<p v-show="ok">YES</p><p v-else>NO</p>'
-    var vm = new Vue({
+    var vm = new Braces({
       el: el,
       data: {
         ok: true
@@ -38,7 +38,7 @@ describe('v-show', function () {
 
     var el1 = document.createElement('div')
     el1.innerHTML = '<p v-show="ok">YES</p><p v-else>NO</p>'
-    vm = new Vue({
+    vm = new Braces({
       el: el1,
       data: {
         ok: false

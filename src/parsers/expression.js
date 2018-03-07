@@ -146,7 +146,7 @@ function makeGetterFn (body) {
       /* istanbul ignore if */
       if (e.toString().match(/unsafe-eval|CSP/)) {
         warn(
-          'It seems you are using the default build of Vue.js in an environment ' +
+          'It seems you are using the default build of Braces.js in an environment ' +
           'with Content Security Policy that prohibits unsafe-eval. ' +
           'Use the CSP-compliant build instead: ' +
           'http://vuejs.org/guide/installation.html#CSP-compliant-build'

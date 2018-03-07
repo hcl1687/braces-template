@@ -15,7 +15,7 @@ import {
  * Can optionally compile content with a child scope.
  *
  * @param {Function} linker
- * @param {Vue} vm
+ * @param {Braces} vm
  * @param {DocumentFragment} frag
  * @param {Object} [scope]
  * @param {Fragment} [parentFrag]
@@ -175,9 +175,9 @@ Fragment.prototype.destroy = function () {
 }
 
 /**
- * Call attach hook for a Vue instance.
+ * Call attach hook for a Braces instance.
  *
- * @param {Vue} child
+ * @param {Braces} child
  */
 
 function attach (child) {
@@ -187,9 +187,9 @@ function attach (child) {
 }
 
 /**
- * Call detach hook for a Vue instance.
+ * Call detach hook for a Braces instance.
  *
- * @param {Vue} child
+ * @param {Braces} child
  */
 
 function detach (child) {
