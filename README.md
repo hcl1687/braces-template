@@ -1,31 +1,36 @@
-# braces-template
-
 [![Build](https://img.shields.io/travis/hcl1687/braces-template.svg)](https://travis-ci.org/hcl1687/braces-template)
-
 [![Coverage Status](https://coveralls.io/repos/github/hcl1687/braces-template/badge.svg)](https://coveralls.io/github/hcl1687/braces-template)
 
-[![Selenium Test Status](https://saucelabs.com/browser-matrix/hcl1687.svg)](https://saucelabs.com/u/hcl1687)
+# Braces-template
 
+Braces-template is a Javascript templating engine. It inherits its look from the <a href='https://github.com/vuejs/vue'>Vue.js library</a> .
 
+## install
 
-no support
+npm install braces-template --save
 
+## Example
 
+## Documentation
 
-no support in ie8
-1、v-bind
-    xlink
-1、v-on
-    iframe bind
-    capture = true
-svg
-template tag
-custom tag
+## Supported Environments
+Braces-template has been designed to work in IE8 and other browsers that are ES5-compliant.
 
+### IE8 Caveats
 
-in ie8
-a.true should be a['true']
+- v-bind 
+    - no support bind xlink attribute.
+- v-on
+    - no support attache an event listener to the iframe element except load event.
+    - no support capture mode.
+- svg
+    - no support svg.
+- template tag
+    - no support template tag, using `<javascript type="x/template"></script>` instead.
+- custom tag
+    - no support custom tag
+- a.true should be replaced by a['true']
+    - true is a keyworld in javascript. using dot notaion 'true' will throw an error.
 
-IE<9 does not recognize innerHTML or childNodes on script tags
-
-如果是ie8，需要排查是否存在template标签
+## License
+[MIT](https://opensource.org/licenses/mit-license.php)
