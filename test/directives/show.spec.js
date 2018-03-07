@@ -27,7 +27,7 @@ describe('v-show', function () {
 
   it('should work with v-else', function () {
     el.innerHTML = '<p v-show="ok">YES</p><p v-else>NO</p>'
-    var vm = new Braces({
+    new Braces({
       el: el,
       data: {
         ok: true
@@ -38,7 +38,7 @@ describe('v-show', function () {
 
     var el1 = document.createElement('div')
     el1.innerHTML = '<p v-show="ok">YES</p><p v-else>NO</p>'
-    vm = new Braces({
+    new Braces({
       el: el1,
       data: {
         ok: false

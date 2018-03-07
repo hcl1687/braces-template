@@ -5,7 +5,7 @@ export default {
   bind () {
     this.attr = this.el.nodeType === 3
       ? 'data'
-      : isIE8 
+      : isIE8
         ? 'innerText'
         : 'textContent'
   },

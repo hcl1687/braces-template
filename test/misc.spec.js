@@ -1,5 +1,5 @@
 // test cases for edge cases & bug fixes
-var  Braces = require('src')
+var Braces = require('src')
 var _ = require('src/util')
 var textContent = _.textContent
 
@@ -48,7 +48,7 @@ describe('Misc', function () {
   it('handle interpolated textarea', function () {
     var el = document.createElement('div')
     el.innerHTML = '<textarea>hello {{msg}}</textarea>'
-    var vm = new Braces({
+    new Braces({
       el: el,
       data: {
         msg: 'test'
@@ -158,31 +158,30 @@ describe('Misc', function () {
     el.parentNode.removeChild(el)
   })
 
-  // it('demo: v-for nested', function () {
-  //   debugger
-  //   var el = document.createElement('div')
-  //   el.id = 'app'
-  //   document.body.appendChild(el)
+  it('demo: v-for nested', function () {
+    var el = document.createElement('div')
+    el.id = 'app'
+    document.body.appendChild(el)
 
-  //   new Braces({
-  //     el: el,
-  //     template: '<script type="x/template" v-for="item in items">' +
-  //         '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
-  //       '</script>',
-  //     data: {
-  //       items: [
-  //         { items: [{a: 1}, {a: 2}], a: 1 },
-  //         { items: [{a: 3}, {a: 4}], a: 2 }
-  //       ]
-  //     }
-  //   })
+    new Braces({
+      el: el,
+      template: '<script type="x/template" v-for="item in items">' +
+          '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
+        '</script>',
+      data: {
+        items: [
+          { items: [{a: 1}, {a: 2}], a: 1 },
+          { items: [{a: 3}, {a: 4}], a: 2 }
+        ]
+      }
+    })
 
-  //   expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe(
-  //     '<p>0 1 0 1</p><p>1 2 0 1</p>' +
-  //     '<p>0 3 1 2</p><p>1 4 1 2</p>'
-  //   )
-  //   el.parentNode.removeChild(el)
-  // })
+    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe(
+      '<p>0 1 0 1</p><p>1 2 0 1</p>' +
+      '<p>0 3 1 2</p><p>1 4 1 2</p>'
+    )
+    el.parentNode.removeChild(el)
+  })
 
   it('demo: v-if false', function () {
     var el = document.createElement('div')

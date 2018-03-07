@@ -7,12 +7,11 @@ var publicDirectives = require('src/directives/public')
 var textContent = _.textContent
 
 describe('Compile', function () {
-  var vm, el, data, directiveBind, directiveTeardown, bindDirSpy
+  var vm, el, directiveBind, directiveTeardown, bindDirSpy
   beforeEach(function () {
     // We mock vms here so we can assert what the generated
     // linker functions do.
     el = document.createElement('div')
-    data = {}
     directiveBind = jasmine.createSpy('bind')
     directiveTeardown = jasmine.createSpy('teardown')
     bindDirSpy = jasmine.createSpy()
@@ -305,7 +304,7 @@ describe('Compile', function () {
 
   it('attribute interpolation', function () {
     el.innerHTML = '<div id="{{a}}" class="b bla-{{c}} d"></div>'
-    var vm = new Braces({
+    new Braces({
       el: el,
       data: {
         a: 'aaa',
@@ -360,7 +359,7 @@ describe('Compile', function () {
 
   it('should compile custom terminal directive wihtout loop', function () {
     el.innerHTML = '<p v-if="show" v-inject:modal.modifier1="foo">hello world</p>'
-    var vm = new Braces({
+    new Braces({
       el: el,
       data: { show: true },
       directives: {

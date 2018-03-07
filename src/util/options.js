@@ -1,4 +1,3 @@
-import Braces from '../instance/braces'
 import config from '../config'
 import {
   extend,

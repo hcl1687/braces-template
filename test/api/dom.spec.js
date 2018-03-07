@@ -2,7 +2,7 @@ var Braces = require('src')
 var _ = require('src/util')
 
 describe('DOM API', function () {
-  var vm, vm2, parent, target, sibling, empty, spy
+  var vm, parent, target, sibling, empty, spy
   beforeEach(function () {
     spy = jasmine.createSpy('dom')
     parent = document.createElement('div')

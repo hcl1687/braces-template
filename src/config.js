@@ -1,5 +1,3 @@
-import { compileRegex } from './parsers/text'
-
 const config = {
 
   /**

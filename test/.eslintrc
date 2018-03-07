@@ -9,9 +9,12 @@
     "assert": false,
     "expect": false,
     "should": false,
-    "console": false
+    "console": false,
+    "spyOn": false,
+    "jasmine": false
   },
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "no-new": "off"
   }
 }

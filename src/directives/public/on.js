@@ -110,7 +110,7 @@ export default {
     // stub a noop for v-on with no value,
     // e.g. @mousedown.prevent
     if (!this.descriptor.raw) {
-      handler = function _handler() {}
+      handler = function _handler () {}
     }
 
     if (typeof handler !== 'function') {

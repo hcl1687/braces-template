@@ -22,7 +22,7 @@ export default function (Braces) {
     this.$root = this.$parent
       ? this.$parent.$root
       : this
-    this.$els = {}        // element references
+    this.$els = {} // element references
     this._directives = [] // all directives
 
     // a uid
@@ -32,12 +32,12 @@ export default function (Braces) {
     this._isBraces = true
 
     // events bookkeeping
-    this._events = {}            // registered callbacks
+    this._events = {} // registered callbacks
 
     // fragment instance properties
     this._isFragment = false
-    this._fragment =         // @type {DocumentFragment}
-    this._fragmentStart =    // @type {Text|Comment}
+    this._fragment = // @type {DocumentFragment}
+    this._fragmentStart = // @type {Text|Comment}
     this._fragmentEnd = null // @type {Text|Comment}
 
     // lifecycle state

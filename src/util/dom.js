@@ -330,7 +330,7 @@ function isTrimmable (node) {
 export function isTemplate (el) {
   return el.tagName &&
     (el.tagName.toLowerCase() === 'template' ||
-      el.tagName.toLowerCase() === 'script' && el.type === 'x/template')
+      (el.tagName.toLowerCase() === 'script' && el.type === 'x/template'))
 }
 
 /**
@@ -350,7 +350,6 @@ export function isTemplate (el) {
  *                            templates.
  * @return {Comment|Text}
  */
-var ANCHOR_MARK = '__BRACES__ANCHOR_MARK__BRACES__'
 export function createAnchor (content, persist) {
   var anchor = config.debug
     ? document.createComment(content)
@@ -472,13 +471,13 @@ export function getWholeText (el) {
 
   var res = ''
   var previousSibling = el
-  while(previousSibling && previousSibling.nodeType === 3) {
+  while (previousSibling && previousSibling.nodeType === 3) {
     res = previousSibling.data + res
     previousSibling = previousSibling.previousSibling
   }
 
   var nextSibling = el.nextSibling
-  while(nextSibling && nextSibling.nodeType === 3) {
+  while (nextSibling && nextSibling.nodeType === 3) {
     res += nextSibling.data
     nextSibling = nextSibling.nextSibling
   }
@@ -495,7 +494,7 @@ export function getWholeText (el) {
 export function textContent (el, val) {
   // IE8 does not recognize innerHTML or childNodes on script tags
   if (val === undefined) {
-    return isIE8 
+    return isIE8
       ? el.tagName === 'SCRIPT'
         ? el.text
         : el.innerText
@@ -527,17 +526,21 @@ export function cloneDomNode (el, deep) {
   // ie8 deep clone
   return deepClone(el)
 
-  function deepClone(el) {
-    var clone = el.nodeType == 3 ? document.createTextNode(el.nodeValue)
+  function deepClone (el) {
+    var clone = el.nodeType === 3 ? document.createTextNode(el.nodeValue)
       : el.cloneNode(false)
-   
-    // Recurse     
-    var child = el.firstChild
-    while(child) {
-        clone.appendChild(deepClone(child))
-        child = child.nextSibling
+
+    if (el.tagName === 'SCRIPT') {
+      textContent(clone, textContent(el))
     }
-     
+
+    // Recurse
+    var child = el.firstChild
+    while (child) {
+      clone.appendChild(deepClone(child))
+      child = child.nextSibling
+    }
+
     return clone
   }
 }
@@ -600,7 +603,7 @@ export function innerHTML (el, val) {
   var selector = '__BRACES__INNERHTML_MARK__BRACES__'
   var prefix = '<div class="' + selector + '" style="display:none;">&nbsp;</div>'
   var scriptStyleTagRE = /(<script|<style)/ig
-  val = val.replace(scriptStyleTagRE, function($1) {
+  val = val.replace(scriptStyleTagRE, function ($1) {
     return prefix + $1
   })
 

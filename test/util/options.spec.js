@@ -1,7 +1,5 @@
 var _ = require('src/util')
-var Braces = require('src')
 var merge = _.mergeOptions
-var resolveAsset = _.resolveAsset
 var __ = require('src/util/debug')
 
 describe('Util - Option merging', function () {

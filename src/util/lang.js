@@ -17,7 +17,7 @@ export function hasOwn (obj, key) {
  * @return {Boolean}
  */
 
-var literalValueRE = /^\s?(true|false|-?[\d\.]+|'[^']*'|"[^"]*")\s?$/
+var literalValueRE = /^\s?(true|false|-?[\d.]+|'[^']*'|"[^"]*")\s?$/
 export function isLiteral (exp) {
   return literalValueRE.test(exp)
 }
@@ -139,7 +139,7 @@ export function hyphenate (str) {
  * @return {String}
  */
 
-var classifyRE = /(?:^|[-_\/])(\w)/g
+var classifyRE = /(?:^|[-_/])(\w)/g
 export function classify (str) {
   return str.replace(classifyRE, toUpper)
 }
@@ -225,8 +225,7 @@ export function isPlainObject (obj) {
   // toString.call(null) === OBJECT_STRING
   // toString.call(undefined) === OBJECT_STRING
   // toString.call(Window) === OBJECT_STRING
-  return toString.call(obj) === OBJECT_STRING && obj !== null && obj !== undefined
-    && obj !== window
+  return toString.call(obj) === OBJECT_STRING && obj !== null && obj !== undefined && obj !== window
 }
 
 /**

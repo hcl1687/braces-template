@@ -1,7 +1,7 @@
 import Cache from '../cache'
 import config from '../config'
 
-const regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g
+const regexEscapeRE = /[-.*+?^${}()|[\]/\\]/g
 let cache, tagRE, htmlRE
 
 /**

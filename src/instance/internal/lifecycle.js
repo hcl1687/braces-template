@@ -6,7 +6,6 @@ import {
   arrRemove,
   warn,
   isIE8,
-  innerHTML,
   isTemplate
 } from '../../util/index'
 
@@ -105,7 +104,7 @@ export default function (Braces) {
       var content = el.innerHTML.toLowerCase()
       // no support svg in ie8
       var svgRE = /<svg[^>]*>/
-      if (svgRE.test(content))  {
+      if (svgRE.test(content)) {
         process.env.NODE_ENV !== 'production' && warn(
           'Do not use SVG tag. IE8 doesn\'t support SVG.',
           this

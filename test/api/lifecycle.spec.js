@@ -1,6 +1,5 @@
 var _ = require('src/util')
 var Braces = require('src')
-var compiler = require('src/compiler')
 var textContent = _.textContent
 
 describe('Lifecycle API', function () {

@@ -111,10 +111,10 @@ function getPathCharType (ch) {
     case 0x09: // Tab
     case 0x0A: // Newline
     case 0x0D: // Return
-    case 0xA0:  // No-break space
-    case 0xFEFF:  // Byte Order Mark
-    case 0x2028:  // Line Separator
-    case 0x2029:  // Paragraph Separator
+    case 0xA0: // No-break space
+    case 0xFEFF: // Byte Order Mark
+    case 0x2028: // Line Separator
+    case 0x2029: // Paragraph Separator
       return 'ws'
   }
 

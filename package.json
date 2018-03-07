@@ -1,9 +1,10 @@
 {
   "name": "braces-template",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src test",
     "test": "better-npm-run test",
     "test-ci": "better-npm-run test-ci",
     "compile": "better-npm-run compile",

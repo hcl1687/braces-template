@@ -133,7 +133,7 @@ describe('Instance Events', function () {
       // try mounting on something already in dom
       el = document.createElement('div')
       document.body.appendChild(el)
-        vm = new Braces({
+      vm = new Braces({
         el: el,
         ready: spy2
       })

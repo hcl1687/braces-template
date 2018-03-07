@@ -9,16 +9,6 @@ import * as directive from './parsers/directive'
 import * as expression from './parsers/expression'
 import FragmentFactory from './fragment/factory'
 
-import {
-  nextTick,
-  mergeOptions,
-  classify,
-  commonTagRE,
-  reservedTagRE,
-  warn,
-  isPlainObject
-} from './util/index'
-
 export default function (Braces) {
   /**
    * Braces and every constructor that extends Braces has an
@@ -40,7 +30,7 @@ export default function (Braces) {
 
   Braces.util = util
   Braces.config = config
-  Braces.nextTick = nextTick
+  Braces.nextTick = util.nextTick
 
   /**
    * The following are exposed for advanced usage / plugins
@@ -63,7 +53,6 @@ export default function (Braces) {
    */
 
   Braces.cid = 0
-  var cid = 1
 
   /**
    * Create asset registration methods with the following

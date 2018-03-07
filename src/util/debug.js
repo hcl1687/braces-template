@@ -11,6 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
     if (hasConsole && (!config.silent)) {
       const res = '[Braces warn]: ' + msg + (vm ? formatComponentName(vm) : '')
       warn.msg = res
+      // eslint-disable-next-line
       console.error(res)
     }
   }

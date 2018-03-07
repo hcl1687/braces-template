@@ -1,5 +1,4 @@
 var Path = require('src/parsers/path')
-var _ = require('src/util')
 
 function assertPath (str, expected) {
   var path = Path.parsePath(str)

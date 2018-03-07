@@ -4,7 +4,6 @@ import {
   trimNode,
   isTemplate,
   isFragment,
-  isIE8,
   textContent,
   cloneDomNode,
   innerHTML

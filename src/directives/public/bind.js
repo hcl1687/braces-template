@@ -111,6 +111,7 @@ export default {
         if (process.env.NODE_ENV !== 'production') {
           // no support xlink bind in ie8
           if (isIE8) {
+            var raw = attr + '="' + this.descriptor.raw + '": '
             warn(
               raw + ' no support xlink bind in ie8.',
               this.vm

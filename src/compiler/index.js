@@ -19,7 +19,7 @@ import {
 const bindRE = /^v-bind:|^:/
 const onRE = /^v-on:|^@/
 const dirAttrRE = /^v-([^:]+)(?:$|:(.*)$)/
-const modifierRE = /\.[^\.]+/g
+const modifierRE = /\.[^.]+/g
 
 // default directive priority
 const DEFAULT_PRIORITY = 1000
@@ -228,7 +228,7 @@ var TEXT_SKIP_MARK = '__BRACES__TEXT_SKIP_MARK__BRACES__'
 
 function compileTextNode (node, options) {
   // skip marked text nodes
-  if (isIE8 && node.data === TEXT_SKIP_MARK || node._skip) {
+  if ((isIE8 && node.data === TEXT_SKIP_MARK) || node._skip) {
     return removeText
   }
 
