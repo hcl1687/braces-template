@@ -3,7 +3,9 @@
 [![Sauce Test Status](https://saucelabs.com/buildstatus/hcl1687)](https://saucelabs.com/u/hcl1687)
 
 <p align="center">
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/YOUR_SAUCE_USERNAME.svg)](https://saucelabs.com/u/YOUR_SAUCE_USERNAME)
+  <a href="https://saucelabs.com/u/hcl1687">
+    <img src="https://saucelabs.com/browser-matrix/hcl1687.svg" alt="Sauce Test Status"/>
+  </a>
 </p>
 
 # Braces-template

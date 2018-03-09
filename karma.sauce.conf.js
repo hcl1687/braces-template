@@ -61,11 +61,17 @@ batches = {
   sl_chrome: {
     base: 'SauceLabs',
     browserName: 'chrome',
-    platform: 'Windows 7'
+    platform: 'Windows 7',
+    version: '35'
   }
 }
 
 module.exports = function (config) {
+  if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
+    console.log('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.')
+    process.exit(1)
+  }
+
   config.set(assign({}, base, {
     browsers: Object.keys(batches),
     customLaunchers: batches,
@@ -79,15 +85,14 @@ module.exports = function (config) {
       // 测试的记录号，可以为任意字符，如果希望生成矩阵图，build 不能为空
       build: process.env.TRAVIS_JOB_NUMBER || 'build-' + Date.now(),
       startConnect: false,
-      username: process.env.SAUCE_USERNAME,
-      accessKey: process.env.SAUCE_ACCESS_KEY,
       connectOptions: {
         port: 5757,
         logfile: 'sauce_connect.log'
-      }
+      },
+      public: 'public'
     },
     // mobile emulators are really slow
-    captureTimeout: 300000,
-    browserNoActivityTimeout: 300000
+    captureTimeout: 120000,
+    browserNoActivityTimeout: 120000
   }))
 }
