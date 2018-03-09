@@ -1,5 +1,10 @@
 [![Build](https://img.shields.io/travis/hcl1687/braces-template.svg)](https://travis-ci.org/hcl1687/braces-template)
 [![Coverage Status](https://coveralls.io/repos/github/hcl1687/braces-template/badge.svg)](https://coveralls.io/github/hcl1687/braces-template)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/hcl1687)](https://saucelabs.com/u/hcl1687)
+
+<p align="center">
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/YOUR_SAUCE_USERNAME.svg)](https://saucelabs.com/u/YOUR_SAUCE_USERNAME)
+</p>
 
 # Braces-template
 
@@ -186,4 +191,7 @@ Braces-template need es5-shim and es5-sham in IE8. If you want to run Braces-tem
     - true is a keyworld in javascript. using dot notaion 'true' will throw an error in IE8.
 
 ## License
-[MIT](https://opensource.org/licenses/mit-license.php)
+
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2018-present Chunlin He
