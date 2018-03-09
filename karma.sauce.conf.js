@@ -72,6 +72,8 @@ module.exports = function (config) {
     process.exit(1)
   }
 
+  const bid = process.env.TRAVIS_JOB_NUMBER || 'build-' + Date.now()
+  console.log('bid: ' + bid)
   config.set(assign({}, base, {
     browsers: Object.keys(batches),
     customLaunchers: batches,
@@ -83,12 +85,9 @@ module.exports = function (config) {
       // 是否在测试过程记录虚拟机的图像
       recordScreenshots: false,
       // 测试的记录号，可以为任意字符，如果希望生成矩阵图，build 不能为空
-      build: process.env.TRAVIS_JOB_NUMBER || 'build-' + Date.now(),
+      build: bid,
       startConnect: false,
-      connectOptions: {
-        port: 5757,
-        logfile: 'sauce_connect.log'
-      },
+      tunnelIdentifier: bid,
       public: 'public'
     },
     // mobile emulators are really slow
