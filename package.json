@@ -9,7 +9,8 @@
     "test-ci": "better-npm-run test-ci",
     "compile": "better-npm-run compile",
     "coveralls": "cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls",
-    "sauce": "better-npm-run sauce"
+    "sauce": "better-npm-run sauce",
+    "sauce-all": "npm run sauce && npm run sauce -- 1 && npm run sauce -- 2"
   },
   "betterScripts": {
     "test": {

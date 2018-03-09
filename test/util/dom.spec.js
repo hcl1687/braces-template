@@ -42,11 +42,17 @@ describe('Util - DOM', function () {
 
   it('inDoc (iframe)', function (done) {
     var f = document.createElement('iframe')
-    f.onload = function () {
+    var loadHandler = function () {
       f.contentWindow.document.body.appendChild(target)
       expect(_.inDoc(target)).toBe(true)
       document.body.removeChild(f)
       done()
+    }
+
+    if (_.isIE8) {
+      f.attachEvent('onload', loadHandler)
+    } else {
+      f.onload = loadHandler
     }
     document.body.appendChild(f)
     f.src = 'about:blank'

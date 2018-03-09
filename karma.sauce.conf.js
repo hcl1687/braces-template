@@ -7,82 +7,67 @@ var base = require('./karma.base.conf.js')
  * smaller batches.
  */
 
-var batches = {
+var batches = [
   // the cool kids
-  sl_chrome: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 7'
+  {
+    sl_chrome: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'Windows 7'
+    },
+    sl_firefox: {
+      base: 'SauceLabs',
+      browserName: 'firefox'
+    },
+    sl_mac_safari: {
+      base: 'SauceLabs',
+      browserName: 'safari',
+      platform: 'OS X 10.10'
+    }
   },
-  sl_firefox: {
-    base: 'SauceLabs',
-    browserName: 'firefox'
+  // ie family
+  {
+    sl_ie_8: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '8'
+    },
+    sl_ie_9: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '9'
+    },
+    sl_ie_10: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 8',
+      version: '10'
+    },
+    sl_ie_11: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 8.1',
+      version: '11'
+    }
   },
-  sl_mac_safari: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'OS X 10.10'
-  },
-  sl_ie_8: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 7',
-    version: '8'
-  },
-  sl_ie_9: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 7',
-    version: '9'
-  },
-  sl_ie_10: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 8',
-    version: '10'
-  },
-  sl_ie_11: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 8.1',
-    version: '11'
-  },
-  sl_ios_safari: {
-    base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'OS X 10.9',
-    version: '7.1'
-  },
-  sl_android: {
-    base: 'SauceLabs',
-    browserName: 'android',
-    platform: 'Linux',
-    version: '4.2'
+  // mobile
+  {
+    sl_ios_safari: {
+      base: 'SauceLabs',
+      browserName: 'iphone',
+      platform: 'OS X 10.9',
+      version: '7.1'
+    },
+    sl_android: {
+      base: 'SauceLabs',
+      browserName: 'android',
+      platform: 'Linux',
+      version: '4.2'
+    }
   }
-}
-
-batches = {
-  sl_chrome: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 7'
-  },
-  sl_firefox: {
-    base: 'SauceLabs',
-    browserName: 'firefox'
-  },
-  sl_mac_safari: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'OS X 10.10'
-  },
-  sl_ie_8: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 7',
-    version: '8'
-  }
-}
+]
 
 module.exports = function (config) {
   if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
@@ -91,10 +76,12 @@ module.exports = function (config) {
     process.exit(1)
   }
 
-  const bid = process.env.TRAVIS_JOB_NUMBER || 'build-' + Date.now()
+  var batch = batches[process.argv[4] || 0]
+
+  var bid = process.env.TRAVIS_JOB_NUMBER || 'build-' + Date.now()
   config.set(assign({}, base, {
-    browsers: Object.keys(batches),
-    customLaunchers: batches,
+    browsers: Object.keys(batch),
+    customLaunchers: batch,
     reporters: ['progress', 'saucelabs'],
     sauceLabs: {
       testName: 'braces-template unit tests',
