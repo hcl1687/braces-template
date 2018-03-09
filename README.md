@@ -2,7 +2,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/hcl1687/braces-template/badge.svg)](https://coveralls.io/github/hcl1687/braces-template)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/hcl1687)](https://saucelabs.com/u/hcl1687)
 
-<p align="center">
+![Karma Plus Sauce](/img/Sauce-Labs_Horiz_Red-Grey_RGB.png)
+
+> Run your unit tests on [Sauce Labs](https://saucelabs.com/)' browser cloud!
+
+<p>
   <a href="https://saucelabs.com/u/hcl1687">
     <img src="https://saucelabs.com/browser-matrix/hcl1687.svg" alt="Sauce Test Status"/>
   </a>
