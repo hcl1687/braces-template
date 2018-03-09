@@ -23,7 +23,12 @@ var batches = {
     browserName: 'safari',
     platform: 'OS X 10.10'
   },
-  // ie family
+  sl_ie_8: {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    platform: 'Windows 7',
+    version: '8'
+  },
   sl_ie_9: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
@@ -42,7 +47,6 @@ var batches = {
     platform: 'Windows 8.1',
     version: '11'
   },
-  // mobile
   sl_ios_safari: {
     base: 'SauceLabs',
     browserName: 'iphone',
@@ -57,23 +61,14 @@ var batches = {
   }
 }
 
-batches = {
-  sl_chrome: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 7',
-    version: '35'
-  }
-}
-
 module.exports = function (config) {
   if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
+    // eslint-disable-next-line
     console.log('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.')
     process.exit(1)
   }
 
   const bid = process.env.TRAVIS_JOB_NUMBER || 'build-' + Date.now()
-  console.log('bid: ' + bid)
   config.set(assign({}, base, {
     browsers: Object.keys(batches),
     customLaunchers: batches,
