@@ -61,6 +61,29 @@ var batches = {
   }
 }
 
+batches = {
+  sl_chrome: {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    platform: 'Windows 7'
+  },
+  sl_firefox: {
+    base: 'SauceLabs',
+    browserName: 'firefox'
+  },
+  sl_mac_safari: {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'OS X 10.10'
+  },
+  sl_ie_8: {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    platform: 'Windows 7',
+    version: '8'
+  }
+}
+
 module.exports = function (config) {
   if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
     // eslint-disable-next-line
