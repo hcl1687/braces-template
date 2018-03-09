@@ -1,10 +1,8 @@
+# Braces-template
+
 [![Build](https://img.shields.io/travis/hcl1687/braces-template.svg)](https://travis-ci.org/hcl1687/braces-template)
 [![Coverage Status](https://coveralls.io/repos/github/hcl1687/braces-template/badge.svg)](https://coveralls.io/github/hcl1687/braces-template)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/hcl1687)](https://saucelabs.com/u/hcl1687)
-
-![Karma Plus Sauce](/img/Sauce-Labs_Horiz_Red-Grey_RGB.png)
-
-> Run your unit tests on [Sauce Labs](https://saucelabs.com/)' browser cloud!
 
 <p>
   <a href="https://saucelabs.com/u/hcl1687">
@@ -12,9 +10,13 @@
   </a>
 </p>
 
-# Braces-template
-
 Braces-template is a Javascript templating engine. It inherits its look from the <a href='https://github.com/vuejs/vue'>Vue.js library</a>. Braces-template does not provide reactive data binding, so it can not sync your changed data to the dom after rendering.
+
+## Big Thanks
+
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com/)
+
+![Karma Plus Sauce](/img/Sauce-Labs_Horiz_Red-Grey_RGB.png)
 
 ## install
 
