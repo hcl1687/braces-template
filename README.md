@@ -14,6 +14,14 @@ Braces-template is a Javascript templating engine. It inherits its look from the
 
 ## Big Thanks
 
+### Vue.js
+
+A progressive framework for building user interfaces.
+
+![Vue.js](/img/vue.png)
+
+### Sauce Labs
+
 Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com/)
 
 ![Karma Plus Sauce](/img/Sauce-Labs_Horiz_Red-Grey_RGB.png)
