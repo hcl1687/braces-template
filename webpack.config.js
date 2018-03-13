@@ -5,7 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './'),
     filename: 'index.js',
-    library: 'braces',
+    library: 'Braces',
     libraryTarget: 'umd'
   },
   module: {

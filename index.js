@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["braces"] = factory();
+		exports["Braces"] = factory();
 	else
-		root["braces"] = factory();
+		root["Braces"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -68,12 +68,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _globalApi2 = _interopRequireDefault(_globalApi);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	(0, _globalApi2.default)(_braces2.default);
-	_braces2.default.version = '1.0.26';
+	(0, _globalApi2['default'])(_braces2['default']);
+	_braces2['default'].version = '1.0.26';
 
-	exports.default = _braces2.default;
+	exports['default'] = _braces2['default'];
 	module.exports = exports['default'];
 
 /***/ }),
@@ -118,23 +118,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _lifecycle4 = _interopRequireDefault(_lifecycle3);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function Braces(options) {
 	  this._init(options);
 	}
 
-	(0, _init2.default)(Braces);
-	(0, _state2.default)(Braces);
-	(0, _events2.default)(Braces);
-	(0, _lifecycle2.default)(Braces);
+	(0, _init2['default'])(Braces);
+	(0, _state2['default'])(Braces);
+	(0, _events2['default'])(Braces);
+	(0, _lifecycle2['default'])(Braces);
 
-	(0, _data2.default)(Braces);
-	(0, _dom2.default)(Braces);
-	(0, _events4.default)(Braces);
-	(0, _lifecycle4.default)(Braces);
+	(0, _data2['default'])(Braces);
+	(0, _dom2['default'])(Braces);
+	(0, _events4['default'])(Braces);
+	(0, _lifecycle4['default'])(Braces);
 
-	exports.default = Braces;
+	exports['default'] = Braces;
 	module.exports = exports['default'];
 
 /***/ }),
@@ -147,7 +147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.prototype._init = function (options) {
 	    options = options || {};
@@ -230,9 +230,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var debug = _interopRequireWildcard(_debug);
 
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-	exports.default = _extends({}, lang, env, dom, options, debug);
+	exports['default'] = _extends({}, lang, env, dom, options, debug);
 	module.exports = exports['default'];
 
 /***/ }),
@@ -573,7 +573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _lang = __webpack_require__(4);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function query(el) {
 	  if (typeof el === 'string') {
@@ -741,7 +741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function createAnchor(content, persist) {
-	  var anchor = _config2.default.debug ? document.createComment(content) : document.createTextNode(persist ? ' ' : '');
+	  var anchor = _config2['default'].debug ? document.createComment(content) : document.createTextNode(persist ? ' ' : '');
 	  if (!_env.isIE8) {
 	    anchor.__v_anchor = true;
 	  }
@@ -1154,7 +1154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  unsafeDelimiters: ['{{{', '}}}']
 	};
 
-	exports.default = config;
+	exports['default'] = config;
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
@@ -1175,7 +1175,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _lang = __webpack_require__(4);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _warn = void 0;
 	var formatComponentName = void 0;
@@ -1184,7 +1184,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hasConsole = typeof console !== 'undefined';
 
 	  exports.warn = _warn = function warn(msg, vm) {
-	    if (hasConsole && !_config2.default.silent) {
+	    if (hasConsole && !_config2['default'].silent) {
 	      var res = '[Braces warn]: ' + msg + (vm ? formatComponentName(vm) : '');
 	      _warn.msg = res;
 
@@ -1221,9 +1221,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _debug = __webpack_require__(9);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var strats = _config2.default.optionMergeStrategies = Object.create(null);
+	var strats = _config2['default'].optionMergeStrategies = Object.create(null);
 
 	function mergeData(to, from) {
 	  var key, toVal, fromVal;
@@ -1287,7 +1287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return childVal ? (0, _lang.extend)(res, guardArrayAssets(childVal)) : res;
 	}
 
-	_config2.default._assetTypes.forEach(function (type) {
+	_config2['default']._assetTypes.forEach(function (type) {
 	  strats[type + 's'] = mergeAssets;
 	});
 
@@ -1388,7 +1388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.prototype._initState = function () {
 	    this._initMethods();
@@ -1451,7 +1451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.prototype._initEvents = function () {
 	    var options = this.$options;
@@ -1534,7 +1534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.prototype._compile = function (el) {
 	    var options = this.$options;
@@ -1593,7 +1593,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  Braces.prototype._bindDir = function (descriptor, node, scope, frag) {
-	    this._directives.push(new _directive2.default(descriptor, this, node, scope, frag));
+	    this._directives.push(new _directive2['default'](descriptor, this, node, scope, frag));
 	  };
 
 	  Braces.prototype._destroy = function (remove, deferCleanup) {
@@ -1666,7 +1666,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index2 = __webpack_require__(18);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
@@ -1680,7 +1680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = Directive;
+	exports['default'] = Directive;
 
 	var _index = __webpack_require__(3);
 
@@ -1690,7 +1690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _expression = __webpack_require__(15);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function Directive(descriptor, vm, el, scope, frag) {
 	  this.vm = vm;
@@ -1759,7 +1759,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    try {
 	      value = this.getter.call(scope, scope);
 	    } catch (e) {
-	      if (process.env.NODE_ENV !== 'production' && _config2.default.warnExpressionErrors) {
+	      if (process.env.NODE_ENV !== 'production' && _config2['default'].warnExpressionErrors) {
 	        (0, _index.warn)('Error when evaluating expression ' + '"' + this.expression + '": ' + e.toString(), this.vm);
 	      }
 	    }
@@ -1811,7 +1811,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  try {
 	    value = getter.call(scope, scope);
 	  } catch (e) {
-	    if (process.env.NODE_ENV !== 'production' && _config2.default.warnExpressionErrors) {
+	    if (process.env.NODE_ENV !== 'production' && _config2['default'].warnExpressionErrors) {
 	      (0, _index.warn)('Error when evaluating expression ' + '"' + this.expression + '": ' + e.toString(), this.vm);
 	    }
 	  }
@@ -1881,9 +1881,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cache2 = _interopRequireDefault(_cache);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var expressionCache = new _cache2.default(1000);
+	var expressionCache = new _cache2['default'](1000);
 
 	var allowedKeywords = 'Math,Date,this,true,false,null,undefined,Infinity,NaN,' + 'isNaN,isFinite,decodeURI,decodeURIComponent,encodeURI,' + 'encodeURIComponent,parseInt,parseFloat';
 	var allowedKeywordsRE = new RegExp('^(' + allowedKeywords.replace(/,/g, '\\b|') + '\\b)');
@@ -1979,7 +1979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = Cache;
+	exports["default"] = Cache;
 	function Cache(limit) {
 	  this.size = 0;
 	  this.limit = limit;
@@ -2071,10 +2071,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index = __webpack_require__(3);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var templateCache = new _cache2.default(1000);
-	var idSelectorCache = new _cache2.default(1000);
+	var templateCache = new _cache2['default'](1000);
+	var idSelectorCache = new _cache2['default'](1000);
 
 	var map = {
 	  efault: [0, '', ''],
@@ -2269,7 +2269,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index3 = __webpack_require__(3);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var bindRE = /^v-bind:|^:/;
 	var onRE = /^v-on:|^@/;
@@ -2421,7 +2421,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var parsed = (0, _directive.parseDirective)(token.value);
 	    token.descriptor = {
 	      name: type,
-	      def: _index2.default[type],
+	      def: _index2['default'][type],
 	      expression: parsed.expression,
 	      filters: parsed.filters
 	    };
@@ -2551,7 +2551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (tokens) {
 	      value = (0, _text.tokensToExp)(tokens);
 	      arg = name;
-	      pushDir('bind', _index2.default.bind, tokens);
+	      pushDir('bind', _index2['default'].bind, tokens);
 
 	      if (process.env.NODE_ENV !== 'production') {
 	        if (name === 'class' && Array.prototype.some.call(attrs, function (attr) {
@@ -2562,11 +2562,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    } else if (onRE.test(name)) {
 	      arg = name.replace(onRE, '');
-	      pushDir('on', _index2.default.on);
+	      pushDir('on', _index2['default'].on);
 	    } else if (bindRE.test(name)) {
 	        dirName = name.replace(bindRE, '');
 	        arg = dirName;
-	        pushDir('bind', _index2.default.bind);
+	        pushDir('bind', _index2['default'].bind);
 	      } else if (matched = name.match(dirAttrRE)) {
 	          dirName = matched[1];
 	          arg = matched[2];
@@ -2674,18 +2674,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cloak2 = _interopRequireDefault(_cloak);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	exports.default = {
-	  text: _text2.default,
-	  html: _html2.default,
-	  'for': _for2.default,
-	  'if': _if2.default,
-	  show: _show2.default,
-	  on: _on2.default,
-	  bind: _bind2.default,
-	  el: _el2.default,
-	  cloak: _cloak2.default
+	exports['default'] = {
+	  text: _text2['default'],
+	  html: _html2['default'],
+	  'for': _for2['default'],
+	  'if': _if2['default'],
+	  show: _show2['default'],
+	  on: _on2['default'],
+	  bind: _bind2['default'],
+	  el: _el2['default'],
+	  cloak: _cloak2['default']
 	};
 	module.exports = exports['default'];
 
@@ -2701,7 +2701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index = __webpack_require__(3);
 
-	exports.default = {
+	exports['default'] = {
 	  bind: function bind() {
 	    this.attr = this.el.nodeType === 3 ? 'data' : _index.isIE8 ? 'innerText' : 'textContent';
 	  },
@@ -2725,7 +2725,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index = __webpack_require__(3);
 
-	exports.default = {
+	exports['default'] = {
 	  bind: function bind() {
 	    if (this.el.nodeType === 8) {
 	      this.nodes = [];
@@ -2774,7 +2774,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index = __webpack_require__(3);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var uid = 0;
 
@@ -2813,7 +2813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _index.replace)(this.el, this.end);
 	    (0, _index.before)(this.start, this.end);
 
-	    this.factory = new _factory2.default(this.vm, this.el);
+	    this.factory = new _factory2['default'](this.vm, this.el);
 	  },
 	  update: function update(data) {
 	    this.diff(data);
@@ -2929,7 +2929,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ret;
 	}
 
-	exports.default = vFor;
+	exports['default'] = vFor;
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
@@ -2942,7 +2942,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = FragmentFactory;
+	exports['default'] = FragmentFactory;
 
 	var _index = __webpack_require__(18);
 
@@ -2958,9 +2958,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cache2 = _interopRequireDefault(_cache);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var linkerCache = new _cache2.default(5000);
+	var linkerCache = new _cache2['default'](5000);
 
 	function FragmentFactory(vm, el) {
 	  this.vm = vm;
@@ -2991,7 +2991,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	FragmentFactory.prototype.create = function (scope, parentFrag) {
 	  var frag = (0, _template.cloneNode)(this.template);
-	  return new _fragment2.default(this.linker, this.vm, frag, scope, parentFrag);
+	  return new _fragment2['default'](this.linker, this.vm, frag, scope, parentFrag);
 	};
 	module.exports = exports['default'];
 
@@ -3004,7 +3004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = Fragment;
+	exports['default'] = Fragment;
 
 	var _index = __webpack_require__(3);
 
@@ -3164,9 +3164,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index = __webpack_require__(3);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	exports.default = {
+	exports['default'] = {
 
 	  priority: _priorities.IF,
 	  terminal: true,
@@ -3204,7 +3204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    if (!this.factory) {
-	      this.factory = new _factory2.default(this.vm, this.el);
+	      this.factory = new _factory2['default'](this.vm, this.el);
 	    }
 	    this.frag = this.factory.create(this._scope, this._frag);
 	    this.frag.before(this.anchor);
@@ -3216,7 +3216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    if (this.elseEl && !this.elseFrag) {
 	      if (!this.elseFactory) {
-	        this.elseFactory = new _factory2.default(this.elseEl._context || this.vm, this.elseEl);
+	        this.elseFactory = new _factory2['default'](this.elseEl._context || this.vm, this.elseEl);
 	      }
 	      this.elseFrag = this.elseFactory.create(this._scope, this._frag);
 	      this.elseFrag.before(this.anchor);
@@ -3246,7 +3246,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index = __webpack_require__(3);
 
-	exports.default = {
+	exports['default'] = {
 	  bind: function bind() {
 	    var next = (0, _index.nextElementSibling)(this.el);
 	    if (next && (0, _index.getAttr)(next, 'v-else') !== null) {
@@ -3348,7 +3348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	}
 
-	exports.default = {
+	exports['default'] = {
 
 	  priority: _priorities.ON,
 	  acceptStatement: true,
@@ -3446,7 +3446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var enumeratedAttrRE = /^(?:draggable|contenteditable|spellcheck)$/;
 
-	exports.default = {
+	exports['default'] = {
 
 	  priority: _priorities.BIND,
 
@@ -3540,7 +3540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _priorities = __webpack_require__(25);
 
-	exports.default = {
+	exports['default'] = {
 
 	  priority: _priorities.EL,
 
@@ -3570,7 +3570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = {
+	exports['default'] = {
 	  bind: function bind() {
 	    var el = this.el;
 	    this.vm.$once('pre-hook:compiled', function () {
@@ -3601,7 +3601,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _config2 = _interopRequireDefault(_config);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var regexEscapeRE = /[-.*+?^${}()|[\]/\\]/g;
 	var cache = void 0,
@@ -3613,14 +3613,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function compileRegex() {
-	  var open = escapeRegex(_config2.default.delimiters[0]);
-	  var close = escapeRegex(_config2.default.delimiters[1]);
-	  var unsafeOpen = escapeRegex(_config2.default.unsafeDelimiters[0]);
-	  var unsafeClose = escapeRegex(_config2.default.unsafeDelimiters[1]);
+	  var open = escapeRegex(_config2['default'].delimiters[0]);
+	  var close = escapeRegex(_config2['default'].delimiters[1]);
+	  var unsafeOpen = escapeRegex(_config2['default'].unsafeDelimiters[0]);
+	  var unsafeClose = escapeRegex(_config2['default'].unsafeDelimiters[1]);
 	  tagRE = new RegExp(unsafeOpen + '((?:.|\\n)+?)' + unsafeClose + '|' + open + '((?:.|\\n)+?)' + close, 'g');
 	  htmlRE = new RegExp('^' + unsafeOpen + '((?:.|\\n)+?)' + unsafeClose + '$');
 
-	  cache = new _cache2.default(1000);
+	  cache = new _cache2['default'](1000);
 	}
 
 	function parseText(text) {
@@ -3698,9 +3698,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cache2 = _interopRequireDefault(_cache);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var cache = new _cache2.default(1000);
+	var cache = new _cache2['default'](1000);
 
 	function parseDirective(s) {
 	  var hit = cache.get(s);
@@ -3725,7 +3725,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.prototype.$get = function (exp, asStatement) {
 	    var res = (0, _expression.parseExpression)(exp);
@@ -3763,7 +3763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.prototype.$nextTick = function (fn) {
 	    (0, _index.nextTick)(fn, this);
@@ -3869,7 +3869,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.prototype.$on = function (event, fn) {
 	    (this._events[event] || (this._events[event] = [])).push(fn);
@@ -3944,7 +3944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.prototype.$mount = function (el) {
 	    if (this._isCompiled) {
@@ -3998,19 +3998,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	exports.default = function (Braces) {
+	exports['default'] = function (Braces) {
 
 	  Braces.options = {
-	    directives: _index2.default,
+	    directives: _index2['default'],
 	    replace: true
 	  };
 
 	  Braces.util = util;
-	  Braces.config = _config2.default;
+	  Braces.config = _config2['default'];
 	  Braces.nextTick = util.nextTick;
 
 	  Braces.compiler = compiler;
-	  Braces.FragmentFactory = _factory2.default;
+	  Braces.FragmentFactory = _factory2['default'];
 	  Braces.parsers = {
 	    path: path,
 	    text: text,
@@ -4021,7 +4021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  Braces.cid = 0;
 
-	  _config2.default._assetTypes.forEach(function (type) {
+	  _config2['default']._assetTypes.forEach(function (type) {
 	    Braces[type] = function (id, definition) {
 	      if (!definition) {
 	        return this.options[type + 's'][id];
@@ -4073,9 +4073,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _factory2 = _interopRequireDefault(_factory);
 
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	module.exports = exports['default'];
 
@@ -4100,9 +4100,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cache2 = _interopRequireDefault(_cache);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var pathCache = new _cache2.default(1000);
+	var pathCache = new _cache2['default'](1000);
 
 	var APPEND = 0;
 	var PUSH = 1;
