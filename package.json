@@ -2,7 +2,7 @@
   "name": "braces-template",
   "version": "0.2.3",
   "description": "",
-  "main": "index.js",
+  "main": "dist/braces-template.js",
   "scripts": {
     "lint": "eslint src test",
     "test": "better-npm-run test",
