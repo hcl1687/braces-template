@@ -16,6 +16,7 @@ module.exports = {
   files: [
     './node_modules/es5-shim/es5-sham.js',
     './node_modules/phantomjs-polyfill/bind-polyfill.js',
+    './node_modules/promise-polyfill/dist/polyfill.js',
     {
       pattern: './test/index.js',
       watched: false,

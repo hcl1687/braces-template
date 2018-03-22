@@ -13,6 +13,10 @@ import bind from './bind'
 import el from './el'
 // cloak
 import cloak from './cloak'
+// method
+import vMethod from './method'
+// source
+import source from './source'
 
 // must export plain object
 export default {
@@ -24,5 +28,7 @@ export default {
   on,
   bind,
   el,
-  cloak
+  cloak,
+  'method': vMethod,
+  source
 }

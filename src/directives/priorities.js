@@ -8,3 +8,5 @@ export const PARTIAL = 1750
 export const IF = 2100
 export const FOR = 2200
 export const SLOT = 2300
+export const SOURCE = 2400
+export const METHOD = 2500

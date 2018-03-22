@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _braces2 = _interopRequireDefault(_braces);
 
-	var _globalApi = __webpack_require__(38);
+	var _globalApi = __webpack_require__(39);
 
 	var _globalApi2 = _interopRequireDefault(_globalApi);
 
@@ -102,19 +102,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _lifecycle2 = _interopRequireDefault(_lifecycle);
 
-	var _data = __webpack_require__(34);
+	var _data = __webpack_require__(35);
 
 	var _data2 = _interopRequireDefault(_data);
 
-	var _dom = __webpack_require__(35);
+	var _dom = __webpack_require__(36);
 
 	var _dom2 = _interopRequireDefault(_dom);
 
-	var _events3 = __webpack_require__(36);
+	var _events3 = __webpack_require__(37);
 
 	var _events4 = _interopRequireDefault(_events3);
 
-	var _lifecycle3 = __webpack_require__(37);
+	var _lifecycle3 = __webpack_require__(38);
 
 	var _lifecycle4 = _interopRequireDefault(_lifecycle3);
 
@@ -2263,9 +2263,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _text = __webpack_require__(32);
+	var _text = __webpack_require__(33);
 
-	var _directive = __webpack_require__(33);
+	var _directive = __webpack_require__(34);
 
 	var _index3 = __webpack_require__(3);
 
@@ -2674,6 +2674,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cloak2 = _interopRequireDefault(_cloak);
 
+	var _method = __webpack_require__(32);
+
+	var _method2 = _interopRequireDefault(_method);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	exports['default'] = {
@@ -2685,7 +2689,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  on: _on2['default'],
 	  bind: _bind2['default'],
 	  el: _el2['default'],
-	  cloak: _cloak2['default']
+	  cloak: _cloak2['default'],
+	  'method': _method2['default']
 	};
 	module.exports = exports['default'];
 
@@ -3145,6 +3150,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var IF = exports.IF = 2100;
 	var FOR = exports.FOR = 2200;
 	var SLOT = exports.SLOT = 2300;
+	var METHOD = exports.METHOD = 2400;
 
 /***/ }),
 /* 26 */
@@ -3584,6 +3590,75 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _index = __webpack_require__(3);
+
+	var _priorities = __webpack_require__(25);
+
+	function noop() {}
+
+	exports['default'] = {
+
+	  priority: _priorities.METHOD,
+	  terminal: true,
+	  scopeVar: '__BRACES__',
+
+	  bind: function bind() {
+	    this.args = this.arg.split(',');
+	    this.body = (0, _index.textContent)(this.el);
+	  },
+	  update: function update(value) {
+	    if (this.vm[value]) {
+	      if (process.env.NODE_ENV !== 'production') {
+	        (0, _index.warn)('Property: ' + value + ' has exsited on the vm instance.');
+	      }
+
+	      return;
+	    }
+
+	    if (this.args.indexOf(this.scopeVar) > -1) {
+	      if (process.env.NODE_ENV !== 'production') {
+	        (0, _index.warn)('Function parameter: ' + this.scopeVar + ' is a keyword. ' + 'Do not use ' + this.scopeVar + ' as a function parameter.');
+	      }
+
+	      return;
+	    }
+
+	    var argsName = [this.scopeVar].concat(this.args);
+	    var fun = this.create(argsName, this.body);
+	    this.vm[value] = (0, _index.bind)(function () {
+	      var args = [].slice.call(arguments);
+	      args.unshift(this);
+	      fun.apply(this, args);
+	    }, this.vm);
+	  },
+	  create: function create(args, body) {
+	    try {
+	      return new Function(args.join(','), ' ' + body + ';');
+	    } catch (e) {
+	      if (process.env.NODE_ENV !== 'production') {
+	        (0, _index.warn)('Invalid function. ' + 'Generated function body: ' + body);
+	      }
+	      return noop;
+	    }
+	  },
+	  unbind: function unbind() {
+	    var name = this.value;
+	    delete this.vm[name];
+	  }
+	};
+	module.exports = exports['default'];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -3684,7 +3759,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3716,7 +3791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3754,7 +3829,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3860,7 +3935,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3935,7 +4010,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -3989,7 +4064,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4049,11 +4124,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var compiler = _interopRequireWildcard(_index4);
 
-	var _path = __webpack_require__(39);
+	var _path = __webpack_require__(40);
 
 	var path = _interopRequireWildcard(_path);
 
-	var _text = __webpack_require__(32);
+	var _text = __webpack_require__(33);
 
 	var text = _interopRequireWildcard(_text);
 
@@ -4061,7 +4136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var template = _interopRequireWildcard(_template);
 
-	var _directive = __webpack_require__(33);
+	var _directive = __webpack_require__(34);
 
 	var directive = _interopRequireWildcard(_directive);
 
@@ -4080,7 +4155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
