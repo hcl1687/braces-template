@@ -12,6 +12,9 @@ export default {
   bind () {
     this.args = this.arg.split(',')
     this.body = textContent(this.el)
+    if (typeof this.transform === 'function') {
+      this.body = this.transform(this.body)
+    }
     this.anchor = createAnchor('v-method')
     var el = this.el
     replace(el, this.anchor)
