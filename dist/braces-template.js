@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _braces2 = _interopRequireDefault(_braces);
 
-	var _globalApi = __webpack_require__(39);
+	var _globalApi = __webpack_require__(40);
 
 	var _globalApi2 = _interopRequireDefault(_globalApi);
 
@@ -102,19 +102,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _lifecycle2 = _interopRequireDefault(_lifecycle);
 
-	var _data = __webpack_require__(35);
+	var _data = __webpack_require__(36);
 
 	var _data2 = _interopRequireDefault(_data);
 
-	var _dom = __webpack_require__(36);
+	var _dom = __webpack_require__(37);
 
 	var _dom2 = _interopRequireDefault(_dom);
 
-	var _events3 = __webpack_require__(37);
+	var _events3 = __webpack_require__(38);
 
 	var _events4 = _interopRequireDefault(_events3);
 
-	var _lifecycle3 = __webpack_require__(38);
+	var _lifecycle3 = __webpack_require__(39);
 
 	var _lifecycle4 = _interopRequireDefault(_lifecycle3);
 
@@ -1291,6 +1291,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  strats[type + 's'] = mergeAssets;
 	});
 
+	strats.directives = function (parentVal, childVal) {
+	  childVal = childVal ? guardArrayAssets(childVal) : {};
+	  Object.keys(parentVal).forEach(function (key) {
+	    var child = childVal[key];
+	    var parent = parentVal[key];
+	    if (child) {
+	      childVal[key] = (0, _lang.extend)((0, _lang.extend)({}, parent), child);
+	    } else {
+	      childVal[key] = (0, _lang.extend)({}, parent);
+	    }
+	  });
+
+	  return childVal;
+	};
+
 	strats.events = function (parentVal, childVal) {
 	  if (!childVal) return parentVal;
 	  if (!parentVal) return childVal;
@@ -2263,9 +2278,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _text = __webpack_require__(33);
+	var _text = __webpack_require__(34);
 
-	var _directive = __webpack_require__(34);
+	var _directive = __webpack_require__(35);
 
 	var _index3 = __webpack_require__(3);
 
@@ -2678,6 +2693,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _method2 = _interopRequireDefault(_method);
 
+	var _source = __webpack_require__(33);
+
+	var _source2 = _interopRequireDefault(_source);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	exports['default'] = {
@@ -2690,7 +2709,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  bind: _bind2['default'],
 	  el: _el2['default'],
 	  cloak: _cloak2['default'],
-	  'method': _method2['default']
+	  'method': _method2['default'],
+	  source: _source2['default']
 	};
 	module.exports = exports['default'];
 
@@ -3150,7 +3170,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var IF = exports.IF = 2100;
 	var FOR = exports.FOR = 2200;
 	var SLOT = exports.SLOT = 2300;
-	var METHOD = exports.METHOD = 2400;
+	var SOURCE = exports.SOURCE = 2400;
+	var METHOD = exports.METHOD = 2500;
 
 /***/ }),
 /* 26 */
@@ -3606,16 +3627,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  priority: _priorities.METHOD,
 	  terminal: true,
-	  scopeVar: '__BRACES__',
+	  scopeVar: '__braces__',
 
 	  bind: function bind() {
 	    this.args = this.arg.split(',');
 	    this.body = (0, _index.textContent)(this.el);
+	    if (typeof this.transform === 'function') {
+	      this.body = this.transform(this.body);
+	    }
+	    this.anchor = (0, _index.createAnchor)('v-method');
+	    var el = this.el;
+	    (0, _index.replace)(el, this.anchor);
 	  },
 	  update: function update(value) {
 	    if (this.vm[value]) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        (0, _index.warn)('Property: ' + value + ' has exsited on the vm instance.');
+	        (0, _index.warn)('Property: ' + value + ' is already defined.');
 	      }
 
 	      return;
@@ -3623,7 +3650,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (this.args.indexOf(this.scopeVar) > -1) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        (0, _index.warn)('Function parameter: ' + this.scopeVar + ' is a keyword. ' + 'Do not use ' + this.scopeVar + ' as a function parameter.');
+	        (0, _index.warn)('Do not use ' + this.scopeVar + ' as a function parameter.');
 	      }
 
 	      return;
@@ -3631,11 +3658,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var argsName = [this.scopeVar].concat(this.args);
 	    var fun = this.create(argsName, this.body);
-	    this.vm[value] = (0, _index.bind)(function () {
+	    var scope = this.scope ? typeof this.scope === 'function' ? this.scope.apply(this.vm) : this.scope : this.vm;
+	    this.vm[value] = function () {
 	      var args = [].slice.call(arguments);
-	      args.unshift(this);
-	      fun.apply(this, args);
-	    }, this.vm);
+	      args.unshift(scope);
+	      return fun.apply(scope, args);
+	    };
 	  },
 	  create: function create(args, body) {
 	    try {
@@ -3657,6 +3685,96 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _factory = __webpack_require__(23);
+
+	var _factory2 = _interopRequireDefault(_factory);
+
+	var _priorities = __webpack_require__(25);
+
+	var _index = __webpack_require__(3);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var uid = 0;
+
+	exports['default'] = {
+
+	  priority: _priorities.SOURCE,
+	  terminal: true,
+
+	  bind: function bind() {
+	    this.id = '__v-source__' + ++uid;
+
+	    this.start = (0, _index.createAnchor)('v-source-start');
+	    this.end = (0, _index.createAnchor)('v-source-end');
+	    (0, _index.replace)(this.el, this.end);
+	    (0, _index.before)(this.start, this.end);
+
+	    this.factory = new _factory2['default'](this.vm, this.el);
+	  },
+	  update: function update(source) {
+	    this.handleSource(source);
+	  },
+	  handleSource: function handleSource(source) {
+	    var that = this;
+	    var isFn = typeof source === 'function';
+	    var data = isFn ? source() : source;
+	    if (data && data.then) {
+	      data.then(function (res) {
+	        that.createFrag(res);
+	      });
+	    } else {
+	      this.createFrag(data);
+	    }
+	  },
+	  createFrag: function createFrag(data) {
+	    this.frag = this.create(data);
+	    this.frag.before(this.end);
+	  },
+	  create: function create(value) {
+	    var parentScope = this._scope || this.vm;
+	    var scope = Object.create(parentScope);
+	    scope.$els = Object.create(parentScope.$els);
+
+	    scope.$parent = parentScope;
+	    if (value && (value.hasOwnProperty('$els') || value.hasOwnProperty('$parent'))) {
+	      delete value['$els'];
+	      delete value['$parent'];
+	      if (process.env.NODE_ENV !== 'production') {
+	        (0, _index.warn)('$els or $parent is keyword. ' + 'source data should not contain these property.');
+	      }
+	    }
+
+	    (0, _index.extend)(scope, value);
+	    var frag = this.factory.create(scope, this._frag);
+	    frag.sourceId = this.id;
+	    return frag;
+	  },
+	  unbind: function unbind() {
+	    if (this.frags) {
+	      var i = this.frags.length;
+	      var frag;
+	      while (i--) {
+	        frag = this.frags[i];
+	        frag.destroy();
+	      }
+	      this.frags = [];
+	    }
+	  }
+	};
+	module.exports = exports['default'];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+
+/***/ }),
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3759,7 +3877,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3791,7 +3909,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3829,7 +3947,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3935,7 +4053,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4010,7 +4128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -4064,7 +4182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4124,11 +4242,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var compiler = _interopRequireWildcard(_index4);
 
-	var _path = __webpack_require__(40);
+	var _path = __webpack_require__(41);
 
 	var path = _interopRequireWildcard(_path);
 
-	var _text = __webpack_require__(33);
+	var _text = __webpack_require__(34);
 
 	var text = _interopRequireWildcard(_text);
 
@@ -4136,7 +4254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var template = _interopRequireWildcard(_template);
 
-	var _directive = __webpack_require__(34);
+	var _directive = __webpack_require__(35);
 
 	var directive = _interopRequireWildcard(_directive);
 
@@ -4155,7 +4273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
