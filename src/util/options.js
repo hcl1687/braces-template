@@ -154,6 +154,21 @@ config._assetTypes.forEach(function (type) {
   strats[type + 's'] = mergeAssets
 })
 
+strats.directives = function (parentVal, childVal) {
+  childVal = childVal ? guardArrayAssets(childVal) : {}
+  Object.keys(parentVal).forEach(function (key) {
+    var child = childVal[key]
+    var parent = parentVal[key]
+    if (child) {
+      childVal[key] = extend(extend({}, parent), child)
+    } else {
+      childVal[key] = extend({}, parent)
+    }
+  })
+
+  return childVal
+}
+
 /**
  * Events.
  *

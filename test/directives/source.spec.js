@@ -11,7 +11,7 @@ describe('v-source', function () {
     var str = ''
     str += '<script type="x/template" v-source="test"><div>{{a}}</div></script>'
     _.innerHTML(el, str)
-    var vm = new Braces({
+    new Braces({
       el: el,
       data: {
         test: {
@@ -28,7 +28,7 @@ describe('v-source', function () {
     str += '<script type="x/template" v-method:a.literal="test">return { a: 1, b: 2}</script>'
     str += '<script type="x/template" v-source="test"><div>{{a}}</div></script>'
     _.innerHTML(el, str)
-    var vm = new Braces({
+    new Braces({
       el: el
     })
     expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>1</div>')
@@ -38,7 +38,7 @@ describe('v-source', function () {
     var str = ''
     str += '<script type="x/template" v-source="test"><div>{{a}}</div></script>'
     _.innerHTML(el, str)
-    var vm = new Braces({
+    new Braces({
       el: el,
       data: {
         test: Promise.resolve({ a: 1 })
@@ -55,7 +55,7 @@ describe('v-source', function () {
     var str = ''
     str += '<script type="x/template" v-source="test"><div>{{a}}</div></script>'
     _.innerHTML(el, str)
-    var vm = new Braces({
+    new Braces({
       el: el,
       methods: {
         test: function () {

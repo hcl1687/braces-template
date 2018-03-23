@@ -91,8 +91,12 @@ describe('Util - Option merging', function () {
   })
 
   it('assets', function () {
-    var asset1 = {}
-    var asset2 = {}
+    var asset1 = {
+      test: 1
+    }
+    var asset2 = {
+      test: 2
+    }
     var res = merge({
       directives: {
         a: asset1
@@ -102,8 +106,8 @@ describe('Util - Option merging', function () {
         b: asset2
       }
     }).directives
-    expect(res.a).toBe(asset1)
-    expect(res.b).toBe(asset2)
+    expect(res.a.test).toBe(asset1.test)
+    expect(res.b.test).toBe(asset2.test)
   })
 
   it('should ignore non-function el & data in class merge', function () {
@@ -218,10 +222,18 @@ describe('Util - Option merging', function () {
   })
 
   it('mixins', function () {
-    var a = {}
-    var b = {}
-    var c = {}
-    var d = {}
+    var a = {
+      test: 1
+    }
+    var b = {
+      test: 2
+    }
+    var c = {
+      test: 3
+    }
+    var d = {
+      test: 4
+    }
     var f1 = function () {}
     var f2 = function () {}
     var f3 = function () {}
@@ -239,10 +251,10 @@ describe('Util - Option merging', function () {
     })
     expect(res.a).toBe(1)
     expect(res.b).toBe(1)
-    expect(res.directives.a).toBe(a)
-    expect(res.directives.b).toBe(b)
-    expect(res.directives.c).toBe(c)
-    expect(res.directives.d).toBe(d)
+    expect(res.directives.a.test).toBe(a.test)
+    expect(res.directives.b.test).toBe(b.test)
+    expect(res.directives.c.test).toBe(c.test)
+    expect(res.directives.d.test).toBe(d.test)
     expect(res.created[0]).toBe(f1)
     expect(res.created[1]).toBe(f2)
     expect(res.created[2]).toBe(f3)
@@ -261,8 +273,8 @@ describe('Util - Option merging', function () {
       directives: [{ name: 'b' }]
     }
     var res = merge(a, b)
-    expect(res.directives.a).toBe(a.directives.a)
-    expect(res.directives.b).toBe(b.directives[0])
+    expect(res.directives.a.name).toBe(a.directives.a.name)
+    expect(res.directives.b.name).toBe(b.directives[0].name)
   })
 
   it('warn Array assets without id', function () {

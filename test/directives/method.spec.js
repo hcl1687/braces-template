@@ -47,4 +47,46 @@ describe('v-method', function () {
     trigger(a, 'click')
     expect(vm.b).toBe(1)
   })
+
+  it('method with object scope', function () {
+    _.innerHTML(el, '<script type="x/template" v-method:a="funName">this.b = a + this.c</script><a @click="test(1)"></a>')
+    var scope = {
+      c: 1
+    }
+    new Braces({
+      el: el,
+      data: {
+        funName: 'test'
+      },
+      directives: {
+        method: {
+          scope: scope
+        }
+      }
+    })
+    var a = el.lastChild
+    trigger(a, 'click')
+    expect(scope.b).toBe(2)
+  })
+
+  it('method with function scope', function () {
+    _.innerHTML(el, '<script type="x/template" v-method:a="funName">return this.name</script><div>{{test()}}</div>')
+    new Braces({
+      el: el,
+      data: {
+        funName: 'test',
+        message: 'hello'
+      },
+      directives: {
+        method: {
+          scope: function () {
+            return {
+              name: this.message
+            }
+          }
+        }
+      }
+    })
+    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>hello</div>')
+  })
 })

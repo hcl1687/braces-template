@@ -1,4 +1,4 @@
-import { textContent, bind, warn, replace, createAnchor } from '../../util/index'
+import { textContent, warn, replace, createAnchor } from '../../util/index'
 import { METHOD } from '../priorities'
 
 function noop () {}
@@ -7,7 +7,7 @@ export default {
 
   priority: METHOD,
   terminal: true,
-  scopeVar: '__BRACES__',
+  scopeVar: '__braces__',
 
   bind () {
     this.args = this.arg.split(',')
@@ -43,11 +43,16 @@ export default {
 
     var argsName = [this.scopeVar].concat(this.args)
     var fun = this.create(argsName, this.body)
-    this.vm[value] = bind(function () {
+    var scope = this.scope
+      ? typeof this.scope === 'function'
+        ? this.scope.apply(this.vm)
+        : this.scope
+      : this.vm
+    this.vm[value] = function () {
       var args = [].slice.call(arguments)
-      args.unshift(this)
-      return fun.apply(this, args)
-    }, this.vm)
+      args.unshift(scope)
+      return fun.apply(scope, args)
+    }
   },
 
   create (args, body) {
