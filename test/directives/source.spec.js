@@ -73,4 +73,39 @@ describe('v-source', function () {
       done()
     }, 1000)
   })
+
+  it('hook attached and detached', function (done) {
+    var str = ''
+    str += '<script type="x/template" v-source="test" :attached="attached" :detached="detached"><div>{{a}}</div></script>'
+    _.innerHTML(el, str)
+    document.body.appendChild(el)
+
+    var attached = jasmine.createSpy('attached')
+    var detached = jasmine.createSpy('detached')
+    var vm = new Braces({
+      el: el,
+      methods: {
+        test: function () {
+          return new Promise(function (resolve) {
+            setTimeout(function () {
+              resolve({ a: 1 })
+            }, 50)
+          })
+        },
+        attached: attached,
+        detached: detached
+      }
+    })
+
+    setTimeout(function () {
+      expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>1</div>')
+      expect(attached).toHaveBeenCalled()
+      setTimeout(function () {
+        vm.$destroy(true)
+        expect(detached).toHaveBeenCalled()
+
+        done()
+      }, 100)
+    }, 100)
+  })
 })

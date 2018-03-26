@@ -204,7 +204,7 @@ Braces-template need es5-shim and es5-sham in IE8. If you want to run Braces-tem
 - custom tag
     - no support custom tag
 - a.true should be replaced by a['true']
-    - true is a keyworld in javascript. using dot notaion 'true' will throw an error in IE8.
+    - true is a keyword in javascript. using dot notaion 'true' will throw an error in IE8.
 
 ## License
 

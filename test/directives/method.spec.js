@@ -89,4 +89,12 @@ describe('v-method', function () {
     })
     expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>hello</div>')
   })
+
+  it('method with multi arguments', function () {
+    _.innerHTML(el, '<script type="x/template" v-method:name,u-id.literal="test">return name + uId</script><div>{{test("hcl", "1687")}}</div>')
+    new Braces({
+      el: el
+    })
+    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>hcl1687</div>')
+  })
 })

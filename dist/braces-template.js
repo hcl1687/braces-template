@@ -3630,6 +3630,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  scopeVar: '__braces__',
 
 	  bind: function bind() {
+	    this.arg = this.arg || '';
+	    this.arg = (0, _index.camelize)(this.arg);
 	    this.args = this.arg.split(',');
 	    this.body = (0, _index.textContent)(this.el);
 	    if (typeof this.transform === 'function') {
@@ -3709,6 +3711,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  priority: _priorities.SOURCE,
 	  terminal: true,
+	  params: ['attached', 'detached'],
 
 	  bind: function bind() {
 	    this.id = '__v-source__' + ++uid;
@@ -3738,6 +3741,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  createFrag: function createFrag(data) {
 	    this.frag = this.create(data);
 	    this.frag.before(this.end);
+	    if (typeof this.params['attached'] === 'function') {
+	      this.params['attached']();
+	    }
 	  },
 	  create: function create(value) {
 	    var parentScope = this._scope || this.vm;
@@ -3759,14 +3765,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return frag;
 	  },
 	  unbind: function unbind() {
-	    if (this.frags) {
-	      var i = this.frags.length;
-	      var frag;
-	      while (i--) {
-	        frag = this.frags[i];
-	        frag.destroy();
-	      }
-	      this.frags = [];
+	    if (this.frag) {
+	      this.frag.destroy();
+	      this.frag = null;
+	    }
+	    if (typeof this.params['detached'] === 'function') {
+	      this.params['detached']();
 	    }
 	  }
 	};
