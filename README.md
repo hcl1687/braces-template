@@ -32,29 +32,6 @@ npm install braces-template --save
 
 ## Example
 
-### new
-```javascript
-import Braces from 'braces-template'
-
-// el = '<div id="app"><div>{{message}}</div></div>'
-var el = document.createElement('div')
-el.id = 'app'
-el.innerHTML = '<div>{{message}}</div>'
-document.body.appendChild(el)
-
-var vm = new Braces({
-  el: '#app',
-  data: {
-    message: 'Hello World'
-  }
-})
-
-// output:
-// <div id="app"><div>Hello World</div></div>
-expect(textContent(vm.$el).replace(/\r\n/g, '')).toBe('Hello World')
-el.parentNode.removeChild(el)
-```
-
 ### new with template
 ```javascript
 import Braces from 'braces-template'
@@ -77,26 +54,6 @@ expect(textContent(vm.$el).replace(/\r\n/g, '')).toBe('Hello World')
 el.parentNode.removeChild(el)
 ```
 
-### v-for
-```javascript
-import Braces from 'braces-template'
-
-var el = document.createElement('div')
-el.id = 'app'
-document.body.appendChild(el)
-
-new Braces({
-  el: el,
-  template: '<div v-for="item in items">{{$index}} {{item.a}}</div>',
-  data: {
-    items: [{a: 1}, {a: 2}]
-  }
-})
-
-expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>0 1</div><div>1 2</div>')
-el.parentNode.removeChild(el)
-```
-
 ### v-for nested
 ```javascript
 import Braces from 'braces-template'
@@ -107,9 +64,9 @@ document.body.appendChild(el)
 
 new Braces({
   el: el,
-  template: '<script type="x/template" v-for="item in items">' +
+  template: '<div type="x/template" v-for="item in items">' +
       '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
-    '</script>',
+    '</div>',
   data: {
     items: [
       { items: [{a: 1}, {a: 2}], a: 1 },
@@ -184,6 +141,60 @@ expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div><div>1234</di
 el.parentNode.removeChild(el)
 ```
 
+### v-method
+```javascript
+import Braces from 'braces-template'
+
+var el = document.createElement('div')
+el.id = 'app'
+document.body.appendChild(el)
+
+var html = ''
+html += '<div type="text/x-template" v-method:name,u-id.literal="test">'
+html += 'return name + uId'
+html += '</div>'
+html += '<div>{{test("hcl", "1687")}}</div>'
+el.innerHTML = html
+new Braces({
+  el: el
+})
+expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>hcl1687</div>')
+
+el.parentNode.removeChild(el)
+```
+
+### v-source
+```javascript
+import Braces from 'braces-template'
+
+var el = document.createElement('div')
+el.id = 'app'
+document.body.appendChild(el)
+
+var html = ''
+html += '<div type="text/x-template" v-source="test"><div>{{a}}</div></div>'
+el.innerHTML = html
+new Braces({
+  el: el,
+  methods: {
+    test: function () {
+      return new Promise(function (resolve) {
+        setTimeout(function () {
+          resolve({ a: 1 })
+        }, 500)
+      })
+    }
+  }
+})
+
+setTimeout(function () {
+  expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>1</div>')
+  // done()
+}, 1000)
+
+el.parentNode.removeChild(el)
+```
+
 ## Documentation
 
 ## Supported Environments
@@ -200,7 +211,7 @@ Braces-template need es5-shim and es5-sham in IE8. If you want to run Braces-tem
 - svg
     - no support svg.
 - template tag
-    - no support template tag, using `<javascript type="x/template"></script>` instead.
+    - no support template tag, using `<div type="text/x-template"></div>` instead.
 - custom tag
     - no support custom tag
 - a.true should be replaced by a['true']

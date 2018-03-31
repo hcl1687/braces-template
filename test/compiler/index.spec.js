@@ -296,7 +296,7 @@ describe('Compile', function () {
   })
 
   it('skip script tags', function () {
-    el.innerHTML = '<script type="x/template">{{test}}</script>'
+    el.innerHTML = '<script type="text/x-template">{{test}}</script>'
     var linker = compile(el, Braces.options)
     linker(vm, el)
     expect(bindDirSpy.calls.count()).toBe(0)

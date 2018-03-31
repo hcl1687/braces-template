@@ -26,7 +26,7 @@ describe('v-method', function () {
   })
 
   it('method with literal name', function () {
-    _.innerHTML(el, '<script type="x/template" v-method:a.literal="test">this.b = a</script><a @click="test(1)"></a>')
+    _.innerHTML(el, '<div type="text/x-template" v-method:a.literal="test">this.b = a</div><a @click="test(1)"></a>')
     var vm = new Braces({
       el: el
     })
@@ -36,7 +36,7 @@ describe('v-method', function () {
   })
 
   it('method with dynamic name', function () {
-    _.innerHTML(el, '<script type="x/template" v-method:a="funName">this.b = a</script><a @click="test(1)"></a>')
+    _.innerHTML(el, '<div type="text/x-template" v-method:a="funName">this.b = a</div><a @click="test(1)"></a>')
     var vm = new Braces({
       el: el,
       data: {
@@ -49,7 +49,7 @@ describe('v-method', function () {
   })
 
   it('method with object scope', function () {
-    _.innerHTML(el, '<script type="x/template" v-method:a="funName">this.b = a + this.c</script><a @click="test(1)"></a>')
+    _.innerHTML(el, '<div type="text/x-template" v-method:a="funName">this.b = a + this.c</div><a @click="test(1)"></a>')
     var scope = {
       c: 1
     }
@@ -70,7 +70,7 @@ describe('v-method', function () {
   })
 
   it('method with function scope', function () {
-    _.innerHTML(el, '<script type="x/template" v-method:a="funName">return this.name</script><div>{{test()}}</div>')
+    _.innerHTML(el, '<div type="text/x-template" v-method:a="funName">return this.name</div><div>{{test()}}</div>')
     new Braces({
       el: el,
       data: {
@@ -91,7 +91,12 @@ describe('v-method', function () {
   })
 
   it('method with multi arguments', function () {
-    _.innerHTML(el, '<script type="x/template" v-method:name,u-id.literal="test">return name + uId</script><div>{{test("hcl", "1687")}}</div>')
+    var html = ''
+    html += '<div type="text/x-template" v-method:name,u-id.literal="test">'
+    html += 'return name + uId'
+    html += '</div>'
+    html += '<div>{{test("hcl", "1687")}}</div>'
+    el.innerHTML = html
     new Braces({
       el: el
     })

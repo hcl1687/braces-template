@@ -79,8 +79,21 @@ describe('Template Parser', function () {
   it('should retrieve and parse if argument is an id selector', function () {
     var node = document.createElement('script')
     node.setAttribute('id', 'template-test')
-    node.setAttribute('type', 'x/template')
+    node.setAttribute('type', 'text/x-template')
     textContent(node, testString)
+    document.body.appendChild(node)
+    var res = parse('#template-test')
+    expect(res.nodeType).toBe(11)
+    expect(res.childNodes.length).toBe(2)
+    expect(textContent(res.querySelector('.test'))).toBe('world')
+    document.body.removeChild(node)
+  })
+
+  it('should retrieve and parse if argument is an id selector with div template', function () {
+    var node = document.createElement('div')
+    node.setAttribute('id', 'template-test')
+    node.setAttribute('type', 'text/x-template')
+    node.innerHTML = testString
     document.body.appendChild(node)
     var res = parse('#template-test')
     expect(res.nodeType).toBe(11)
@@ -129,7 +142,7 @@ describe('Template Parser', function () {
   it('should cache id selectors', function () {
     var node = document.createElement('script')
     node.setAttribute('id', 'template-test')
-    node.setAttribute('type', 'x/template')
+    node.setAttribute('type', 'text/x-template')
     textContent(node, '<div>never seen before content</div>')
     if (_.isIE8) {
       document.getElementsByTagName('head')[0].appendChild(node)
@@ -190,7 +203,7 @@ describe('Template Parser', function () {
     expect(res.firstChild.tagName).toBe('P')
     // nodes
     var el = document.createElement('div')
-    _.innerHTML(el, '<script type="x/template">    <p>test</p>    </script>')
+    _.innerHTML(el, '<div type="text/x-template">    <p>test</p>    </div>')
     res = parse(el.children[0])
     expect(res.childNodes.length).toBe(1)
     expect(res.firstChild.tagName).toBe('P')

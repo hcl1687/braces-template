@@ -24,6 +24,20 @@ describe('Misc', function () {
     expect(textContent(vm.$el)).toBe('bar foo')
   })
 
+  it('should bind an expression', function () {
+    var div = document.createElement('div')
+    var vm = new Braces({
+      el: div,
+      template: '<div v-bind:a="test(\'a\')"></div>',
+      methods: {
+        test: function (a) {
+          return a + '1'
+        }
+      }
+    })
+    expect(vm.$el.firstChild.getAttribute('a')).toBe('a1')
+  })
+
   // #922
   it('v-for inside svg', function () {
     var el = document.createElement('div')
@@ -165,9 +179,9 @@ describe('Misc', function () {
 
     new Braces({
       el: el,
-      template: '<script type="x/template" v-for="item in items">' +
+      template: '<div type="text/x-template" v-for="item in items">' +
           '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
-        '</script>',
+        '</div>',
       data: {
         items: [
           { items: [{a: 1}, {a: 2}], a: 1 },

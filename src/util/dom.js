@@ -330,7 +330,7 @@ function isTrimmable (node) {
 export function isTemplate (el) {
   return el.tagName &&
     (el.tagName.toLowerCase() === 'template' ||
-      (el.tagName.toLowerCase() === 'script' && el.type === 'x/template'))
+      el.getAttribute('type') === 'text/x-template')
 }
 
 /**

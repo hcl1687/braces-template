@@ -9,7 +9,7 @@ describe('v-source', function () {
 
   it('source is plain object data', function () {
     var str = ''
-    str += '<script type="x/template" v-source="test"><div>{{a}}</div></script>'
+    str += '<div type="text/x-template" v-source="test"><div>{{a}}</div></div>'
     _.innerHTML(el, str)
     new Braces({
       el: el,
@@ -25,8 +25,8 @@ describe('v-source', function () {
 
   it('source is function return plain object data', function () {
     var str = ''
-    str += '<script type="x/template" v-method:a.literal="test">return { a: 1, b: 2}</script>'
-    str += '<script type="x/template" v-source="test"><div>{{a}}</div></script>'
+    str += '<div type="text/x-template" v-method:a.literal="test">return { a: 1, b: 2}</div>'
+    str += '<div type="text/x-template" v-source="test"><div>{{a}}</div></div>'
     _.innerHTML(el, str)
     new Braces({
       el: el
@@ -36,7 +36,7 @@ describe('v-source', function () {
 
   it('source is promise data', function (done) {
     var str = ''
-    str += '<script type="x/template" v-source="test"><div>{{a}}</div></script>'
+    str += '<div type="text/x-template" v-source="test"><div>{{a}}</div></div>'
     _.innerHTML(el, str)
     new Braces({
       el: el,
@@ -52,9 +52,9 @@ describe('v-source', function () {
   })
 
   it('source is function return promise', function (done) {
-    var str = ''
-    str += '<script type="x/template" v-source="test"><div>{{a}}</div></script>'
-    _.innerHTML(el, str)
+    var html = ''
+    html += '<div type="text/x-template" v-source="test"><div>{{a}}</div></div>'
+    el.innerHTML = html
     new Braces({
       el: el,
       methods: {
@@ -76,7 +76,7 @@ describe('v-source', function () {
 
   it('hook attached and detached', function (done) {
     var str = ''
-    str += '<script type="x/template" v-source="test" :attached="attached" :detached="detached"><div>{{a}}</div></script>'
+    str += '<div type="text/x-template" v-source="test" :attached="attached" :detached="detached"><div>{{a}}</div></div>'
     _.innerHTML(el, str)
     document.body.appendChild(el)
 

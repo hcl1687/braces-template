@@ -114,7 +114,7 @@ export default function (Braces) {
       var templateRE = /<\/template[^>]*/
       if (templateRE.test(content)) {
         process.env.NODE_ENV !== 'production' && warn(
-          'IE8 cannot use `<template id="my-template">`. instead of `<script id="my-template" type="x/template">`',
+          'IE8 cannot use `<template id="my-template">`. instead of `<div id="my-template" type="text/x-template">`',
           this
         )
       }

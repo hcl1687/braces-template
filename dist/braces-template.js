@@ -737,7 +737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function isTemplate(el) {
-	  return el.tagName && (el.tagName.toLowerCase() === 'template' || el.tagName.toLowerCase() === 'script' && el.type === 'x/template');
+	  return el.tagName && (el.tagName.toLowerCase() === 'template' || el.getAttribute('type') === 'text/x-template');
 	}
 
 	function createAnchor(content, persist) {
@@ -1598,7 +1598,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var templateRE = /<\/template[^>]*/;
 	      if (templateRE.test(content)) {
-	        process.env.NODE_ENV !== 'production' && (0, _index.warn)('IE8 cannot use `<template id="my-template">`. instead of `<script id="my-template" type="x/template">`', this);
+	        process.env.NODE_ENV !== 'production' && (0, _index.warn)('IE8 cannot use `<template id="my-template">`. instead of `<div id="my-template" type="text/x-template">`', this);
 	      }
 	    }
 
