@@ -64,7 +64,7 @@ document.body.appendChild(el)
 
 new Braces({
   el: el,
-  template: '<div type="x/template" v-for="item in items">' +
+  template: '<div type="text/x-template" v-for="item in items">' +
       '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
     '</div>',
   data: {
