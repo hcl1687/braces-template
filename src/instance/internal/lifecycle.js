@@ -227,6 +227,7 @@ export default function (Braces) {
     this._context =
     this._scope =
     this._directives = null
+    this._vsourcePending = 0
     // call the last hook...
     this._isDestroyed = true
     this._callHook('destroyed')

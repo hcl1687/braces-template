@@ -40,6 +40,11 @@ export default function (Braces) {
     this._fragmentStart = // @type {Text|Comment}
     this._fragmentEnd = null // @type {Text|Comment}
 
+    // v-source support async promise
+    // so need to record how many v-source is pending.
+    // this param is used for determine when the dom is ready
+    this._vsourcePending = 0
+
     // lifecycle state
     this._isCompiled =
     this._isDestroyed =

@@ -26,7 +26,7 @@ export default function (Braces) {
     }
     this._compile(el)
     this._initDOMHooks()
-    if (inDoc(this.$el)) {
+    if (inDoc(this.$el) && this._vsourcePending === 0) {
       this._callHook('attached')
       ready.call(this)
     } else {

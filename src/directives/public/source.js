@@ -19,6 +19,8 @@ export default {
   bind () {
     // uid
     this.id = '__v-source__' + (++uid)
+    // count v-source directive
+    this.vm._vsourcePending++
 
     // setup anchor nodes
     this.start = createAnchor('v-source-start')
@@ -46,9 +48,13 @@ export default {
     var data = isFn ? source() : source
     if (data && data.then) {
       data.then(function (res) {
+        that.vm._vsourcePending--
         that.createFrag(res)
+      }).catch(function () {
+        that.vm._vsourcePending--
       })
     } else {
+      that.vm._vsourcePending--
       this.createFrag(data)
     }
   },
@@ -58,6 +64,10 @@ export default {
     this.frag.before(this.end)
     if (typeof this.params['attached'] === 'function') {
       this.params['attached']()
+    }
+    // if no pending, call ready
+    if (this.vm._vsourcePending === 0) {
+      this.vm._callHook('attached')
     }
   },
 
