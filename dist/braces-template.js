@@ -164,6 +164,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this._events = {};
 	    this._isFragment = false;
 	    this._fragment = this._fragmentStart = this._fragmentEnd = null;
+	    this._vsourcePending = 0;
+
 	    this._isCompiled = this._isDestroyed = this._isReady = this._isAttached = this._isBeingDestroyed = this._vForRemoving = false;
 	    this._unlinkFn = null;
 
@@ -1663,6 +1665,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    this.$el = this.$parent = this.$root = this._context = this._scope = this._directives = null;
+	    this._vsourcePending = 0;
 
 	    this._isDestroyed = true;
 	    this._callHook('destroyed');
@@ -3716,6 +3719,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  bind: function bind() {
 	    this.id = '__v-source__' + ++uid;
 
+	    this.vm._vsourcePending++;
+
 	    this.start = (0, _index.createAnchor)('v-source-start');
 	    this.end = (0, _index.createAnchor)('v-source-end');
 	    (0, _index.replace)(this.el, this.end);
@@ -3732,9 +3737,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var data = isFn ? source() : source;
 	    if (data && data.then) {
 	      data.then(function (res) {
+	        that.vm._vsourcePending--;
 	        that.createFrag(res);
+	      })['catch'](function () {
+	        that.vm._vsourcePending--;
 	      });
 	    } else {
+	      that.vm._vsourcePending--;
 	      this.createFrag(data);
 	    }
 	  },
@@ -3743,6 +3752,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.frag.before(this.end);
 	    if (typeof this.params['attached'] === 'function') {
 	      this.params['attached']();
+	    }
+
+	    if (this.vm._vsourcePending === 0) {
+	      this.vm._callHook('attached');
 	    }
 	  },
 	  create: function create(value) {
@@ -4154,7 +4167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    this._compile(el);
 	    this._initDOMHooks();
-	    if ((0, _index.inDoc)(this.$el)) {
+	    if ((0, _index.inDoc)(this.$el) && this._vsourcePending === 0) {
 	      this._callHook('attached');
 	      ready.call(this);
 	    } else {
