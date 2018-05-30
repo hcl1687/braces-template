@@ -22,7 +22,7 @@ var batches = [
     sl_mac_safari: {
       base: 'SauceLabs',
       browserName: 'safari',
-      platform: 'OS X 10.10'
+      platform: 'OS X 10.12'
     }
   },
   // ie family
