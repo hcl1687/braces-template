@@ -10,15 +10,15 @@ var base = require('./karma.base.conf.js')
 var batches = [
   // the cool kids
   {
-    // sl_chrome: {
-    //   base: 'SauceLabs',
-    //   browserName: 'chrome',
-    //   platform: 'Windows 7'
-    // },
-    // sl_firefox: {
-    //   base: 'SauceLabs',
-    //   browserName: 'firefox'
-    // },
+    sl_chrome: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'Windows 7'
+    },
+    sl_firefox: {
+      base: 'SauceLabs',
+      browserName: 'firefox'
+    },
     sl_mac_safari: {
       base: 'SauceLabs',
       browserName: 'safari',
@@ -32,40 +32,34 @@ var batches = [
       browserName: 'internet explorer',
       platform: 'Windows 7',
       version: '8'
+    },
+    sl_ie_9: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '9'
+    },
+    sl_ie_10: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 8',
+      version: '10'
+    },
+    sl_ie_11: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 8.1',
+      version: '11'
     }
-    // sl_ie_9: {
-    //   base: 'SauceLabs',
-    //   browserName: 'internet explorer',
-    //   platform: 'Windows 7',
-    //   version: '9'
-    // },
-    // sl_ie_10: {
-    //   base: 'SauceLabs',
-    //   browserName: 'internet explorer',
-    //   platform: 'Windows 8',
-    //   version: '10'
-    // },
-    // sl_ie_11: {
-    //   base: 'SauceLabs',
-    //   browserName: 'internet explorer',
-    //   platform: 'Windows 8.1',
-    //   version: '11'
-    // }
   },
   // mobile
   {
-    sl_ios_safari: {
+    sl_android: {
       base: 'SauceLabs',
-      browserName: 'iphone',
-      platform: 'OS X 10.9',
-      version: '7.1'
+      browserName: 'android',
+      platform: 'Linux',
+      version: '4.2'
     }
-    // sl_android: {
-    //   base: 'SauceLabs',
-    //   browserName: 'android',
-    //   platform: 'Linux',
-    //   version: '4.2'
-    // }
   }
 ]
 
