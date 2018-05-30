@@ -18,6 +18,11 @@ var batches = [
     sl_firefox: {
       base: 'SauceLabs',
       browserName: 'firefox'
+    },
+    sl_mac_safari: {
+      base: 'SauceLabs',
+      browserName: 'safari',
+      platform: 'OS X 10.10'
     }
   },
   // ie family
@@ -49,6 +54,12 @@ var batches = [
   },
   // mobile
   {
+    sl_ios_safari: {
+      base: 'SauceLabs',
+      browserName: 'iphone',
+      platform: 'OS X 10.9',
+      version: '7.1'
+    },
     sl_android: {
       base: 'SauceLabs',
       browserName: 'android',
