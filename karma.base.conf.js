@@ -56,7 +56,7 @@ module.exports = {
       type: 'text-summary'
     }, {
       type: 'html'
-    },{
+    }, {
       type: 'lcov',
       subdir: 'lcov'
     }],
