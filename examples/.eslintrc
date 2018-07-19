@@ -11,8 +11,7 @@
     "should": false,
     "console": false,
     "spyOn": false,
-    "jasmine": false,
-    "casper": fasle
+    "jasmine": false
   },
   "rules": {
     "no-console": "off",

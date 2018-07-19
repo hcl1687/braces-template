@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Braces-template commits example</title>
+    <meta charset="utf-8">
+    <style>
+      #demo {
+        font-family: 'Helvetica', Arial, sans-serif;
+      }
+      a {
+        text-decoration: none;
+        color: #f66;
+      }
+      li {
+        line-height: 1.5em;
+        margin-bottom: 20px;
+      }
+      .author, .date {
+        font-weight: bold;
+      }
+    </style>
+    <script src="../../dist/braces-template.js"></script>
+  </head>
+  <body>
+    <div id="demo">
+      <h1>Latest Braces-template Commits</h1>
+      <template v-for="branch in branches">
+        <input type="radio"
+          name="branch"
+          :id="branch"
+          @change="handleChange"
+          :value="branch">
+        <label :for="branch">{{branch}}</label>
+      </template>
+      <p>current selected branch: <span id="current-branch"></span></p>
+      <ul>
+        <li v-for="record in commits">
+          <a :href="record.html_url" target="_blank" class="commit">{{record.sha.slice(0, 7)}}</a>
+          - <span class="message">{{record.commit.message}}</span><br>
+          by <span class="author">{{record.commit.author.name}}</span>
+          at <span class="date">{{record.commit.author.date}}</span>
+        </li>
+      </ul>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

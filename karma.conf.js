@@ -20,7 +20,7 @@ module.exports = function (config) {
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
       './node_modules/promise-polyfill/dist/polyfill.js',
       {
-        pattern: './test/index.js',
+        pattern: './test/unit/index.js',
         watched: false,
         served: true,
         included: true
@@ -34,7 +34,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './test/index.js': ['webpack', 'sourcemap']
+      './test/unit/index.js': ['webpack', 'sourcemap']
     },
 
     // test results reporter to use
