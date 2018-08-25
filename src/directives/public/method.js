@@ -10,9 +10,9 @@ export default {
   scopeVar: '__braces__',
 
   bind () {
-    this.arg = this.arg || ''
+    this.arg = (this.arg || '').trim()
     this.arg = camelize(this.arg)
-    this.args = this.arg.split(',')
+    this.args = this.arg ? this.arg.split(',') : []
     this.body = textContent(this.el)
     if (typeof this.transform === 'function') {
       this.body = this.transform(this.body)

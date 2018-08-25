@@ -102,4 +102,17 @@ describe('v-method', function () {
     })
     expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>hcl1687</div>')
   })
+
+  it('method with no arguments', function () {
+    var html = ''
+    html += '<div type="text/x-template" v-method.literal="test">'
+    html += 'return 123'
+    html += '</div>'
+    html += '<div>{{test()}}</div>'
+    el.innerHTML = html
+    new Braces({
+      el: el
+    })
+    expect(el.innerHTML.replace(/\r\n/g, '').toLowerCase()).toBe('<div>123</div>')
+  })
 })
