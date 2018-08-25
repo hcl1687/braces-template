@@ -3633,9 +3633,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  scopeVar: '__braces__',
 
 	  bind: function bind() {
-	    this.arg = this.arg || '';
+	    this.arg = (this.arg || '').trim();
 	    this.arg = (0, _index.camelize)(this.arg);
-	    this.args = this.arg.split(',');
+	    this.args = this.arg ? this.arg.split(',') : [];
 	    this.body = (0, _index.textContent)(this.el);
 	    if (typeof this.transform === 'function') {
 	      this.body = this.transform(this.body);
