@@ -18,11 +18,11 @@ var batches = [
     sl_firefox: {
       base: 'SauceLabs',
       browserName: 'firefox'
-    },
-    sl_mac_safari: {
-      base: 'SauceLabs',
-      browserName: 'safari',
-      platform: 'OS X 10.12'
+    // },
+    // sl_mac_safari: {
+    //   base: 'SauceLabs',
+    //   browserName: 'safari',
+    //   platform: 'OS X 10.12'
     }
   },
   // ie family
